@@ -1,8 +1,8 @@
 class Player {
-  constructor(_name, _soju) {
+  constructor(_name, _soju, _gen) {
     this.name = _name;
     this.soju = _soju;
-    this.gen = 0;
+    this.gen = _gen;
     this.alcholblood = 0;
     this.die = false;
   }
@@ -13,7 +13,11 @@ class Player {
       this.die = true;
     }
   }
-  display() {}
+  display() {
+    if (this.gen == "boy") {
+    } else if (this.gen == "girl") {
+    }
+  }
   gameover() {
     if (this.die) {
     } else {

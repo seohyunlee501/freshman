@@ -1,4 +1,4 @@
-let mode = 1;
+let mode = 0;
 let gameNum = 0;
 let chars = [];
 let games = [];
@@ -9,29 +9,41 @@ var nameInput;
 var sojuInput;
 var button;
 
-let w = windowWidth;
-let h = windowHeight;
+let w;
+let h;
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  w = windowWidth;
+  h = windowHeight;
+  createCanvas(w, h);
   for (let i = 0; i < 5; i++) {
-    chars[i] = PlayerNPC(random(5, 7), i);
-    if (i == 2) {
-      chars[i].old = true;
-    }
+    //chars[i] = PlayerNPC(random(5, 7), i);
+    // if (i == 2) {
+    //   chars[i].old = true;
+    // }
   }
 }
 
 function draw() {
   background(220);
-  rect;
+  // start and reset
+  if (mode == 0) {
+    fill(0);
+    rectMode(CENTER);
+    rect(0.5 * w, 0.7 * h, 0.3 * w, 0.1 * h);
+  } else if (mode != 1 && mode != 6) {
+    fill(0);
+    rect(0.05 * w, 0.05 * h, 0.05 * w, 0.05 * h);
+  }
+
   switch (mode) {
     case 0:
       break;
     case 1:
-      introdisplay(w * 0.2, h * 0.3, "boy");
-      introdisplay(w * 0.7, h * 0.3, "girl");
-      let player = Player(nameInput, sojuInput);
+      //let player = Player(nameInput, sojuInput);
+      introdisplay(w * 0.25, h * 0.5, "boy");
+      introdisplay(w * 0.25, h * 0.5, "girl");
+
       break;
     case 2:
       introStory = story(2);
@@ -53,36 +65,51 @@ function draw() {
 }
 
 function mouseClicked() {
+  //start button
   if (mode == 0) {
-    if (start) {
+    if (
+      mouseX > 0.5 * w - 0.3 * w &&
+      mouseX < 0.5 * w + 0.3 * w &&
+      mouseY > 0.7 * h - 0.1 * h &&
+      mouseY < 0.7 * h + 0.1 * h
+    ) {
       mode = 1;
     }
-  } else {
-    if (reset) {
+  }
+  //reset button
+  else if (mode != 1 && mode != 6) {
+    if (
+      mouseX > 0.05 * w &&
+      mouseX < 0.1 * w &&
+      mouseY > 0.05 * h &&
+      mouseY < 0.1 * h
+    ) {
       mode = 0;
     }
-    switch (mode) {
-      case 1:
-        break;
-      case 2:
-        break;
-      case 3:
-        break;
-      case 4:
-        break;
-      case 5:
-        break;
-      case 6:
-        break;
-    }
+  }
+  //select player
+  if (mode == 1) {
+    selectPlayer();
   }
 }
 
 function introdisplay(_x, _y, _gen) {
+  let x = _x;
+  let y = _y;
   push();
-  translate(_x, _y);
+  translate(x, y);
+  rectMode(CENTER);
+  rect(0, 0, 0.3 * w, 0.5 * h);
+
+  pop();
+}
+
+function selectPlayer(_x, _y, _gen) {
+  let x = _x;
+  let y = _y;
+  let gen = _gen;
   nameInput = createInput();
-  nameInput.position(20, 30);
+  nameInput.position(0, 0);
   button = createButton("submit");
   button.position(160, 30);
   button.mousePressed(setPlayer);
@@ -90,12 +117,8 @@ function introdisplay(_x, _y, _gen) {
   background(100);
   noStroke();
   text("Enter your name.", 20, 20);
-  if (_gen == "boy") {
-  } else if (_gen == "girl") {
-  }
-  pop();
 }
 
-function setPlayer() {}
-
-function clock() {}
+function clock() {
+  text;
+}
