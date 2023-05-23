@@ -1,13 +1,13 @@
-class Player {
-  constructor(_name, _soju) {
-    this.name = _name;
+class PlayerNPC {
+  constructor(_soju, _idx) {
     this.soju = _soju;
-    this.gen = 0;
+    this.idx = _idx;
     this.alcholblood = 0;
     this.die = false;
+    this.old = false;
   }
-  player() {
-    this.npc = false;
+  old() {
+    this.old = true;
   }
   lose() {
     this.alcholblood += 1;
