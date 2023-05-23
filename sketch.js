@@ -38,6 +38,10 @@ function draw() {
       introStory.display();
       player.alcholblood += 4;
       break;
+    case 3:
+      break;
+    case 4:
+      break;
     case 5:
       eventStory = story(5);
       story.display();
@@ -50,9 +54,26 @@ function draw() {
 
 function mouseClicked() {
   if (mode == 0) {
+    if (start) {
+      mode = 1;
+    }
   } else {
     if (reset) {
       mode = 0;
+    }
+    switch (mode) {
+      case 1:
+        break;
+      case 2:
+        break;
+      case 3:
+        break;
+      case 4:
+        break;
+      case 5:
+        break;
+      case 6:
+        break;
     }
   }
 }
@@ -76,3 +97,5 @@ function introdisplay(_x, _y, _gen) {
 }
 
 function setPlayer() {}
+
+function clock() {}
