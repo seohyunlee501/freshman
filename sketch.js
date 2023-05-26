@@ -15,6 +15,13 @@ var button;
 let w;
 let h;
 
+let retroFont;
+let movieFont;
+function preload() {
+  retroFont = loadFont("fonts/DungGeunMo.ttf");
+  movieFont = loadFont("fonts/a시네마M.ttf");
+}
+
 function setup() {
   w = windowWidth;
   h = windowHeight;
@@ -26,42 +33,57 @@ function setup() {
 
 function draw() {
   background(0, 64, 0);
+  console.log(mode);
+  textFont(retroFont);
+  textAlign(CENTER);
   // start and reset
   if (mode == 0) {
     fill(0);
     rectMode(CENTER);
-    rect(0.5 * w, 0.7 * h, 0.3 * w, 0.1 * h);
+    rect(0.5 * w, 0.7 * h, 0.1 * w, 0.1 * h);
   } else if (mode != 1 && mode != 6) {
     fill(0);
-    rect(0.05 * w, 0.05 * h, 0.05 * w, 0.05 * h);
+    rectMode(CORNER);
+    rect(0.05 * w, 0.05 * h, 0.05 * w, 0.1 * h);
   }
 
   switch (mode) {
     case 0:
+      push();
+      translate(w * 0.5, h * 0.5);
+      fill(255);
+      textSize(50);
+
+      text("모두를 위한 술게임 안내서", 0, 0);
+      textSize(30);
+      text("START", 0, 0.21 * h);
+      pop();
+
       break;
     case 1:
-      //let player = Player(nameInput, sojuInput);
       introdisplay(w * 0.3, h * 0.5, "boy");
       introdisplay(w * 0.7, h * 0.5, "girl");
       break;
     case 2:
-      introStory = story(2);
+      textFont(movieFont);
+      introStory = new Story(2);
       introStory.display();
       player.alcholblood += 4;
-      mode = 3;
-      break;
-    case 3:
       for (let i = 0; i < 5; i++) {
         chars[i] = new PlayerNPC(random(5, 7), i);
       }
       gameSelect = new gameList(chars);
+      mode = 3;
+      break;
+    case 3:
       gameSelect.display();
       break;
     case 4:
       break;
     case 5:
-      eventStory = story(5);
-      story.display();
+      textFont(movieFont);
+      eventStory = new Story(5);
+      eventStory.display();
       break;
     case 6:
       player.gameover();
@@ -87,7 +109,7 @@ function mouseClicked() {
       mouseX > 0.05 * w &&
       mouseX < 0.1 * w &&
       mouseY > 0.05 * h &&
-      mouseY < 0.1 * h
+      mouseY < 0.15 * h
     ) {
       mode = 0;
     }
@@ -117,11 +139,9 @@ function mouseClicked() {
 function introdisplay(_x, _y, _gen) {
   let x = _x;
   let y = _y;
-  push();
-  translate(x, y);
   rectMode(CENTER);
   fill(255);
-  rect(0, 0, 0.3 * w, 0.5 * h);
+  rect(x, y, 0.3 * w, 0.5 * h);
   let playerimg;
   if (_gen == "boy") {
     playerimg = createImg("Assets/player_m_1.png");
@@ -129,8 +149,7 @@ function introdisplay(_x, _y, _gen) {
     playerimg = createImg("Assets/player_f_1.png");
   }
   imageMode(CENTER);
-  image(playerimg, 0, 0, playerimg.width, playerimg.height);
-  pop();
+  image(playerimg, x, y, playerimg.width, playerimg.height);
 }
 
 function selectPlayer(_gen) {
@@ -157,7 +176,7 @@ function setPlayer() {
   nameInput.position(-0.25 * w, -0.4 * h);
   sojuInput.position(-0.25 * w, -0.5 * h);
   button.position(-0.68 * w, -0.65 * h);
-  mode = 3;
+  mode = 2;
 }
 
 function clock() {

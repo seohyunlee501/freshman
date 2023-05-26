@@ -1,0 +1,1 @@
+class baboGame extends Game {}
