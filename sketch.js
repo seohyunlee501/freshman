@@ -4,6 +4,9 @@ let chars = [];
 let games = [];
 let introStory;
 let eventStory;
+let player;
+let gender;
+let gameSelect;
 
 var nameInput;
 var sojuInput;
@@ -16,16 +19,13 @@ function setup() {
   w = windowWidth;
   h = windowHeight;
   createCanvas(w, h);
-  for (let i = 0; i < 5; i++) {
-    //chars[i] = PlayerNPC(random(5, 7), i);
-    // if (i == 2) {
-    //   chars[i].old = true;
-    // }
-  }
+  nameInput = createInput();
+  sojuInput = createInput();
+  button = createButton("submit");
 }
 
 function draw() {
-  background(220);
+  background(0, 64, 0);
   // start and reset
   if (mode == 0) {
     fill(0);
@@ -41,16 +41,21 @@ function draw() {
       break;
     case 1:
       //let player = Player(nameInput, sojuInput);
-      introdisplay(w * 0.25, h * 0.5, "boy");
-      introdisplay(w * 0.25, h * 0.5, "girl");
-
+      introdisplay(w * 0.3, h * 0.5, "boy");
+      introdisplay(w * 0.7, h * 0.5, "girl");
       break;
     case 2:
       introStory = story(2);
       introStory.display();
       player.alcholblood += 4;
+      mode = 3;
       break;
     case 3:
+      for (let i = 0; i < 5; i++) {
+        chars[i] = new PlayerNPC(random(5, 7), i);
+      }
+      gameSelect = new gameList(chars);
+      gameSelect.display();
       break;
     case 4:
       break;
@@ -89,7 +94,23 @@ function mouseClicked() {
   }
   //select player
   if (mode == 1) {
-    selectPlayer();
+    if (
+      mouseX > 0.15 * w &&
+      mouseX < 0.45 * w &&
+      mouseY > 0.25 * h &&
+      mouseY < 0.75 * h
+    ) {
+      selectPlayer("boy");
+      gender = "boy";
+    } else if (
+      mouseX > 0.55 * w &&
+      mouseX < 0.95 * w &&
+      mouseY > 0.25 * h &&
+      mouseY < 0.75 * h
+    ) {
+      selectPlayer("girl");
+      gender = "girl";
+    }
   }
 }
 
@@ -99,24 +120,44 @@ function introdisplay(_x, _y, _gen) {
   push();
   translate(x, y);
   rectMode(CENTER);
+  fill(255);
   rect(0, 0, 0.3 * w, 0.5 * h);
-
+  let playerimg;
+  if (_gen == "boy") {
+    playerimg = createImg("Assets/player_m_1.png");
+  } else if (_gen == "girl") {
+    playerimg = createImg("Assets/player_f_1.png");
+  }
+  imageMode(CENTER);
+  image(playerimg, 0, 0, playerimg.width, playerimg.height);
   pop();
 }
 
-function selectPlayer(_x, _y, _gen) {
-  let x = _x;
-  let y = _y;
-  let gen = _gen;
-  nameInput = createInput();
-  nameInput.position(0, 0);
-  button = createButton("submit");
-  button.position(160, 30);
+function selectPlayer(_gen) {
+  if (_gen == "boy") {
+    fill(0);
+    rectMode(CENTER);
+    rect(0.3 * w, 0.5 * h, 0.3 * w, 0.5 * h);
+    nameInput.position(0.25 * w, 0.4 * h);
+    sojuInput.position(0.25 * w, 0.5 * h);
+    button.position(0.28 * w, 0.65 * h);
+  } else if (_gen == "girl") {
+    nameInput.position(0.65 * w, 0.4 * h);
+    sojuInput.position(0.65 * w, 0.5 * h);
+    button.position(0.68 * w, 0.65 * h);
+  }
   button.mousePressed(setPlayer);
-
-  background(100);
-  noStroke();
-  text("Enter your name.", 20, 20);
+}
+function setPlayer() {
+  let name = nameInput.value();
+  let soju = sojuInput.value();
+  player = new Player(name, soju, gender);
+  nameInput.value("");
+  sojuInput.value("");
+  nameInput.position(-0.25 * w, -0.4 * h);
+  sojuInput.position(-0.25 * w, -0.5 * h);
+  button.position(-0.68 * w, -0.65 * h);
+  mode = 3;
 }
 
 function clock() {

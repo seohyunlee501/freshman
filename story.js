@@ -4,7 +4,9 @@ class Story {
   }
   display() {
     if (this.mode == 2) {
+      // 지각주 story
     } else if (this.mode == 5) {
+      // 고학번 story
     }
   }
 }
