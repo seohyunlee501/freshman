@@ -1,16 +1,21 @@
 let mode = 0;
-let chars = [];
+
 let introStory;
 let eventStory;
+
+let chars = [];
 let player;
 let gender;
-let gameSelect;
 let bSelecting = false;
 let gSelecting = false;
 
 var nameInput;
 var sojuInput;
 var button;
+
+let gameSelect;
+let nowGame;
+let idx = 0;
 
 let w;
 let h;
@@ -75,9 +80,8 @@ function draw() {
       bSelecting = false;
       gSelecting = false;
       textFont(movieFont);
-      introStory = new Story(2);
+      introStory = new Story(2, player);
       introStory.display();
-      player.alcholblood += 4;
       for (let i = 0; i < 5; i++) {
         chars[i] = new PlayerNPC(random(5, 7), i);
       }
@@ -88,10 +92,12 @@ function draw() {
       gameSelect.display();
       break;
     case 4:
+      nowGame.display();
+      nowGame.round();
       break;
     case 5:
       textFont(movieFont);
-      eventStory = new Story(5);
+      eventStory = new Story(5, player);
       eventStory.display();
       break;
     case 6:
@@ -145,6 +151,34 @@ function mouseClicked() {
       gSelecting = true;
 
       selectPlayer("girl");
+    }
+  }
+  //game select
+  if (mode == 3) {
+    if (mouseY > 0.2 * h && mouseY < 0.5 * h) {
+      if (mouseX > 0.13 * w && mouseX < 0.37 * w) {
+        console.log("selecting");
+        nowGame = new berryGame(idx, player, chars);
+        console.log("selecting");
+        mode = 4;
+      } else if (mouseX > 0.38 * w && mouseX < 0.62 * w) {
+        nowGame = new eyeGame(idx, player, chars);
+        mode = 4;
+      } else if (mouseX > 0.63 * w && mouseX < 0.87 * w) {
+        nowGame = new brGame(idx, player, chars);
+        mode = 4;
+      }
+    } else if (mouseY > 0.52 * h && mouseY < 0.82 * h) {
+      if (mouseX > 0.13 * w && mouseX < 0.37 * w) {
+        nowGame = new subwayGame(idx, player, chars);
+        mode = 4;
+      } else if (mouseX > 0.38 * w && mouseX < 0.62 * w) {
+        nowGame = new doobooGame(idx, player, chars);
+        mode = 4;
+      } else if (mouseX > 0.63 * w && mouseX < 0.87 * w) {
+        nowGame = new baboGame(idx, player, chars);
+        mode = 4;
+      }
     }
   }
 }
