@@ -1,6 +1,7 @@
 class Story {
   constructor(_mode) {
     this.mode = _mode;
+    console.log("mode:", mode);
   }
   display() {
     if (this.mode == 2) {

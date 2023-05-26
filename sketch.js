@@ -1,12 +1,12 @@
 let mode = 0;
-let gameNum = 0;
 let chars = [];
-let games = [];
 let introStory;
 let eventStory;
 let player;
 let gender;
 let gameSelect;
+let bSelecting = false;
+let gSelecting = false;
 
 var nameInput;
 var sojuInput;
@@ -17,9 +17,14 @@ let h;
 
 let retroFont;
 let movieFont;
+
+let playerimg, bImg, gImg;
+
 function preload() {
   retroFont = loadFont("fonts/DungGeunMo.ttf");
   movieFont = loadFont("fonts/a시네마M.ttf");
+  bImg = loadImage("Assets/player_m_1.png");
+  gImg = loadImage("Assets/player_f_1.png");
 }
 
 function setup() {
@@ -35,7 +40,7 @@ function draw() {
   background(0, 64, 0);
   console.log(mode);
   textFont(retroFont);
-  textAlign(CENTER);
+  textAlign(CENTER, CENTER);
   // start and reset
   if (mode == 0) {
     fill(0);
@@ -45,6 +50,9 @@ function draw() {
     fill(0);
     rectMode(CORNER);
     rect(0.05 * w, 0.05 * h, 0.05 * w, 0.1 * h);
+    fill(255);
+    textSize(20);
+    text("<-", 0.075 * w, 0.1 * h);
   }
 
   switch (mode) {
@@ -53,7 +61,6 @@ function draw() {
       translate(w * 0.5, h * 0.5);
       fill(255);
       textSize(50);
-
       text("모두를 위한 술게임 안내서", 0, 0);
       textSize(30);
       text("START", 0, 0.21 * h);
@@ -65,6 +72,8 @@ function draw() {
       introdisplay(w * 0.7, h * 0.5, "girl");
       break;
     case 2:
+      bSelecting = false;
+      gSelecting = false;
       textFont(movieFont);
       introStory = new Story(2);
       introStory.display();
@@ -72,7 +81,7 @@ function draw() {
       for (let i = 0; i < 5; i++) {
         chars[i] = new PlayerNPC(random(5, 7), i);
       }
-      gameSelect = new gameList(chars);
+      gameSelect = new gameList(chars, player);
       mode = 3;
       break;
     case 3:
@@ -122,48 +131,62 @@ function mouseClicked() {
       mouseY > 0.25 * h &&
       mouseY < 0.75 * h
     ) {
+      bSelecting = true;
+      gSelecting = false;
+
       selectPlayer("boy");
-      gender = "boy";
     } else if (
       mouseX > 0.55 * w &&
       mouseX < 0.95 * w &&
       mouseY > 0.25 * h &&
       mouseY < 0.75 * h
     ) {
+      bSelecting = false;
+      gSelecting = true;
+
       selectPlayer("girl");
-      gender = "girl";
     }
   }
 }
 
+//mode 1
 function introdisplay(_x, _y, _gen) {
   let x = _x;
   let y = _y;
   rectMode(CENTER);
   fill(255);
   rect(x, y, 0.3 * w, 0.5 * h);
-  let playerimg;
+
   if (_gen == "boy") {
-    playerimg = createImg("Assets/player_m_1.png");
+    playerimg = bImg;
   } else if (_gen == "girl") {
-    playerimg = createImg("Assets/player_f_1.png");
+    playerimg = gImg;
   }
   imageMode(CENTER);
   image(playerimg, x, y, playerimg.width, playerimg.height);
-}
-
-function selectPlayer(_gen) {
-  if (_gen == "boy") {
+  if ((bSelecting && _gen == "boy") || (gSelecting && _gen == "girl")) {
     fill(0);
     rectMode(CENTER);
-    rect(0.3 * w, 0.5 * h, 0.3 * w, 0.5 * h);
+    rect(x, y, 0.3 * w, 0.5 * h);
+    fill(255);
+    textAlign(LEFT, TOP);
+    textSize(15);
+    text("이름:", x - w * 0.13, 0.4 * h);
+    text("주량(잔):", x - w * 0.13, 0.5 * h);
+  }
+}
+function selectPlayer(_gen) {
+  if (_gen == "boy") {
+    fill(255);
     nameInput.position(0.25 * w, 0.4 * h);
     sojuInput.position(0.25 * w, 0.5 * h);
     button.position(0.28 * w, 0.65 * h);
+    gender = "boy";
   } else if (_gen == "girl") {
     nameInput.position(0.65 * w, 0.4 * h);
     sojuInput.position(0.65 * w, 0.5 * h);
     button.position(0.68 * w, 0.65 * h);
+    gender = "girl";
   }
   button.mousePressed(setPlayer);
 }
@@ -177,8 +200,4 @@ function setPlayer() {
   sojuInput.position(-0.25 * w, -0.5 * h);
   button.position(-0.68 * w, -0.65 * h);
   mode = 2;
-}
-
-function clock() {
-  text;
 }
