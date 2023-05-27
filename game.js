@@ -9,11 +9,18 @@ class Game {
   display() {
     //혈중알콜농도
     textAlign(CENTER);
-    textSize(15);
+    textSize(20);
     text("혈중알콜농도", 0.9 * w, 0.2 * h);
+    push();
     rectMode(CENTER);
-    rect(w * 0.9, h * 0.7, w * 0.1, h * 0.7);
-    for (let i = 0; i < this.player.alcholblood; i++) {}
+    translate(w * 0.9, h * 0.6);
+    rect(0, 0, w * 0.1, h * 0.6);
+
+    for (let i = 0; i < this.player.alcholblood; i++) {
+      fill(i, 255 - i, 0);
+      rect(0, i / 10, 0.1 * w, 0.1 * h);
+    }
+    pop();
 
     //chars
     for (let j = 0; j < 5; j++) {
