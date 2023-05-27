@@ -24,12 +24,14 @@ let retroFont;
 let movieFont;
 
 let playerimg, bImg, gImg;
+let title;
 
 function preload() {
   retroFont = loadFont("fonts/DungGeunMo.ttf");
   movieFont = loadFont("fonts/a시네마M.ttf");
   bImg = loadImage("Assets/player_m_1.png");
   gImg = loadImage("Assets/player_f_1.png");
+  title = loadImage("Assets/title.png");
 }
 
 function setup() {
@@ -64,10 +66,10 @@ function draw() {
     case 0:
       push();
       translate(w * 0.5, h * 0.5);
+      imageMode(CENTER);
+      image(title,0,-150);
       fill(255);
       textSize(50);
-      text("모두를 위한 술게임 안내서", 0, 0);
-      textSize(30);
       text("START", 0, 0.21 * h);
       pop();
 
