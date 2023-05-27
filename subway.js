@@ -1,5 +1,7 @@
 let currentPlayerIndex;
 let currentLine;
+let turnIndex;
+let stationName;
 let gameOn = true;
 let stations = [
     [],
@@ -13,6 +15,7 @@ class Subway {
     constructor() {
         this.players = ["NPC 1", "NPC 2", "NPC 3", "Player", "NPC 4", "NPC 5"];
         this.currentPlayerIndex = 0;
+        this.turnIndex = 0;
     }
 
     start() {
@@ -20,7 +23,11 @@ class Subway {
         if (line >= 2 && line <= 4) {
             currentLine = Math.floor(line);
             currentPlayerIndex = Math.floor(Math.random() * 6);
-            this.npc(currentLine);
+            if(currentPlayerIndex == 4){
+                this.player();
+            }else{
+                this.npc(currentLine);
+            }
         } else {
             this.lose();
         }
@@ -29,7 +36,7 @@ class Subway {
     npc(line) {
         let currentStationIndex = Math.floor(Math.random() * stations[line].length);
         let currentStation = stations[line][currentStationIndex];
-        let wrongProbability = (this.currentPlayerIndex + 1) / this.players.length;
+        let wrongProbability = (this.turnIndex) * 0.5 / this.players.length;
         let sayWrong = Math.random() < wrongProbability;
 
         if (sayWrong) {
@@ -39,21 +46,27 @@ class Subway {
             console.log("NPC: " + currentStation);
             let npcStationIdx = stations[currentLine].indexOf(currentStation);
             stations[currentLine].splice(npcStationIdx, 1);
+            console.log(stations[currentLine]);
             currentPlayerIndex = (currentPlayerIndex + 1) % this.players.length;
             if (currentPlayerIndex == 4){
                 this.player();
+                this.turnIndex += 1;
             }else{
                 this.npc(currentLine);
+                this.turnIndex += 1;
             }
             
         }
     }
 
-    player() {
-        let stationName = prompt("Enter the name of the current station:");
+    promptInput() {
+        stationName = prompt("Enter the name of the current station:")
+    }
 
-        if (stations[currentLine].some((station) => station.name === stationName)) {
-            let stationIdx = stations[currentLine].indexOf(stationName);
+    player() {
+        this.promptInput();
+        let stationIdx = stations[currentLine].indexOf(stationName);
+        if (stationIdx != -1) {
             stations[currentLine].splice(stationIdx, 1);
             currentPlayerIndex = (currentPlayerIndex + 1) % this.players.length;
             this.npc(currentLine);
