@@ -11,17 +11,20 @@ class Story {
     this.item = loadImage("Assets/item_1.png");
     this.clickCount = 0;
   }
+  mouseClicked(){
+    this.clickCount += 1;
+    console.log(this.clickCount);
+  }
   display() {
     if (this.mode == 2) {
       // 도입 story
       console.log("story 2")
-      this.clickcount = 0;
-      imageMode(CENTER);
+      imageMode(CORNER);
       image(this.background2_0, 0,0);
       fill(0);
-      rectMode(CORNER);
-      rect(0,0,w,h*0.2);
-      rect(0, h*0.8,w,h*0.2);
+      // rectMode(CORNER);
+      // rect(0,0,w,h*0.2);
+      // rect(0, h*0.8,w,h*0.2);
       fill(255);
       textSize(50);
       textAlign(CENTER);
@@ -50,7 +53,5 @@ class Story {
       // 고학번 story
     }
   }
-  mouseClicked(){
-    this.clickCount += 1;
-  }
+
 }

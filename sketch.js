@@ -86,8 +86,8 @@ function draw() {
       gSelecting = false;
       textFont(movieFont);
       introStory = new Story(2, player);
-      introStory.display();
       introStory.mouseClicked();
+      introStory.display();
       for (let i = 0; i < 5; i++) {
         chars[i] = new PlayerNPC(random(5, 7), i);
       }
