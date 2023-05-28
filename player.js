@@ -5,6 +5,18 @@ class Player {
     this.gen = _gen;
     this.alcholblood = 0;
     this.die = false;
+    this.image = [];
+    let path = "player_";
+    if (this.gen == "boy") {
+      path = path + "m";
+    } else if (this.gen == "girl") {
+      path = path + "f";
+    }
+    let temp = path;
+    for (let i = 0; i < 5; i++) {
+      path = "Assets/" + temp + "_" + (i + 1) + ".png";
+      this.image[i] = loadImage(path);
+    }
   }
 
   lose() {
@@ -14,15 +26,9 @@ class Player {
     }
   }
   display(x, y) {
-    let path = "player_";
-    if (this.gen == "boy") {
-      path = path + "m";
-    } else if (this.gen == "girl") {
-      path = path + "f";
-    }
+    console.log("alcholblood:", this.alcholblood);
     let a = this.alcholblood - 3;
-    path = "Assets/" + path + "_" + a + ".png";
-    let img = createImg(path);
+    let img = this.image[a];
     imageMode(CENTER);
     image(img, x, y, w * 0.3, w * 0.3);
   }

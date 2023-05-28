@@ -5,8 +5,19 @@ class Game {
     this.idx = _idx;
     this.player = _player;
     this.chars = _chars;
+    this.bg = loadImage("Assets/background.png");
+    this.table = loadImage("Assets/desk.png");
   }
   display() {
+    //background
+    imageMode(CENTER);
+    image(this.bg, 0.5 * w, 0.5 * h, w, h);
+
+    //title
+    rectMode(CORNER);
+    fill(112, 173, 71);
+    rect(0, 0, w, 0.1 * h);
+
     //혈중알콜농도
     textAlign(CENTER);
     textSize(20);
@@ -29,7 +40,8 @@ class Game {
     //player
 
     //table
-
+    imageMode(CENTER);
+    image(this.table, 0.4 * w, 0.5 * h);
     //bottles
   }
 }
