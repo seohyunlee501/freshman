@@ -24,12 +24,17 @@ let retroFont;
 let movieFont;
 
 let playerimg, bImg, gImg;
+let title;
+let cursor, cursor_clicked;
 
 function preload() {
   retroFont = loadFont("fonts/DungGeunMo.ttf");
   movieFont = loadFont("fonts/a시네마M.ttf");
   bImg = loadImage("Assets/player_m_1.png");
   gImg = loadImage("Assets/player_f_1.png");
+  title = loadImage("Assets/title.png");
+  cursor = loadImage("Assets/cursor.png");
+  cursor_clicked = loadImage("Assets/cursor_clicked.png");
 }
 
 function setup() {
@@ -39,6 +44,7 @@ function setup() {
   nameInput = createInput();
   sojuInput = createInput();
   button = createButton("submit");
+  noCursor();
 }
 
 function draw() {
@@ -63,14 +69,13 @@ function draw() {
   switch (mode) {
     case 0:
       push();
-      translate(w * 0.5, h * 0.5);
+      translate(w * 0.5, h * 0.4);
+      imageMode(CENTER);
+      image(title, 0, 0, 0.916 * w * 0.5, 0.491 * w * 0.5);
+      pop();
       fill(255);
       textSize(50);
-      text("모두를 위한 술게임 안내서", 0, 0);
-      textSize(30);
-      text("START", 0, 0.21 * h);
-      pop();
-
+      text("START", 0.5 * w, 0.71 * h);
       break;
     case 1:
       introdisplay(w * 0.3, h * 0.5, "boy");
@@ -103,6 +108,44 @@ function draw() {
     case 6:
       player.gameover();
       break;
+  }
+  if (mouseIsPressed) {
+    imageMode(CENTER);
+    image(cursor_clicked, mouseX, mouseY, 0.1 * h, 0.1 * h);
+  } else {
+    imageMode(CENTER);
+    image(cursor, mouseX, mouseY, 0.1 * h, 0.1 * h);
+  }
+}
+
+function mousePressed() {
+  //game select
+  if (mode == 3) {
+    if (mouseY > 0.2 * h && mouseY < 0.5 * h) {
+      if (mouseX > 0.13 * w && mouseX < 0.37 * w) {
+        console.log("selecting");
+        nowGame = new berryGame(idx, player, chars);
+        console.log("selecting");
+        mode = 4;
+      } else if (mouseX > 0.38 * w && mouseX < 0.62 * w) {
+        nowGame = new eyeGame(idx, player, chars);
+        mode = 4;
+      } else if (mouseX > 0.63 * w && mouseX < 0.87 * w) {
+        nowGame = new brGame(idx, player, chars);
+        mode = 4;
+      }
+    } else if (mouseY > 0.52 * h && mouseY < 0.82 * h) {
+      if (mouseX > 0.13 * w && mouseX < 0.37 * w) {
+        nowGame = new subwayGame(idx, player, chars);
+        mode = 4;
+      } else if (mouseX > 0.38 * w && mouseX < 0.62 * w) {
+        nowGame = new doobooGame(idx, player, chars);
+        mode = 4;
+      } else if (mouseX > 0.63 * w && mouseX < 0.87 * w) {
+        nowGame = new baboGame(idx, player, chars);
+        mode = 4;
+      }
+    }
   }
 }
 
@@ -151,34 +194,6 @@ function mouseClicked() {
       gSelecting = true;
 
       selectPlayer("girl");
-    }
-  }
-  //game select
-  if (mode == 3) {
-    if (mouseY > 0.2 * h && mouseY < 0.5 * h) {
-      if (mouseX > 0.13 * w && mouseX < 0.37 * w) {
-        console.log("selecting");
-        nowGame = new berryGame(idx, player, chars);
-        console.log("selecting");
-        mode = 4;
-      } else if (mouseX > 0.38 * w && mouseX < 0.62 * w) {
-        nowGame = new eyeGame(idx, player, chars);
-        mode = 4;
-      } else if (mouseX > 0.63 * w && mouseX < 0.87 * w) {
-        nowGame = new brGame(idx, player, chars);
-        mode = 4;
-      }
-    } else if (mouseY > 0.52 * h && mouseY < 0.82 * h) {
-      if (mouseX > 0.13 * w && mouseX < 0.37 * w) {
-        nowGame = new subwayGame(idx, player, chars);
-        mode = 4;
-      } else if (mouseX > 0.38 * w && mouseX < 0.62 * w) {
-        nowGame = new doobooGame(idx, player, chars);
-        mode = 4;
-      } else if (mouseX > 0.63 * w && mouseX < 0.87 * w) {
-        nowGame = new baboGame(idx, player, chars);
-        mode = 4;
-      }
     }
   }
 }
