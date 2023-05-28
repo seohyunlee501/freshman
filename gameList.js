@@ -1,5 +1,6 @@
 class gameList {
   constructor(_chars, _player) {
+    console.log("gameList called");
     this.chars = _chars;
     this.player = _player;
     this.gameNum = 1;
