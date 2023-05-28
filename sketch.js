@@ -35,6 +35,7 @@ function preload() {
   title = loadImage("Assets/title.png");
   cursor = loadImage("Assets/cursor.png");
   cursor_clicked = loadImage("Assets/cursor_clicked.png");
+  reset = loadImage("Assets/reset.png");
 }
 
 function setup() {
@@ -108,11 +109,8 @@ function draw() {
   // reset button
   if (mode != 0 && mode != 1 && mode != 6) {
     fill(0);
-    rectMode(CORNER);
-    rect(0.05 * w, 0.05 * h, 0.05 * w, 0.1 * h);
-    fill(255);
-    textSize(20);
-    text("<-", 0.075 * w, 0.1 * h);
+    imageMode(CORNER);
+    image(reset, 0.05 * w, 0.05 * h, 0.05 * w, 0.1 * h);
   }
 
   //cursor
