@@ -87,11 +87,12 @@ function draw() {
       textFont(movieFont);
       introStory = new Story(2, player);
       introStory.display();
+      introStory.mouseClicked();
       for (let i = 0; i < 5; i++) {
         chars[i] = new PlayerNPC(random(5, 7), i);
       }
       gameSelect = new gameList(chars, player);
-      mode = 3;
+      // mode = 3;
       break;
     case 3:
       gameSelect.display();
