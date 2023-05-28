@@ -137,6 +137,7 @@ function mousePressed() {
     } else if (mouseY > 0.52 * h && mouseY < 0.82 * h) {
       if (mouseX > 0.13 * w && mouseX < 0.37 * w) {
         nowGame = new subwayGame(idx, player, chars);
+        nowGame.start();
         mode = 4;
       } else if (mouseX > 0.38 * w && mouseX < 0.62 * w) {
         nowGame = new doobooGame(idx, player, chars);
