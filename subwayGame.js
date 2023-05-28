@@ -1,6 +1,5 @@
 let currentPlayerIndex;
 let currentLine;
-let turnIndex;
 let stationName;
 let gameOn = true;
 var stationInput;
@@ -19,6 +18,7 @@ let stations = [
 class subwayGame extends Game {
   constructor(_idx, _player, _chars) {
     super(_idx, _player, _chars);
+    this.turn = 0;
   }
   
   lineSetup() {
@@ -30,7 +30,7 @@ class subwayGame extends Game {
     if (lineNo >= 2 && lineNo <= 4) {
       currentLine = Math.floor(lineNo);
       currentPlayerIndex = this.idx;
-      if(currentPlayerIndex == this.chars[this.player]){
+      if(currentPlayerIndex == 3){
           this.player();
       }else{
           this.npc(currentLine);
@@ -63,7 +63,7 @@ class subwayGame extends Game {
   npc(line) {
     let currentStationIndex = Math.floor(Math.random() * stations[line].length);
     let currentStation = stations[line][currentStationIndex];
-    let wrongProbability = (this.turnIndex) * 0.5 / this.chars.length;
+    let wrongProbability = (this.turn) * 0.5 / this.chars.length;
     let sayWrong = Math.random() < wrongProbability;
 
     if (sayWrong) {
@@ -74,13 +74,13 @@ class subwayGame extends Game {
         let npcStationIdx = stations[currentLine].indexOf(currentStation);
         stations[currentLine].splice(npcStationIdx, 1);
         console.log(stations[currentLine]);
-        currentPlayerIndex = (currentPlayerIndex + 1) % this.chars.length;
-        if (currentPlayerIndex == 4){
+        currentPlayerIndex = (currentPlayerIndex + 1) % (this.chars.length + 1);
+        if (currentPlayerIndex == 3){
             this.player();
-            this.turnIndex += 1;
+            this.turn += 1;
         }else{
             this.npc(currentLine);
-            this.turnIndex += 1;
+            this.turn += 1;
         }
         
     }
@@ -95,7 +95,7 @@ class subwayGame extends Game {
     let stationIdx = stations[currentLine].indexOf(stationName);
     if (stationIdx != -1) {
         stations[currentLine].splice(stationIdx, 1);
-        currentPlayerIndex = (currentPlayerIndex + 1) % this.chars.length;
+        currentPlayerIndex = (currentPlayerIndex + 1) % (this.chars.length + 1);
         this.npc(currentLine);
     } else {
         this.lose();
