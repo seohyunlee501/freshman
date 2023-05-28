@@ -1,18 +1,18 @@
-let background_mode2_1
-let background_mode2
-let background_mode5
+let background_mode2_1;
+let background_mode2;
+let background_mode5;
 
-let older
-let ffriend
-let item
+let older;
+let ffriend;
+let item;
 
 function preload(){
   background_mode2_1 = loadImage("Assets/background_mode2_1.png");
   background_mode2 = loadImage("Assets/background_mode2.png");
-  background_mode5 = loadImage("Assets/background_mode5");
+  background_mode5 = loadImage("Assets/background_mode5.png");
   older = loadImage("Assets/npc_g_1.png");
   ffriend = loadImage("Assets/npc_1_1.png");
-  item = loadImage("Assets/item_1/png");
+  item = loadImage("Assets/item_1.png");
 }
 
 class Story {
