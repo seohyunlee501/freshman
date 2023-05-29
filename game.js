@@ -46,7 +46,7 @@ class Game {
 
     //chars
     for (let j = 0; j < 5; j++) {
-      this.chars[j].display(0.2 * w * (j + 1), 0.2 * h);
+      // this.chars[j].display(0.2 * w * (j + 1), 0.2 * h);
     }
     //player
 
