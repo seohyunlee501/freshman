@@ -16,9 +16,9 @@ let stations = [
 ];
 
 class subwayGame extends Game {
-  constructor(_idx, _player, _chars) {
-    super(_idx, _player, _chars);
-    this.turn = 0;
+  constructor(_idx, _gameList) {
+    super(_idx, _gameList, _chars);
+    this.gameName = "지하철게임";
   }
   
   lineSetup() {

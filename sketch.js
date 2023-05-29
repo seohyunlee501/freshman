@@ -35,6 +35,7 @@ function preload() {
   title = loadImage("Assets/title.png");
   cursor = loadImage("Assets/cursor.png");
   cursor_clicked = loadImage("Assets/cursor_clicked.png");
+  reset = loadImage("Assets/reset.png");
 }
 
 function setup() {
@@ -52,22 +53,14 @@ function draw() {
   console.log(mode);
   textFont(retroFont);
   textAlign(CENTER, CENTER);
-  // start and reset
-  if (mode == 0) {
-    fill(0);
-    rectMode(CENTER);
-    rect(0.5 * w, 0.7 * h, 0.1 * w, 0.1 * h);
-  } else if (mode != 1 && mode != 6) {
-    fill(0);
-    rectMode(CORNER);
-    rect(0.05 * w, 0.05 * h, 0.05 * w, 0.1 * h);
-    fill(255);
-    textSize(20);
-    text("<-", 0.075 * w, 0.1 * h);
-  }
 
   switch (mode) {
     case 0:
+      //start button
+      fill(0);
+      rectMode(CENTER);
+      rect(0.5 * w, 0.7 * h, 0.1 * w, 0.1 * h);
+      //title image
       push();
       translate(w * 0.5, h * 0.4);
       imageMode(CENTER);
@@ -99,6 +92,9 @@ function draw() {
     case 4:
       nowGame.display();
       nowGame.round();
+      if (nowGame.gameOver) {
+        idx = nowGame.idx;
+      }
       break;
     case 5:
       textFont(movieFont);
@@ -109,6 +105,15 @@ function draw() {
       player.gameover();
       break;
   }
+
+  // reset button
+  if (mode != 0 && mode != 1 && mode != 6) {
+    fill(0);
+    imageMode(CORNER);
+    image(reset, 0.05 * w, 0.05 * h, 0.05 * w, 0.1 * h);
+  }
+
+  //cursor
   if (mouseIsPressed) {
     imageMode(CENTER);
     image(cursor_clicked, mouseX, mouseY, 0.1 * h, 0.1 * h);
@@ -123,27 +128,24 @@ function mousePressed() {
   if (mode == 3) {
     if (mouseY > 0.2 * h && mouseY < 0.5 * h) {
       if (mouseX > 0.13 * w && mouseX < 0.37 * w) {
-        console.log("selecting");
-        nowGame = new berryGame(idx, player, chars);
-        console.log("selecting");
+        nowGame = new berryGame(idx, gameSelect);
         mode = 4;
       } else if (mouseX > 0.38 * w && mouseX < 0.62 * w) {
-        nowGame = new eyeGame(idx, player, chars);
+        nowGame = new eyeGame(idx, gameSelect);
         mode = 4;
       } else if (mouseX > 0.63 * w && mouseX < 0.87 * w) {
-        nowGame = new brGame(idx, player, chars);
+        nowGame = new brGame(idx, gameSelect);
         mode = 4;
       }
     } else if (mouseY > 0.52 * h && mouseY < 0.82 * h) {
       if (mouseX > 0.13 * w && mouseX < 0.37 * w) {
-        nowGame = new subwayGame(idx, player, chars);
-        nowGame.start();
+        nowGame = new subwayGame(idx, gameSelect);
         mode = 4;
       } else if (mouseX > 0.38 * w && mouseX < 0.62 * w) {
-        nowGame = new doobooGame(idx, player, chars);
+        nowGame = new doobooGame(idx, gameSelect);
         mode = 4;
       } else if (mouseX > 0.63 * w && mouseX < 0.87 * w) {
-        nowGame = new baboGame(idx, player, chars);
+        nowGame = new baboGame(idx, gameSelect);
         mode = 4;
       }
     }
