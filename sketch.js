@@ -132,6 +132,8 @@ function mousePressed() {
         mode = 4;
       } else if (mouseX > 0.38 * w && mouseX < 0.62 * w) {
         nowGame = new eyeGame(idx, gameSelect);
+        nowGame.gameSetup();
+        nowGame.gamePlay();
         mode = 4;
       } else if (mouseX > 0.63 * w && mouseX < 0.87 * w) {
         nowGame = new brGame(idx, gameSelect);
