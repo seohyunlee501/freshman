@@ -50,7 +50,7 @@ class subwayGame extends Game {
     stationName = stationInput.value();
     stationInput.value("");
     stationButton.position(-999, -999);
-    stationInput.position(-999, -999);
+    stationInput.position(-999, -999); /// .hide로 숨기는게 나을 수도 있다.
   }
 
   start() {
