@@ -4,10 +4,18 @@ class doobooGame extends Game {
     this.gameName = "두부게임";
     this.dbCount = _dbCount;
     this.turn = 0;
+    this.x1 = w/2;
+    this.y1 = h/2;
+    this.x2 = w/2;
+    this.y2 = h/2;
+    this.x3 = w/2;
+    this.y3 = h/2;
+    this.x4 = w/2;
+    this.y4 = h/2;
   }
   round() {
     this.gameOver=false;
-    this.dbBgm();
+    //this.dbBgm();
     while(!this.gameOver){
       if(this.idx == 3){
         this.playerTurn();
@@ -18,15 +26,46 @@ class doobooGame extends Game {
   }
 
   dbBgm(){
-    text("두~부 두부 두부",w/2, h/2);
-    
-    text("으쌰!으쌰!으쌰!으쌰!",w/2, h/2);
-    
-    text("두~부 두부 두부",w/2, h/2);
-    
-    text("으쌰!으쌰!으쌰!으쌰!",w/2, h/2);
-    
+    let startTime = millis();
+    let bgmOn = true;
+  
+    while(bgmOn){
+      let elapsedTime = millis() - startTime;
+
+  
+      if(elapsedTime < 600){
+        text("두~부 두부 두부", this.x1, this.y1);
+      }
+  
+      if(elapsedTime > 1200 && elapsedTime < 1800){
+        this.x1 = -999;
+        this.y1 = -999;
+        text("으쌰!으쌰!으쌰!으쌰!", this.x2, this.y2);
+      }
+  
+      if(elapsedTime > 1800 && elapsedTime < 2400){
+        this.x2 = -999;
+        this.y2 = -999;
+        text("두~부 두부 두부", this.x3, this.y3);
+      }
+  
+      if(elapsedTime > 2400 && elapsedTime < 3000){
+        this.x3 = -999;
+        this.y3 = -999;
+        text("으쌰!으쌰!으쌰!으쌰!", this.x4, this.y4);
+      }
+  
+      if(elapsedTime > 3000){
+        this.x4 = -999;
+        this.y4 = -999;
+        bgmOn = false;
+        
+      }
+    }
   }
+  
+    
+  
 
   playerTurn(){
     //timer
@@ -61,35 +100,39 @@ class doobooGame extends Game {
         this.gameOver = true;
       }
     } else {
+      this.dbCount = int(random(1,6));
+      while(this.dbCount == 3){
         this.dbCount = int(random(1,6));
+      }
         this.dbCall();
         this.point();
         this.turn++;
       }
+    }
       
 
-  }
+  
 
   point(){
     if(this.dbCount == 1){
       idx -= 2;
-      if(idx <= 0){
+      if(idx < 0){
         idx += 6;
       }
     } else if(this.dbCount == 2){
       idx -= 1;
-      if(idx <= 0){
+      if(idx < 0){
         idx += 6;
       }
       }
      else if(this.dbCount == 4){
       idx += 1;
-      if(idx > 6){
+      if(idx > 5){
         idx -= 6;
       }
     } else if(this.dbCount == 5){
       idx += 2;
-      if(idx > 6){
+      if(idx > 5){
         idx -= 6;
       }
     }
@@ -171,5 +214,3 @@ class doobooGame extends Game {
   }
 
 }
-
-
