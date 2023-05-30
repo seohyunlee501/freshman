@@ -3,7 +3,7 @@ let currentLine;
 let stationName;
 let gameOn = true;
 var stationInput;
-var lineInput;
+// var lineInput;
 var lineButton;
 var stationButton;
 let lineNo;
@@ -19,17 +19,17 @@ class subwayGame extends Game {
   constructor(_idx, _gameList) {
     super(_idx, _gameList);
     this.gameName = "지하철게임";
-    this.chars = Game.chars;
     this.turn = 0;
-    this.gameOver = Game.gameOver;
-    this.player = Game.player;
+    this.lineInput = createInput();
+    this.lineButton;
   }
   
   static lineSetup() {
-    lineNo = Number(lineInput.value());
-    lineInput.value("");
+    lineNo = this.lineInput.value();
+    lineNo = Number(lineNo);
+    this.lineInput.value("");
     lineButton.position(-999, -999);
-    lineInput.position(-999, -999);
+    this.lineInput.position(-999, -999);
 
     if (lineNo >= 2 && lineNo <= 4) {
       currentLine = Math.floor(lineNo);
@@ -53,12 +53,12 @@ class subwayGame extends Game {
   }
 
   start() {
-    lineInput = createInput();
+    // this.lineInput = createInput();
     stationInput = createInput();
     lineButton = createButton("submit");
     stationButton = createButton("submit");
     
-    lineInput.position(w * 0.5, h * 0.5);
+    this.lineInput.position(w * 0.5, h * 0.5);
     lineButton.position(w * 0.5, h * 0.7);
     lineButton.mousePressed(this.lineSetup);
   }
