@@ -9,7 +9,7 @@ class doobooGame extends Game {
     this.gameOver=false;
     this.dbBgm();
     while(!this.gameOver){
-      if(this.idx == 4){
+      if(this.idx == 3){
         this.playerTurn();
       } else {
         this.npcTurn();
@@ -54,17 +54,19 @@ class doobooGame extends Game {
       this.dbCall();
       if (this.dbCount == 1 || this.dbCount == 2 || this.dbCount == 4 || this.dbCount == 5){
         this.point();
+        this.turn++;
       } else {
         this.dbIsSquare();
+        this.turn = 0;
         this.gameOver = true;
       }
     } else {
         this.dbCount = int(random(1,6));
         this.dbCall();
         this.point();
+        this.turn++;
       }
       
-   this.turn++;
 
   }
 
