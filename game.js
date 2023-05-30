@@ -11,6 +11,11 @@ class Game {
     this.table = loadImage("Assets/desk.png");
     this.gameName = "";
     this.gameOver = false;
+    //everyone list
+    this.everyone = this.chars;
+    let temp = this.everyone[3];
+    this.everyone[3] = this.player;
+    this.everyone[5] = temp;
   }
   display() {
     //background
@@ -45,11 +50,9 @@ class Game {
     pop();
 
     //chars
-    for (let j = 0; j < 5; j++) {
-      this.chars[j].display(0.2 * w * (j + 1), 0.2 * h);
+    for (let j = 0; j < 6; j++) {
+      this.everyone[j].display(0.1 * w * (j + 1), 0.4 * h);
     }
-    //player
-
     //table
     imageMode(CENTER);
     image(this.table, 0.4 * w, 0.6 * h);

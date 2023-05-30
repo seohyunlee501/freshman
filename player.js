@@ -30,6 +30,13 @@ class Player {
     let a = this.alcholblood - 3;
     let img = this.image[a];
     imageMode(CENTER);
+    image(img, x, y, h * 0.3, h * 0.3);
+  }
+  displaybig(x, y) {
+    console.log("alcholblood:", this.alcholblood);
+    let a = this.alcholblood - 3;
+    let img = this.image[a];
+    imageMode(CENTER);
     image(img, x, y, w * 0.3, w * 0.3);
   }
   gameover() {

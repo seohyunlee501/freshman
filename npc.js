@@ -4,33 +4,41 @@ class PlayerNPC {
     this.idx = _idx;
     this.alcholblood = 0;
     this.die = false;
-    this.old = false;
-  }
-  old() {
-    this.old = true;
+    if (this.idx == "g") {
+      this.old = true;
+    } else {
+      this.old = false;
+    }
+
+    this.image = [];
+
+    let path = "npc_";
+    path = path + this.idx;
+
+    let temp = path;
+    if (this.old) {
+      path = "Assets/" + temp + "_1.png";
+      this.image[0] = loadImage(path);
+    } else {
+      for (let i = 0; i < 5; i++) {
+        path = "Assets/" + temp + "_" + (i + 1) + ".png";
+        this.image[i] = loadImage(path);
+      }
+    }
   }
   lose() {
     this.alcholblood += 1;
-    if (this.alcholblood >= 10) {
+    if (this.alcholblood >= this.soju) {
       this.die = true;
     }
   }
-  display() {
-    if (this.old) {
-      switch (this.alcholblood) {
-        case 0:
-          break;
-      }
-    } else if (this.gen == 0) {
-      switch (this.alcholblood) {
-        case 0:
-          break;
-      }
-    } else {
-      switch (this.alcholblood) {
-        case 0:
-          break;
-      }
-    }
+  display(x, y) {
+    console.log("who?", this.idx);
+    console.log("alcholblood:", this.alcholblood);
+    let img = this.image[this.alcholblood];
+    console.log("who?", this.idx);
+    imageMode(CENTER);
+    console.log("who?", this.idx);
+    image(img, x, y, h * 0.3, h * 0.3);
   }
 }

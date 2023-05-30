@@ -80,9 +80,13 @@ function draw() {
       textFont(movieFont);
       introStory = new Story(2, player);
       introStory.display();
-      for (let i = 0; i < 5; i++) {
-        chars[i] = new PlayerNPC(random(5, 7), i);
+      for (let i = 1; i < 5; i++) {
+        chars[i - 1] = new PlayerNPC(random(5, 7), i);
       }
+      chars[4] = new PlayerNPC(10, "g");
+      let temp = chars[2];
+      chars[2] = chars[4];
+      chars[4] = temp;
       gameSelect = new gameList(chars, player);
       mode = 3;
       break;
