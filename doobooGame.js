@@ -12,12 +12,13 @@ class doobooGame extends Game {
     this.y3 = h/2;
     this.x4 = w/2;
     this.y4 = h/2;
+    this.whosTurn = 0;
   }
   round() {
     this.gameOver=false;
     //this.dbBgm();
     while(!this.gameOver){
-      if(this.idx == 3){
+      if(this.this.idx == 3){
         this.playerTurn();
       } else {
         this.npcTurn();
@@ -59,36 +60,47 @@ class doobooGame extends Game {
         this.x4 = -999;
         this.y4 = -999;
         bgmOn = false;
+
+        /*text("두~부 두부 두부",w/2, h/2);
+    
+        text("으쌰!으쌰!으쌰!으쌰!",w/2, h/2);
+    
+        text("두~부 두부 두부",w/2, h/2);
+    
+        text("으쌰!으쌰!으쌰!으쌰!",w/2, h/2);
+
+        각 텍스트들이 한줄당 1.5초씩 나왔다 사라지게 하고 싶습니다.
+
+      */
         
       }
     }
   }
-  
-    
-  
+
+
 
   playerTurn(){
-    //timer
+    //6초 안에 key input이 없다면 rhythmIsLife() 호출 후 gameOver = true;하는 메소드를 구현하고 싶습니다...
     if(keyIsPressed){
       this.keyPressed();
-      this.dbCall();
+      this.dbCall(); //1.5초동안 텍스트 유지 후 사라지게 구현하고 싶습니다.
       if(this.dbCount != 1 && this.dbCount != 2 && this.dbCount != 4 && this.dbCount != 5){
         this.dbIsSquare();
+        this.turn= 0;
         this.gameOver = true;
       } else {
         this.point(this.dbCount);
         this.turn++;
       }
+    } else {
+      //this.rhythmIsLife();
+      //this.turn= 0;
+      //this.gameOver=true;
     }
-    //time is over
-    //text("박자는 생명!", w/2, h/2);
-    //text("박자는 생명!", w/2, h/2);
-    //text("생명! 생명! 생명!생명!생명!", w/2, h/2);
-    //gameOver = true;
   }
 
   npcTurn(){
-    if(this.turn >= 10){
+    if(this.turn > 10){
       this.dbCount = int(random(0,10));
       this.dbCall();
       if (this.dbCount == 1 || this.dbCount == 2 || this.dbCount == 4 || this.dbCount == 5){
@@ -100,10 +112,9 @@ class doobooGame extends Game {
         this.gameOver = true;
       }
     } else {
-      this.dbCount = int(random(1,6));
-      while(this.dbCount == 3){
-        this.dbCount = int(random(1,6));
-      }
+      let dbNum = [1,2,4,5];
+      this.dbCount = dbNum[int(random(0,5))];
+      
         this.dbCall();
         this.point();
         this.turn++;
@@ -115,65 +126,70 @@ class doobooGame extends Game {
 
   point(){
     if(this.dbCount == 1){
-      idx -= 2;
-      if(idx < 0){
-        idx += 6;
+      this.idx -= 2;
+      if(this.idx < 0){
+        this.idx += 6;
       }
     } else if(this.dbCount == 2){
-      idx -= 1;
-      if(idx < 0){
-        idx += 6;
+      this.idx -= 1;
+      if(this.idx < 0){
+        this.idx += 6;
       }
       }
      else if(this.dbCount == 4){
-      idx += 1;
-      if(idx > 5){
-        idx -= 6;
+      this.idx += 1;
+      if(this.idx > 5){
+        this.idx -= 6;
       }
     } else if(this.dbCount == 5){
-      idx += 2;
-      if(idx > 5){
-        idx -= 6;
+      this.idx += 2;
+      if(this.idx > 5){
+        this.idx -= 6;
       }
     }
 
   }
 
   dbCall(){
+    let x = (0.1)*w*(this.this.idx+1);
+
+
+    //1.5초동안 텍스트 유지 후 사라지게 구현하고 싶습니다.
     if(this.dbCount == 1){
-      text("두부 한 모!", w/3, h/3);
+      text("두부 한 모!", x, 0.3*h);
       
     } else if(this.dbCount == 2){
-      text("두부 두 모!", w/3, h/3);
+      text("두부 두 모!", x, 0.3*h);
       
     } else if(this.dbCount == 4){
-      text("두부 네 모!", w/3, h/3);
+      text("두부 네 모!", x, 0.3*h);
       
     } else if(this.dbCount == 5){
-      text("두부 다섯 모!", w/3, h/3);
+      text("두부 다섯 모!", x, 0.3*h);
       
     } else if(this.dbCount == 3){
-      text("두부 세 모!", w/3, h/3);
+      text("두부 세 모!", x, 0.3*h);
       
     } else if(this.dbCount == 0){
-      text("두부 빵 모!", w/3, h/3);
+      text("두부 빵 모!", x, 0.3*h);
       
     } else if(this.dbCount == 6){
-      text("두부 여섯 모!", w/3, h/3);
+      text("두부 여섯 모!", x, 0.3*h);
       
     } else if(this.dbCount == 7){
-      text("두부 일곱 모!", w/3, h/3);
+      text("두부 일곱 모!", x, 0.3*h);
       
     } else if(this.dbCount == 8){
-      text("두부 여덟 모!", w/3, h/3);
+      text("두부 여덟 모!", x, 0.3*h);
       
     } else if(this.dbCount == 9){
-      text("두부 아홉 모!", w/3, h/3);
+      text("두부 아홉 모!", x, 0.3*h);
       
     }
   }
 
   dbIsSquare(){
+    //각 텍스트들이 한줄당 1.5초씩 나왔다 사라지게 하고 싶습니다.
     text("두부는 네모!", w/2, h/2);
     
     text("두부는 네모!", w/2, h/2);
@@ -211,6 +227,16 @@ class doobooGame extends Game {
     } else if (keyCode === Digit0){
       this.dbCount = 0;
     }
+  }
+
+  rhythmIsLife(){
+    text("박자는 생명!", w/2, h/2);
+    text("박자는 생명!", w/2, h/2);
+    text("생명! 생명! 생명!생명!생명!", w/2, h/2);
+
+    //각 텍스트들이 한줄당 1.5초씩 나왔다 사라지게 하고 싶습니다.
+
+    
   }
 
 }
