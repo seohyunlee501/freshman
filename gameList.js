@@ -19,18 +19,31 @@ class gameList {
     rectMode(CENTER);
     fill(255);
 
+    //게임 선택창
     image(this.game1, w * 0.25, h * 0.35, w * 0.24, h * 0.3);
     image(this.game2, w * 0.5, h * 0.35, w * 0.24, h * 0.3);
     image(this.game3, w * 0.75, h * 0.35, w * 0.24, h * 0.3);
     image(this.game4, w * 0.25, h * 0.67, w * 0.24, h * 0.3);
     image(this.game5, w * 0.5, h * 0.67, w * 0.24, h * 0.3);
     image(this.game6, w * 0.75, h * 0.67, w * 0.24, h * 0.3);
+
+    //혈중알콜농도
     textAlign(LEFT, CENTER);
-    textSize(20);
+    textSize(30);
     text("혈중알콜농도", 0.13 * w, 0.9 * h);
+
+    push();
     rectMode(CORNER);
-    rect(w * 0.27, h * 0.86, w * 0.6, h * 0.08);
-    let p = this.player;
-    p.display(w * 0.87, 0.9 * h);
+    fill(255);
+    translate(w * 0.27, h * 0.86);
+    rect(0, 0, w * 0.6, h * 0.08);
+    for (let i = 0; i < this.player.alcholblood; i++) {
+      fill(10 * i, 255 - 10 * i, 50);
+      rect(0.005 * h + 0.05 * i, 0.005 * h, 0.045 * w, 0.07 * h);
+    }
+    pop();
+
+    //player
+    this.player.display(w * 0.87, 0.9 * h);
   }
 }
