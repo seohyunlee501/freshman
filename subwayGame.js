@@ -25,6 +25,7 @@ class subwayGame extends Game {
   }
   
   static lineSetup() {
+    console.log(this.lineInput);
     lineNo = this.lineInput.value();
     lineNo = Number(lineNo);
     this.lineInput.value("");
@@ -61,6 +62,7 @@ class subwayGame extends Game {
     this.lineInput.position(w * 0.5, h * 0.5);
     lineButton.position(w * 0.5, h * 0.7);
     lineButton.mousePressed(this.lineSetup);
+    console.log(this.lineInput.value());
   }
 
   static npcPlay(line) {
