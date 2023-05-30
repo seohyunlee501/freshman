@@ -18,7 +18,7 @@ class Story {
   display() {
     if (this.mode == 2) {
       // 도입 story
-      console.log("story 2")
+      console.log("story 2");
       imageMode(CENTER);
       image(this.background2_0, w*0.5,h*0.5, w, h); // 이미지가 왜 안 뜰까요 손나 바카야로
       // 플레이어 이미지 넣기
