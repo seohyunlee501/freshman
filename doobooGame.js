@@ -16,47 +16,46 @@ class doobooGame extends Game {
   }
   round() {
     this.gameOver=false;
-    //this.dbBgm();
-    while(!this.gameOver){
+    this.dbBgm();
+    /*while(!this.gameOver){
       if(this.this.idx == 3){
         this.playerTurn();
       } else {
         this.npcTurn();
       }
-    }
+    }*/
   }
 
   dbBgm(){
-    let startTime = millis();
+    let currentTime = millis();
     let bgmOn = true;
-  
-    while(bgmOn){
-      let elapsedTime = millis() - startTime;
 
+    textAlign(CENTER, CENTER);
   
-      if(elapsedTime < 600){
+    if(bgmOn){
+      if(millis() - currentTime < 1200){
         text("두~부 두부 두부", this.x1, this.y1);
       }
   
-      if(elapsedTime > 1200 && elapsedTime < 1800){
+      if(millis() - currentTime > 1200 && millis() - currentTime < 2400){
         this.x1 = -999;
         this.y1 = -999;
         text("으쌰!으쌰!으쌰!으쌰!", this.x2, this.y2);
       }
   
-      if(elapsedTime > 1800 && elapsedTime < 2400){
+      if(millis() - currentTime > 2400 && millis() - currentTime < 3600){
         this.x2 = -999;
         this.y2 = -999;
         text("두~부 두부 두부", this.x3, this.y3);
       }
   
-      if(elapsedTime > 2400 && elapsedTime < 3000){
+      if(millis() - currentTime > 3600 && millis() - currentTime < 4800){
         this.x3 = -999;
         this.y3 = -999;
         text("으쌰!으쌰!으쌰!으쌰!", this.x4, this.y4);
       }
   
-      if(elapsedTime > 3000){
+      if(millis() - currentTime > 4800){
         this.x4 = -999;
         this.y4 = -999;
         bgmOn = false;
