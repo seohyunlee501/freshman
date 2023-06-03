@@ -98,6 +98,10 @@ function draw() {
       nowGame.round();
       if (nowGame.gameOver) {
         idx = nowGame.idx;
+        gameSelect.gameNum++;
+        if (gameNum == 5) {
+          mode = 5;
+        }
       }
       break;
     case 5:
