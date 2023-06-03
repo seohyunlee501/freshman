@@ -20,7 +20,7 @@ class Player {
   }
 
   lose() {
-    this.alcholblood += 1;
+    this.alcholblood++;
     if (this.alcholblood >= 10) {
       this.die = true;
     }

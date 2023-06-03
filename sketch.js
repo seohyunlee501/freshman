@@ -98,15 +98,17 @@ function draw() {
       break;
     case 3:
       gameSelect.display();
+      //temp = gameSelect.gameNum;
       break;
     case 4:
       nowGame.display();
       nowGame.round();
       if (nowGame.gameOver) {
         idx = nowGame.idx;
-        gameSelect.gameNum++;
-        if (gameNum == 5) {
+        if (gameSelect.gameNum == 5) {
           mode = 5;
+        } else {
+          mode = 3;
         }
       }
       break;
