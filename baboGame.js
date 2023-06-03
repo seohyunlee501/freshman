@@ -6,12 +6,6 @@ class baboGame extends Game {
     this.myRec = new p5.SpeechRec(); // new P5.SpeechRec object
     this.inputVoice = 0;
     this.inputHand = 0;
-    // this.handimg = [];
-    // for (let i = 0; i < 5; i++) {
-    //   let temp = "Assets/hand_" + (i + 1) + ".png";
-    //   this.handimg[i] = loadImage(temp);
-    //   console.log(temp);
-    // }
     this.startTime = millis();
     this.gameStarted = true;
     this.turnStarted = false;
