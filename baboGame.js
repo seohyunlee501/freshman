@@ -151,7 +151,7 @@ class baboGame extends Game {
         this.turnStarted = true;
         this.currentTime = millis();
       } else if (this.turnStarted) {
-        if (millis() - this.currentTime < 2000) {
+        if (millis() - this.currentTime < 1200) {
           //show each
           push();
           translate(0.2 * w + 0.17 * h * this.idx, 0.3 * h);
@@ -163,14 +163,15 @@ class baboGame extends Game {
           imageMode(CENTER);
           image(handimg[this.hand - 1], 0.05 * h, 0, 0.1 * h, 0.1 * h);
           pop();
+        } else {
           if (this.voice == this.hand) {
             this.gameend();
+          } else {
+            this.turnStarted = false;
+            this.turn++;
+            this.idx++;
+            this.idx = this.idx % 6;
           }
-        } else {
-          this.turnStarted = false;
-          this.turn++;
-          this.idx++;
-          this.idx = this.idx % 6;
         }
       }
     }

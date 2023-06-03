@@ -188,7 +188,7 @@ function mouseClicked() {
       mouseY > 0.05 * h &&
       mouseY < 0.15 * h
     ) {
-      mode = 0;
+      mode = 3;
     }
   }
   //select player
