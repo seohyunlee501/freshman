@@ -241,12 +241,12 @@ function introdisplay(_x, _y, _gen) {
   imageMode(CENTER);
   image(playerimg, x, y, playerimg.width, playerimg.height);
   if ((bSelecting && _gen == "boy") || (gSelecting && _gen == "girl")) {
-    fill(0);
+    fill(0, 0, 0, 200);
     rectMode(CENTER);
     rect(x, y, 0.3 * w, 0.5 * h);
     fill(255);
     textAlign(LEFT, TOP);
-    textSize(15);
+    textSize(30);
     text("이름:", x - w * 0.13, 0.4 * h);
     text("주량(잔):", x - w * 0.13, 0.5 * h);
   }

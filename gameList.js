@@ -4,18 +4,17 @@ class gameList {
     this.chars = _chars;
     this.player = _player;
     this.gameNum = 1;
-    // this.game1 = loadImage("Assets/gamebutton_1.png");
-    // this.game2 = loadImage("Assets/gamebutton_2.png");
-    // this.game3 = loadImage("Assets/gamebutton_3.png");
-    // this.game4 = loadImage("Assets/gamebutton_4.png");
-    // this.game5 = loadImage("Assets/gamebutton_5.png");
-    // this.game6 = loadImage("Assets/gamebutton_6.png");
   }
   display() {
+    //title
+    rectMode(CORNER);
+    fill(112, 173, 71);
+    rect(0, 0, w, 0.1 * h);
+    fill(0, 64, 0);
     textAlign(CENTER, CENTER);
-    textSize(30);
+    textSize(50);
     let choose = "게임" + this.gameNum + " 선택";
-    text(choose, 0.5 * w, 0.1 * h);
+    text(choose, 0.5 * w, 0.05 * h);
     rectMode(CENTER);
     fill(255);
 
