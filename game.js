@@ -51,7 +51,7 @@ class Game {
 
     //chars
     for (let j = 0; j < 6; j++) {
-      this.everyone[j].display(0.1 * w * (j + 1), 0.4 * h);
+      this.everyone[j].display(0.2 * w + 0.17 * h * j, 0.45 * h);
     }
     //table
     imageMode(CENTER);

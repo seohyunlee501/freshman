@@ -36,6 +36,12 @@ function preload() {
   cursor = loadImage("Assets/cursor.png");
   cursor_clicked = loadImage("Assets/cursor_clicked.png");
   reset = loadImage("Assets/reset.png");
+  handimg = [];
+  for (let i = 0; i < 5; i++) {
+    let temp = "Assets/hand_" + (i + 1) + ".png";
+    handimg[i] = loadImage(temp);
+    //console.log(temp);
+  }
 }
 
 function setup() {
@@ -81,7 +87,7 @@ function draw() {
       introStory = new Story(2, player);
       introStory.display();
       for (let i = 1; i < 5; i++) {
-        chars[i - 1] = new PlayerNPC(random(5, 7), i);
+        chars[i - 1] = new PlayerNPC(int(random(5, 7)), i);
       }
       chars[4] = new PlayerNPC(10, "g");
       let temp = chars[2];
@@ -92,15 +98,17 @@ function draw() {
       break;
     case 3:
       gameSelect.display();
+      //temp = gameSelect.gameNum;
       break;
     case 4:
       nowGame.display();
       nowGame.round();
       if (nowGame.gameOver) {
         idx = nowGame.idx;
-        gameSelect.gameNum++;
-        if (gameNum == 5) {
+        if (gameSelect.gameNum == 5) {
           mode = 5;
+        } else {
+          mode = 3;
         }
       }
       break;
@@ -180,7 +188,7 @@ function mouseClicked() {
       mouseY > 0.05 * h &&
       mouseY < 0.15 * h
     ) {
-      mode = 0;
+      mode = 3;
     }
   }
   //select player
