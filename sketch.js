@@ -40,7 +40,11 @@ function preload() {
   for (let i = 0; i < 5; i++) {
     let temp = "Assets/hand_" + (i + 1) + ".png";
     handimg[i] = loadImage(temp);
-    //console.log(temp);
+  }
+  gameButton = [];
+  for (let j = 0; j < 6; j++) {
+    let temp = "Assets/gamebutton_" + (j + 1) + ".png";
+    gameButton[j] = loadImage(temp);
   }
 }
 
@@ -188,7 +192,11 @@ function mouseClicked() {
       mouseY > 0.05 * h &&
       mouseY < 0.15 * h
     ) {
-      mode = 3;
+      if (mode == 3) {
+        mode = 0;
+      } else {
+        mode = 3;
+      }
     }
   }
   //select player
