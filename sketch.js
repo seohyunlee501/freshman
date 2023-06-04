@@ -28,13 +28,7 @@ let title;
 let cursor, cursor_clicked;
 
 // Image preload
-let npc1Img,
-  npc2Img,
-  npc3Img,
-  npc4Img,
-  npcGImg = [];
 let bg2, bg2_1, bg5;
-let hand1, hand2, hand3, hand4, hand5; // 바보게임 손 이미지
 
 function preload() {
   retroFont = loadFont("fonts/DungGeunMo.ttf");
@@ -58,6 +52,14 @@ function preload() {
   bg2 = loadImage("Assets/background_mode2.jpg");
   bg2_1 = loadImage("Assets/background_mode2_1.jpg");
   bg5 = loadImage("Assets/background_mode5.jpg");
+  for (let i = 0; i < 4; i++) {
+    let character = [];
+    for (let j = 0; j < 6; j++) {
+      let imageName = "Assets/npc_" + (i + 1) + "_" + (j + 1) + ".png";
+      character[j] = loadImage(imageName);
+    }
+    characterImages[i] = character;
+  }
 }
 
 function setup() {
@@ -110,7 +112,7 @@ function draw() {
       chars[2] = chars[4];
       chars[4] = temp;
       gameSelect = new gameList(chars, player);
-      mode = 3;
+      // mode = 3;
       break;
     case 3:
       gameSelect.display();
