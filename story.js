@@ -10,13 +10,7 @@ class Story {
       console.log("도입 story");
       imageMode(CENTER);
       console.log("이미지 모드 확인");
-      image(
-        bg2,
-        windowWidth * 0.5,
-        windowHeight * 0.5,
-        windowWidth,
-        windowHeight
-      );
+      image(bg2, w * 0.5, h * 0.5, w, h);
       console.log("이미지 로딩 확인");
       // 플레이어 이미지
       image(npc1Img[0], w * 0.8, h * 0.5, w * 0.3, h * 0.3);

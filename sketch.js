@@ -45,20 +45,6 @@ function preload() {
   cursor = loadImage("Assets/cursor.png");
   cursor_clicked = loadImage("Assets/cursor_clicked.png");
   reset = loadImage("Assets/reset.png");
-  for (let j = 1; j <= 4; j++) {
-    for (let i = 1; i <= 6; i++) {
-      let img = loadImage("Assets/npc_" + j + "_" + i + ".png");
-      if (j == 1) {
-        npc1Img.push(img);
-      } else if (j == 2) {
-        npc2Img.push(img);
-      } else if (j == 3) {
-        npc3Img.push(img);
-      } else if (j == 4) {
-        npc4Img.push(img);
-      }
-    }
-  }
   bg2 = loadImage("Assets/background_mode2.jpg");
   bg2_1 = loadImage("Assets/background_mode2_1.jpg");
   bg5 = loadImage("Assets/background_mode5.jpg");
