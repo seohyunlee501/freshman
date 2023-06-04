@@ -4,6 +4,7 @@ let introStory;
 let eventStory;
 
 let chars = [];
+let characterImages = []; // 이미지용
 let player;
 let gender;
 let bSelecting = false;
@@ -105,7 +106,7 @@ function draw() {
       introStory = new Story(2, player);
       introStory.display();
       for (let i = 1; i < 5; i++) {
-        chars[i - 1] = new PlayerNPC(int(random(5, 7)), i);
+        chars[i - 1] = new PlayerNPC(int(random(5, 7)), i/*, characterImages[i-1]*/); // PlayerNPC에 이미지 속성 넣기 가능할까요
       }
       chars[4] = new PlayerNPC(10, "g");
       let temp = chars[2];
