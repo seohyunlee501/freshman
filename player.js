@@ -20,20 +20,20 @@ class Player {
   }
 
   lose() {
-    this.alcholblood += 1;
+    this.alcholblood++;
     if (this.alcholblood >= 10) {
       this.die = true;
     }
   }
   display(x, y) {
-    console.log("alcholblood:", this.alcholblood);
+    //console.log("alcholblood:", this.alcholblood);
     let a = this.alcholblood - 3;
     let img = this.image[a];
     imageMode(CENTER);
     image(img, x, y, h * 0.3, h * 0.3);
   }
   displaybig(x, y) {
-    console.log("alcholblood:", this.alcholblood);
+    //console.log("alcholblood:", this.alcholblood);
     let a = this.alcholblood - 3;
     let img = this.image[a];
     imageMode(CENTER);
