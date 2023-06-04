@@ -55,6 +55,9 @@ function preload() {
     let temp = "Assets/gamebutton_" + (j + 1) + ".png";
     gameButton[j] = loadImage(temp);
   }
+  bg2 = loadImage("Assets/background_mode2.jpg");
+  bg2_1 = loadImage("Assets/background_mode2_1.jpg");
+  bg5 = loadImage("Assets/background_mode5.jpg");
 }
 
 function setup() {
