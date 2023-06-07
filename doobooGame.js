@@ -31,47 +31,50 @@ class doobooGame extends Game {
     let bgmOn = true;
 
     textAlign(CENTER, CENTER);
-  
-    if(bgmOn){
-      if(millis() - currentTime < 1200){
-        text("두~부 두부 두부", this.x1, this.y1);
-      }
-  
-      if(millis() - currentTime > 1200 && millis() - currentTime < 2400){
-        this.x1 = -999;
-        this.y1 = -999;
-        text("으쌰!으쌰!으쌰!으쌰!", this.x2, this.y2);
-      }
-  
-      if(millis() - currentTime > 2400 && millis() - currentTime < 3600){
-        this.x2 = -999;
-        this.y2 = -999;
-        text("두~부 두부 두부", this.x3, this.y3);
-      }
-  
-      if(millis() - currentTime > 3600 && millis() - currentTime < 4800){
-        this.x3 = -999;
-        this.y3 = -999;
-        text("으쌰!으쌰!으쌰!으쌰!", this.x4, this.y4);
-      }
-  
-      if(millis() - currentTime > 4800){
-        this.x4 = -999;
-        this.y4 = -999;
-        bgmOn = false;
 
-        /*text("두~부 두부 두부",w/2, h/2);
+    function draw(){
+  
+      if(bgmOn){
+        if(millis() - currentTime < 1200){
+          text("두~부 두부 두부", this.x1, this.y1);
+        }
     
-        text("으쌰!으쌰!으쌰!으쌰!",w/2, h/2);
+        if(millis() - currentTime > 1200 && millis() - currentTime < 2400){
+          this.x1 = -999;
+          this.y1 = -999;
+          text("으쌰!으쌰!으쌰!으쌰!", this.x2, this.y2);
+        }
     
-        text("두~부 두부 두부",w/2, h/2);
+        if(millis() - currentTime > 2400 && millis() - currentTime < 3600){
+          this.x2 = -999;
+          this.y2 = -999;
+          text("두~부 두부 두부", this.x3, this.y3);
+        }
     
-        text("으쌰!으쌰!으쌰!으쌰!",w/2, h/2);
+        if(millis() - currentTime > 3600 && millis() - currentTime < 4800){
+          this.x3 = -999;
+          this.y3 = -999;
+          text("으쌰!으쌰!으쌰!으쌰!", this.x4, this.y4);
+        }
+    
+        if(millis() - currentTime > 4800){
+          this.x4 = -999;
+          this.y4 = -999;
+          bgmOn = false;
 
-        각 텍스트들이 한줄당 1.5초씩 나왔다 사라지게 하고 싶습니다.
+          /*text("두~부 두부 두부",w/2, h/2);
+      
+          text("으쌰!으쌰!으쌰!으쌰!",w/2, h/2);
+      
+          text("두~부 두부 두부",w/2, h/2);
+      
+          text("으쌰!으쌰!으쌰!으쌰!",w/2, h/2);
 
-      */
+          각 텍스트들이 한줄당 1.5초씩 나왔다 사라지게 하고 싶습니다.
+
+        */
         
+        }
       }
     }
   }
