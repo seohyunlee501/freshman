@@ -12,10 +12,7 @@ class Game {
     this.gameName = "";
     this.gameOver = false;
     //everyone list
-    this.everyone = this.chars;
-    let temp = this.everyone[3];
-    this.everyone[3] = this.player;
-    this.everyone[5] = temp;
+    this.everyone = _gameList.everyone;
   }
   display() {
     //background
@@ -51,6 +48,9 @@ class Game {
 
     //chars
     for (let j = 0; j < 6; j++) {
+      if (this.idx == j) {
+        image(arrow, 0.2 * w + 0.17 * h * j, 0.35 * h);
+      }
       this.everyone[j].display(0.2 * w + 0.17 * h * j, 0.45 * h);
     }
     //table
