@@ -26,6 +26,7 @@ let movieFont;
 let playerimg, bImg, gImg;
 let title;
 let cursor, cursor_clicked;
+let arrow;
 
 function preload() {
   retroFont = loadFont("fonts/DungGeunMo.ttf");
@@ -46,6 +47,7 @@ function preload() {
     let temp = "Assets/gamebutton_" + (j + 1) + ".png";
     gameButton[j] = loadImage(temp);
   }
+  arrow = loadImage("Assets/arrow.png");
 }
 
 function setup() {
