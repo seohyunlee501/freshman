@@ -2,6 +2,7 @@ let mode = 0;
 
 let introStory;
 let eventStory;
+let story;
 
 let chars = [];
 let characterImages = []; // 이미지용
@@ -71,6 +72,7 @@ function setup() {
   sojuInput = createInput();
   button = createButton("submit");
   noCursor();
+  story = new Story();
 }
 
 function draw() {
@@ -103,17 +105,18 @@ function draw() {
       bSelecting = false;
       gSelecting = false;
       textFont(movieFont);
-      introStory = new Story(2, player);
-      introStory.display();
+      story.drawScene();
       for (let i = 1; i < 5; i++) {
-        chars[i - 1] = new PlayerNPC(int(random(5, 7)), i/*, characterImages[i-1]*/); // PlayerNPC에 이미지 속성 넣기 가능할까요
+        chars[i - 1] = new PlayerNPC(
+          int(random(5, 7)),
+          i /*, characterImages[i-1]*/
+        ); // PlayerNPC에 이미지 속성 넣기 가능할까요
       }
       chars[4] = new PlayerNPC(10, "g");
       let temp = chars[2];
       chars[2] = chars[4];
       chars[4] = temp;
       gameSelect = new gameList(chars, player);
-      // mode = 3;
       break;
     case 3:
       gameSelect.display();
@@ -160,6 +163,9 @@ function draw() {
 
 function mousePressed() {
   //game select
+  if (mode == 2 && story) {
+    story.mousePressed();
+  }
   if (mode == 3) {
     if (mouseY > 0.2 * h && mouseY < 0.5 * h) {
       if (mouseX > 0.13 * w && mouseX < 0.37 * w) {
