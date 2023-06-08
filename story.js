@@ -53,8 +53,7 @@ class Story {
       );
 
       console.log("story 2 종료");
-      // mode = 3;
-
+      
     }  else if (this.mode == 5) { 
       // 고학번 story
       console.log("고학번");
