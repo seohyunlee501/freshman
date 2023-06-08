@@ -156,7 +156,6 @@ function mousePressed() {
         mode = 4;
       } else if (mouseX > 0.38 * w && mouseX < 0.62 * w) {
         nowGame = new eyeGame(idx, gameSelect);
-        nowGame.gamePlay();
         mode = 4;
       } else if (mouseX > 0.63 * w && mouseX < 0.87 * w) {
         nowGame = new brGame(idx, gameSelect);
@@ -165,7 +164,6 @@ function mousePressed() {
     } else if (mouseY > 0.52 * h && mouseY < 0.82 * h) {
       if (mouseX > 0.13 * w && mouseX < 0.37 * w) {
         nowGame = new subwayGame(idx, gameSelect);
-        nowGame.start();
         mode = 4;
       } else if (mouseX > 0.38 * w && mouseX < 0.62 * w) {
         nowGame = new doobooGame(idx, gameSelect);
@@ -294,6 +292,12 @@ function keyPressed() {
       nowGame.temp = 2;
     } else if (keyCode === 51 || keyCode === 99) {
       nowGame.temp = 3;
+    }
+  }
+  if (mode == 4 && nowGame.gameName == "눈치게임") {
+    console.log("key pressed");
+    if (keyCode === 13) {
+      nowGame.interruption = true;
     }
   }
 }
