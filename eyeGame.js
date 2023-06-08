@@ -34,20 +34,21 @@ class eyeGame extends Game {
 
     for (let i = 0; i < 3; i++) {
       this.randChar[i][0] = this.chars[i];
-      this.randChar[i][1] = Math.floor(random(100, 3000) / 100) * 100; //this.randChar[i][1]: callInterval
+      this.randChar[i][1] = Math.floor(random(100, 1500) / 100) * 100; //this.randChar[i][1]: callInterval
       this.randChar[i][2] = false; //this.randChar[i][2]: called
       this.randChar[i][3] = i;
     }
 
     for (let i = 4; i < 6; i++) {
       this.randChar[i-1][0] = this.chars[i]
-      this.randChar[i-1][1] = Math.floor(random(100, 3000) / 100) * 100;
+      this.randChar[i-1][1] = Math.floor(random(100, 1500) / 100) * 100;
       this.randChar[i-1][2] = false;
       this.randChar[i-1][3] = i
     }
     
     this.randChar.sort(() => random() - 0.5);
     this.randChar[0][1] = 700;
+    this.randChar[1][1] = Math.floor(random(500, 1000) / 100) * 100
 
     for (let i = 0; i < 5; i++){
       console.log(this.randChar[i][1], this.randChar[i][3]);
@@ -320,7 +321,7 @@ class eyeGame extends Game {
   
   endGame() {
     if(this.endPlayer){
-      if(millis() - this.endStartTime < 1200){
+      if(millis() - this.endStartTime < 2000){
         fill(255);
         rectMode(CENTER);
         rect(w/2, h/2, w/3, h/3);
@@ -329,11 +330,11 @@ class eyeGame extends Game {
         textSize(50);
         text('눈치는 생명! 눈치는 생명!', w / 2, h * 0.45);
         text('생명! 생명! 생명! 생명! 생명!', w / 2, h * 0.55);
-      }else if(millis() - this.endStartTime > 1200){
+      }else if(millis() - this.endStartTime > 2000){
         this.gameOver = true;
       }
     }else if(this.endNPC){
-      if(millis() - this.endStartTime < 1200){
+      if(millis() - this.endStartTime < 2000){
         fill(255);
         rectMode(CENTER);
         rect(w/2, h/2, w/3, h/3);
@@ -341,7 +342,7 @@ class eyeGame extends Game {
         textAlign(CENTER);
         textSize(50);
         text('휴~ 살았다', w / 2, h / 2);
-      }else if(millis() - this.endStartTime > 1200){
+      }else if(millis() - this.endStartTime > 2000){
         this.gameOver = true;
       }
     }
