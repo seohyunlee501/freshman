@@ -3,7 +3,7 @@ class eyeGame extends Game {
     super(_idx, _gameList);
     this.gameName = "눈치게임";
     this.turn = 0;
-    this.failureInterval = 499;
+    this.failureInterval = 299;
     this.lastCalledTime = 0;
     this.currentNumber = 1;
     this.randChar = [[],[],[],[],[]];
@@ -28,19 +28,20 @@ class eyeGame extends Game {
     this.displayNumberFive;
     this.playerNumber;
     this.tempPlayer = true;
+    this.endStartTime;
+    this.endPlayer = false;
+    this.endNPC = false;
 
-
-    
     for (let i = 0; i < 3; i++) {
       this.randChar[i][0] = this.chars[i];
-      this.randChar[i][1] = Math.floor(random(300, 5000) / 100) * 100; //this.randChar[i][1]: callInterval
+      this.randChar[i][1] = Math.floor(random(100, 3000) / 100) * 100; //this.randChar[i][1]: callInterval
       this.randChar[i][2] = false; //this.randChar[i][2]: called
       this.randChar[i][3] = i;
     }
 
     for (let i = 4; i < 6; i++) {
       this.randChar[i-1][0] = this.chars[i]
-      this.randChar[i-1][1] = Math.floor(random(300, 5000) / 100) * 100;
+      this.randChar[i-1][1] = Math.floor(random(100, 3000) / 100) * 100;
       this.randChar[i-1][2] = false;
       this.randChar[i-1][3] = i
     }
@@ -76,6 +77,7 @@ class eyeGame extends Game {
           this.lastCalledTime = millis();
           this.currentNumber++;
           this.playerLose();
+          this.endPlayer = true;
           this.playerTurnPassed = true;
         }else if(millis() - this.lastCalledTime > this.failureInterval){
           console.log(this.currentNumber); //should be displayed later
@@ -91,6 +93,7 @@ class eyeGame extends Game {
       }
     }else{
       this.playerLose();
+      this.endPlayer = true;
     }
   }
 
@@ -98,6 +101,7 @@ class eyeGame extends Game {
     this.playerPlay();
     this.npcPlay();
     this.displayOverhead();
+    this.endGame();
   }
 
   playerPlay() {
@@ -198,6 +202,7 @@ class eyeGame extends Game {
         this.randChar[0][2] = true;
         this.currentNumber++;
         this.npcLose();
+        this.endNPC = true;
         this.randChar[1][2] = true;
         this.randChar[2][2] = true;
         this.randChar[3][2] = true;
@@ -219,6 +224,7 @@ class eyeGame extends Game {
         this.randChar[1][2] = true;
         this.currentNumber++;
         this.npcLose();
+        this.endNPC = true;
         this.randChar[2][2] = true;
         this.randChar[3][2] = true;
         this.randChar[4][2] = true;
@@ -239,6 +245,7 @@ class eyeGame extends Game {
         this.randChar[2][2] = true;
         this.currentNumber++;
         this.npcLose();
+        this.endNPC = true;
         this.randChar[3][2] = true;
         this.randChar[4][2] = true;
       }
@@ -258,6 +265,7 @@ class eyeGame extends Game {
         this.randChar[3][2] = true;
         this.currentNumber++;
         this.npcLose();
+        this.endNPC = true;
         this.randChar[4][2] = true;
       }
     
@@ -270,8 +278,10 @@ class eyeGame extends Game {
         this.randChar[4][2] = true;
         if(this.currentNumber == 6){
           this.npcLose();
+          this.endNPC = true;
         }else if(this.currentNumber == 5){
           this.playerLose();
+          this.endPlayer = true;
         }
       }else if(this.randChar[4][0].die == false && this.randChar[4][2] == false && this.randChar[4][1] < this.failureInterval){
         this.idx = this.randChar[4][3];
@@ -281,12 +291,13 @@ class eyeGame extends Game {
         this.randChar[4][2] = true;
         this.currentNumber++;
         this.npcLose();
+        this.endNPC = true;
       }
   }
 
   npcLose() {
+    this.endStartTime = millis();
     console.log("YOU WIN!"); // should be changed with display
-    this.gameOver = true;
     this.npcOneDisplay = false;
     this.npcTwoDisplay = false;
     this.npcThreeDisplay = false;
@@ -296,8 +307,8 @@ class eyeGame extends Game {
   }
 
   playerLose() {
+    this.endStartTime = millis();
     console.log("GAME OVER!"); // should be changed with display
-    this.gameOver = true;
     this.player.alcholblood++;
     this.idx = 3;
     this.npcOneDisplay = false;
@@ -307,6 +318,35 @@ class eyeGame extends Game {
     this.npcFiveDisplay = false;
   }
   
+  endGame() {
+    if(this.endPlayer){
+      if(millis() - this.endStartTime < 1200){
+        fill(255);
+        rectMode(CENTER);
+        rect(w/2, h/2, w/3, h/3);
+        fill(0);
+        textAlign(CENTER);
+        textSize(50);
+        text('눈치는 생명! 눈치는 생명!', w / 2, h * 0.45);
+        text('생명! 생명! 생명! 생명! 생명!', w / 2, h * 0.55);
+      }else if(millis() - this.endStartTime > 1200){
+        this.gameOver = true;
+      }
+    }else if(this.endNPC){
+      if(millis() - this.endStartTime < 1200){
+        fill(255);
+        rectMode(CENTER);
+        rect(w/2, h/2, w/3, h/3);
+        fill(0);
+        textAlign(CENTER);
+        textSize(50);
+        text('휴~ 살았다', w / 2, h / 2);
+      }else if(millis() - this.endStartTime > 1200){
+        this.gameOver = true;
+      }
+    }
+  }
+
   round() {
     this.gamePlay();
   }
