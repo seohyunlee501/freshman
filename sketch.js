@@ -28,6 +28,7 @@ let movieFont;
 let playerimg, bImg, gImg;
 let title;
 let cursor, cursor_clicked;
+let arrow, bubble_l, bubble_r;
 
 // Image preload
 let bg2, bg2_1, bg5;
@@ -51,6 +52,9 @@ function preload() {
     let temp = "Assets/gamebutton_" + (j + 1) + ".png";
     gameButton[j] = loadImage(temp);
   }
+  arrow = loadImage("Assets/arrow.png");
+  bubble_l = loadImage("Assets/bubble_left.png");
+  bubble_r = loadImage("Assets/bubble_right.png");
   bg2 = loadImage("Assets/background_mode2.jpg");
   bg2_1 = loadImage("Assets/background_mode2_1.jpg");
   bg5 = loadImage("Assets/background_mode5.jpg");
@@ -297,4 +301,18 @@ function setPlayer() {
   sojuInput.position(-0.25 * w, -0.5 * h);
   button.position(-0.68 * w, -0.65 * h);
   mode = 2;
+}
+
+function keyPressed() {
+  if (mode == 4 && nowGame.gameName == "배스킨 라빈스 31") {
+    console.log("key pressed");
+    console.log(keyCode);
+    if (keyCode === 49 || keyCode === 97) {
+      nowGame.temp = 1;
+    } else if (keyCode === 50 || keyCode === 98) {
+      nowGame.temp = 2;
+    } else if (keyCode === 51 || keyCode === 99) {
+      nowGame.temp = 3;
+    }
+  }
 }

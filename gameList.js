@@ -4,6 +4,10 @@ class gameList {
     this.chars = _chars;
     this.player = _player;
     this.gameNum = 1;
+    this.everyone = this.chars;
+    let temp = this.everyone[3];
+    this.everyone[3] = this.player;
+    this.everyone[5] = temp;
   }
   display() {
     //title
