@@ -26,6 +26,7 @@ let movieFont;
 let playerimg, bImg, gImg;
 let title;
 let cursor, cursor_clicked;
+let arrow, bubble_l, bubble_r;
 
 function preload() {
   retroFont = loadFont("fonts/DungGeunMo.ttf");
@@ -36,6 +37,19 @@ function preload() {
   cursor = loadImage("Assets/cursor.png");
   cursor_clicked = loadImage("Assets/cursor_clicked.png");
   reset = loadImage("Assets/reset.png");
+  handimg = [];
+  for (let i = 0; i < 5; i++) {
+    let temp = "Assets/hand_" + (i + 1) + ".png";
+    handimg[i] = loadImage(temp);
+  }
+  gameButton = [];
+  for (let j = 0; j < 6; j++) {
+    let temp = "Assets/gamebutton_" + (j + 1) + ".png";
+    gameButton[j] = loadImage(temp);
+  }
+  arrow = loadImage("Assets/arrow.png");
+  bubble_l = loadImage("Assets/bubble_left.png");
+  bubble_r = loadImage("Assets/bubble_right.png");
 }
 
 function setup() {
@@ -80,20 +94,30 @@ function draw() {
       textFont(movieFont);
       introStory = new Story(2, player);
       introStory.display();
-      for (let i = 0; i < 5; i++) {
-        chars[i] = new PlayerNPC(random(5, 7), i);
+      for (let i = 1; i < 5; i++) {
+        chars[i - 1] = new PlayerNPC(int(random(5, 7)), i);
       }
+      chars[4] = new PlayerNPC(10, "g");
+      let temp = chars[2];
+      chars[2] = chars[4];
+      chars[4] = temp;
       gameSelect = new gameList(chars, player);
       mode = 3;
       break;
     case 3:
       gameSelect.display();
+      //temp = gameSelect.gameNum;
       break;
     case 4:
       nowGame.display();
       nowGame.round();
       if (nowGame.gameOver) {
         idx = nowGame.idx;
+        if (gameSelect.gameNum == 5) {
+          mode = 5;
+        } else {
+          mode = 3;
+        }
       }
       break;
     case 5:
@@ -174,7 +198,11 @@ function mouseClicked() {
       mouseY > 0.05 * h &&
       mouseY < 0.15 * h
     ) {
-      mode = 0;
+      if (mode == 3) {
+        mode = 0;
+      } else {
+        mode = 3;
+      }
     }
   }
   //select player
@@ -219,12 +247,12 @@ function introdisplay(_x, _y, _gen) {
   imageMode(CENTER);
   image(playerimg, x, y, playerimg.width, playerimg.height);
   if ((bSelecting && _gen == "boy") || (gSelecting && _gen == "girl")) {
-    fill(0);
+    fill(0, 0, 0, 200);
     rectMode(CENTER);
     rect(x, y, 0.3 * w, 0.5 * h);
     fill(255);
     textAlign(LEFT, TOP);
-    textSize(15);
+    textSize(30);
     text("이름:", x - w * 0.13, 0.4 * h);
     text("주량(잔):", x - w * 0.13, 0.5 * h);
   }
@@ -254,4 +282,18 @@ function setPlayer() {
   sojuInput.position(-0.25 * w, -0.5 * h);
   button.position(-0.68 * w, -0.65 * h);
   mode = 2;
+}
+
+function keyPressed() {
+  if (mode == 4 && nowGame.gameName == "배스킨 라빈스 31") {
+    console.log("key pressed");
+    console.log(keyCode);
+    if (keyCode === 49 || keyCode === 97) {
+      nowGame.temp = 1;
+    } else if (keyCode === 50 || keyCode === 98) {
+      nowGame.temp = 2;
+    } else if (keyCode === 51 || keyCode === 99) {
+      nowGame.temp = 3;
+    }
+  }
 }
