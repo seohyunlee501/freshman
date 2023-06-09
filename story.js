@@ -117,18 +117,17 @@ class Story {
 
   drawPlayer() {
     if (bSelecting) {
-      push(); 
-      scale(-1, 1); 
-      image(player_boy, -w * 0.25, h * 0.5, -w, h * 1.5); 
-      pop(); 
+      push();
+      scale(-1, 1);
+      image(player_boy, -w * 0.25, h * 0.5, -w, h * 1.5);
+      pop();
     } else if (gSelecting) {
-      push(); 
-      scale(-1, 1); 
-      image(player_girl, -w * 0.25, h * 0.5, -w, h * 1.5); 
-      pop(); 
+      push();
+      scale(-1, 1);
+      image(player_girl, -w * 0.25, h * 0.5, -w, h * 1.5);
+      pop();
     }
   }
-  
 
   drawNPC(scene) {
     if (scene == "2-1") {
@@ -145,8 +144,8 @@ class Story {
       image(soju_img, w * 0.7, h * 0.75, w * 0.2, h * 0.2);
     } else if (obj_img == "item") {
       image(item_img, w * 0.4, h * 0.8, w * 0.2, h * 0.2);
-    } else if (obj_img == "soju_green"){
-      image(soju_img_g, w*0.6, h * 0.75, w * 0.2, h * 0.2);
+    } else if (obj_img == "soju_green") {
+      image(soju_img_g, w * 0.6, h * 0.75, w * 0.2, h * 0.2);
     }
   }
 
@@ -169,7 +168,10 @@ class Story {
       this.ready = false;
     } else if (this.scene === "5-1") {
       this.scene = "5-2";
-    } else if ((this.scene === "5-3" || this.scene === "5-4" || this.scene === "5-5")&& kkk){
+    } else if (
+      (this.scene === "5-3" || this.scene === "5-4" || this.scene === "5-5") &&
+      this.kkk
+    ) {
       mode = 6;
     }
     // 5-3, 5-4, 5-5에서 클릭했을 때 mode 6으로 넘어가고 싶은데 else if (5-3 || 5-4 || 5-5){mode =6;} 을 추가하면 scene이 뜨지 않음
@@ -182,7 +184,7 @@ class Story {
 
       // 숫자 입력을 받는 input 요소 생성
       this.numberInput = createInput();
-      this.numberInput.position(w * 0.5-100, h * 0.65);
+      this.numberInput.position(w * 0.5 - 100, h * 0.65);
       this.numberInput.size(100);
       this.numberInput.input(this.handleNumberInput); // 입력 값 변화 이벤트 처리
 

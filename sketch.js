@@ -31,6 +31,8 @@ let cursor, cursor_clicked;
 
 // Image preload
 let bg2, bg2_1, bg5;
+let imgs_npc = {};
+let imgs_player = {};
 
 function preload() {
   retroFont = loadFont("fonts/DungGeunMo.ttf");
@@ -61,6 +63,17 @@ function preload() {
   soju_img = loadImage("Assets/soju_1.png"); // 빨뚜
   soju_img_g = loadImage("Assets/soju_2.png"); // 초록뚜껑
   item_img = loadImage("Assets/item_1.png");
+  imgs_npc["g_1"] = loadImage("Assets/npc_g_1.png");
+  for (let i = 1; i <= 4; i++) {
+    for (let j = 1; j <= 6; j++) {
+      let idx = `${i}_${j}`;
+      imgs_npc[idx] = loadImage(`Assets/npc_${idx}.png`);
+    }
+  }
+  for (let i = 1; i <= 5; i++) {
+    imgs_player[`m_${i}`] = loadImage(`Assets/player_m_${i}.png`);
+    imgs_player[`f_${i}`] = loadImage(`Assets/player_f_${i}.png`);
+  }
 }
 
 function setup() {
@@ -72,6 +85,15 @@ function setup() {
   button = createButton("submit");
   noCursor();
   story = new Story();
+  for (let i = 1; i < 5; i++) {
+    chars[i - 1] = new PlayerNPC(int(random(5, 7)), i);
+  }
+  chars[4] = new PlayerNPC(10, "g");
+  let temp = chars[2];
+  chars[2] = chars[4];
+  chars[4] = temp;
+
+  player = new Player();
 }
 
 function draw() {
@@ -105,13 +127,7 @@ function draw() {
       // gSelecting = false;
       textFont(movieFont);
       story.drawScene();
-      for (let i = 1; i < 5; i++) {
-        chars[i - 1] = new PlayerNPC(int(random(5, 7)), i);
-      }
-      chars[4] = new PlayerNPC(10, "g");
-      let temp = chars[2];
-      chars[2] = chars[4];
-      chars[4] = temp;
+
       gameSelect = new gameList(chars, player);
       break;
     case 3:
@@ -132,8 +148,8 @@ function draw() {
       break;
     case 5:
       textFont(movieFont);
-      eventStory = new Story(5, player);
-      eventStory.display();
+      // eventStory = new Story(5, player);
+      story.drawScene();
       break;
     case 6:
       player.gameover();
@@ -159,7 +175,7 @@ function draw() {
 
 function mousePressed() {
   //game select
-  if (mode == 2 && story) {
+  if ((mode == 2 || mode == 5) && story) {
     story.mousePressed();
   }
   if (mode == 3) {
@@ -286,11 +302,11 @@ function selectPlayer(_gen) {
 function setPlayer() {
   let name = nameInput.value();
   let soju = sojuInput.value();
-  player = new Player(name, soju, gender);
+  player.set(name, soju, gender);
   nameInput.value("");
   sojuInput.value("");
   nameInput.position(-0.25 * w, -0.4 * h);
   sojuInput.position(-0.25 * w, -0.5 * h);
   button.position(-0.68 * w, -0.65 * h);
-  mode = 2;
+  mode = 5;
 }
