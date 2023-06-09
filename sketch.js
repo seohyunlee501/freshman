@@ -56,10 +56,6 @@ function preload() {
   bg2 = loadImage("Assets/background_mode2.jpg");
   bg2_1 = loadImage("Assets/background_mode2_1.jpg");
   bg5 = loadImage("Assets/background_mode5.jpg");
-  player_boy = loadImage("Assets/player_m_1.png"); // story용 이미지 프리로드
-  player_girl = loadImage("Assets/player_f_1.png");
-  npc_story2 = loadImage("Assets/npc_1_1.png");
-  npc_story5 = loadImage("Assets/npc_g_1.png");
   soju_img = loadImage("Assets/soju_1.png"); // 빨뚜
   soju_img_g = loadImage("Assets/soju_2.png"); // 초록뚜껑
   item_img = loadImage("Assets/item_1.png");

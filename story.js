@@ -119,19 +119,19 @@ class Story {
     if (bSelecting) {
       push();
       scale(-1, 1);
-      image(imgs_player[`m_1`], -w * 0.25, h * 0.5, -w, h * 1.5);
+      image(imgs_player["m_1"], -w * 0.25, h * 0.5, -w, h * 1.5);
       pop();
     } else if (gSelecting) {
       push();
       scale(-1, 1);
-      image(imgs_player[`f_1`], -w * 0.25, h * 0.5, -w, h * 1.5);
+      image(imgs_player["f_1"], -w * 0.25, h * 0.5, -w, h * 1.5);
       pop();
     }
   }
 
   drawNPC(scene) {
     if (scene == "2-1") {
-      image(imgs_npc[1_1], w * 0.75, h * 0.5, w, h * 1.5);
+      image(imgs_npc["1_1"], w * 0.75, h * 0.5, w, h * 1.5);
     } else if (scene == "2-4") {
       image(imgs_npc["g_1"], w * 0.75, h * 0.5, w, h * 1.5);
     } else if (scene == "5-1") {
