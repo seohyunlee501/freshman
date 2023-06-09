@@ -36,6 +36,8 @@ function preload() {
   title = loadImage("Assets/title.png");
   cursor = loadImage("Assets/cursor.png");
   cursor_clicked = loadImage("Assets/cursor_clicked.png");
+  //cursor.style("z-index", 10);
+  //cursor_clicked.style("z-index", 10);
   reset = loadImage("Assets/reset.png");
   handimg = [];
   for (let i = 0; i < 5; i++) {
@@ -59,6 +61,9 @@ function setup() {
   nameInput = createInput();
   sojuInput = createInput();
   button = createButton("submit");
+  nameInput.style("z-index", 1);
+  sojuInput.style("z-index", 1);
+  button.style("z-index", 1);
   noCursor();
 }
 
