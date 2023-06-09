@@ -58,7 +58,8 @@ function preload() {
   player_girl = loadImage("Assets/player_f_1.png");
   npc_story2 = loadImage("Assets/npc_1_1.png");
   npc_story5 = loadImage("Assets/npc_g_1.png");
-  soju_img = loadImage("Assets/soju_1.png");
+  soju_img = loadImage("Assets/soju_1.png"); // 빨뚜
+  soju_img_g = loadImage("Assets/soju_2.png"); // 초록뚜껑
   item_img = loadImage("Assets/item_1.png");
 }
 

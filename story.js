@@ -1,6 +1,9 @@
 class Story {
   constructor() {
     this.ready = false;
+    this.numberInput = null;
+    this.submitButton = null;
+    this.kkk = false;
   }
   checkScene() {
     if (!this.ready) {
@@ -61,6 +64,38 @@ class Story {
         this.drawObject("item");
         this.drawTextbox();
         this.drawSceneText(`- 혹시 내가 몇 학번인지 아니?`);
+        this.drawNumberInput();
+        break;
+      case "5-3":
+        console.log("5-3");
+        this.numberInput.remove();
+        this.submitButton.remove();
+        this.drawSceneBackground("5-1");
+        this.drawNPC("5-1");
+        this.drawObject("item");
+        this.drawTextbox();
+        this.drawSceneText(`- 오 맞아 19학번이야!`);
+        break;
+      case "5-4":
+        console.log("5-4");
+        this.numberInput.remove();
+        this.submitButton.remove();
+        this.drawSceneBackground("5-1");
+        this.drawNPC("5-1");
+        this.drawObject("soju_green");
+        this.drawTextbox();
+        this.drawSceneText(`- ... 내가 그렇게 늙어보여...?`);
+        break;
+      case "5-5":
+        console.log("5-5");
+        this.numberInput.remove();
+        this.submitButton.remove();
+        this.drawSceneBackground("5-1");
+        this.drawNPC("5-1");
+        this.drawObject("soju_green");
+        this.drawTextbox();
+        this.drawSceneText(`- 젊게 봐줘서 고마운데, 틀렸어!`);
+        break;
     }
   }
 
@@ -71,7 +106,7 @@ class Story {
     } else if (scene == "2-4") {
       image(bg2_1, w * 0.5, h * 0.5, w, h);
     } else if (scene == "5-1") {
-      image();
+      image(bg5, w * 0.5, h * 0.5, w, h);
     }
   }
 
@@ -81,12 +116,19 @@ class Story {
   }
 
   drawPlayer() {
-    if (bSelecting == true) {
-      image(player_boy, w * 0.25, h * 0.5, w, h * 1.5);
-    } else if (gSelecting == true) {
-      image(player_girl, w * 0.25, h * 0.5, w, h * 1.5);
+    if (bSelecting) {
+      push(); 
+      scale(-1, 1); 
+      image(player_boy, -w * 0.25, h * 0.5, -w, h * 1.5); 
+      pop(); 
+    } else if (gSelecting) {
+      push(); 
+      scale(-1, 1); 
+      image(player_girl, -w * 0.25, h * 0.5, -w, h * 1.5); 
+      pop(); 
     }
   }
+  
 
   drawNPC(scene) {
     if (scene == "2-1") {
@@ -94,7 +136,7 @@ class Story {
     } else if (scene == "2-4") {
       image(npc_story5, w * 0.75, h * 0.5, w, h * 1.5);
     } else if (scene == "5-1") {
-      image(npc_story5, w * 0.5, h * 5, w, h * 1.5);
+      image(npc_story5, w * 0.5, h * 0.5, w, h * 1.5);
     }
   } // 변수 써서 하기? 캐릭터 이미지 프리로드하기
 
@@ -102,7 +144,9 @@ class Story {
     if (obj_img == "soju") {
       image(soju_img, w * 0.7, h * 0.75, w * 0.2, h * 0.2);
     } else if (obj_img == "item") {
-      image(item_img, w * 0.4, h * 0.5, w * 0.2, h * 0.2);
+      image(item_img, w * 0.4, h * 0.8, w * 0.2, h * 0.2);
+    } else if (obj_img == "soju_green"){
+      image(soju_img_g, w*0.6, h * 0.75, w * 0.2, h * 0.2);
     }
   }
 
@@ -125,7 +169,44 @@ class Story {
       this.ready = false;
     } else if (this.scene === "5-1") {
       this.scene = "5-2";
+    } else if ((this.scene === "5-3" || this.scene === "5-4" || this.scene === "5-5")&& kkk){
       mode = 6;
     }
+    // 5-3, 5-4, 5-5에서 클릭했을 때 mode 6으로 넘어가고 싶은데 else if (5-3 || 5-4 || 5-5){mode =6;} 을 추가하면 scene이 뜨지 않음
+  }
+
+  drawNumberInput() {
+    if (!this.numberInput) {
+      fill(255);
+      textAlign(CENTER);
+
+      // 숫자 입력을 받는 input 요소 생성
+      this.numberInput = createInput();
+      this.numberInput.position(w * 0.5-100, h * 0.65);
+      this.numberInput.size(100);
+      this.numberInput.input(this.handleNumberInput); // 입력 값 변화 이벤트 처리
+
+      // 제출 버튼 생성
+      this.submitButton = createButton("학번");
+      this.submitButton.position(w * 0.5, h * 0.65);
+      this.submitButton.mousePressed(() => {
+        let number = parseInt(this.numberInput.value());
+        if (number === 19) {
+          this.scene = "5-3";
+        } else if (number < 19) {
+          this.scene = "5-4";
+        } else if (number > 19) {
+          this.scene = "5-5";
+        }
+        this.kkk = true;
+      });
+    }
+  }
+
+  handleNumberInput() {
+    // 입력 값이 숫자가 아닌 경우 숫자로 변환
+    let value = this.numberInput.value();
+    value = value.replace(/[^0-9]/g, "");
+    this.numberInput.value(value);
   }
 }
