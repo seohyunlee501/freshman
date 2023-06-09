@@ -300,4 +300,15 @@ function keyPressed() {
       nowGame.interruption = true;
     }
   }
+  if (mode == 4 && nowGame.gameName == "지하철게임" && nowGame.lineSelected == false) {
+    console.log("key pressed");
+    console.log(keyCode);
+    if (keyCode === 50 || keyCode === 98) {
+      nowGame.lineSelection = 2;
+    } else if (keyCode === 51 || keyCode === 99) {
+      nowGame.lineSelection = 3;
+    } else if (keyCode === 52 || keyCode === 100) {
+      nowGame.lineSelection = 4;
+    }
+  }
 }

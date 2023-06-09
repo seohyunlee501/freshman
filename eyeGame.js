@@ -332,6 +332,8 @@ class eyeGame extends Game {
         text('생명! 생명! 생명! 생명! 생명!', w / 2, h * 0.55);
       }else if(millis() - this.endStartTime > 2000){
         this.gameOver = true;
+        this.everyone[this.idx].lose();
+        this.gameList.gameNum++;
       }
     }else if(this.endNPC){
       if(millis() - this.endStartTime < 2000){
@@ -344,6 +346,8 @@ class eyeGame extends Game {
         text('휴~ 살았다', w / 2, h / 2);
       }else if(millis() - this.endStartTime > 2000){
         this.gameOver = true;
+        this.everyone[this.idx].lose();
+        this.gameList.gameNum++;
       }
     }
   }
