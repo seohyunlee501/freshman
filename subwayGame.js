@@ -29,6 +29,7 @@ class subwayGame extends Game {
     this.lineSelection = 0;
     this.currentLine = 0;
     this.loseIssue = '';
+    this.playerInput = false;
     this.stationList = [
       [],
       [],
@@ -92,7 +93,7 @@ class subwayGame extends Game {
   }
 
   playerturn() {
-    
+    this.playerInput = true;
   }
 
   npcturn() {

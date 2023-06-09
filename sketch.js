@@ -28,6 +28,9 @@ let title;
 let cursor, cursor_clicked;
 let arrow, bubble_l, bubble_r;
 
+let subwayInput;
+let subwayButton;
+
 function preload() {
   retroFont = loadFont("fonts/DungGeunMo.ttf");
   movieFont = loadFont("fonts/a시네마M.ttf");
@@ -60,6 +63,13 @@ function setup() {
   sojuInput = createInput();
   button = createButton("submit");
   noCursor();
+  subwayInput = createInput("");
+  subwayInput.size(w / 12);
+  subwayInput.position(w * 0.5, h * 0.55);
+  subwayInput.hide();
+  subwayButton = createButton("확인");
+  subwayButton.position(w * 0.5, h * 0.6);
+  subwayButton.hide();
 }
 
 function draw() {
@@ -144,6 +154,20 @@ function draw() {
   } else {
     imageMode(CENTER);
     image(cursor, mouseX, mouseY, 0.1 * h, 0.1 * h);
+  }
+
+  if(mode == 4 && nowGame.gameName == "지하철게임"){
+    if(nowGame.playerInput == true){
+      fill(255);
+      rectMode(CENTER);
+      rect(w / 2, h / 2, w / 2, h / 2);
+      fill(0);
+      textAlign(CENTER);
+      textSize(32);
+      text('역 이름을 입력하세요!', w * 0.5, h * 0.45);
+      subwayInput.show();
+      subwayButton.show();
+    }
   }
 }
 
