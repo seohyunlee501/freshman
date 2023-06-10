@@ -4,7 +4,7 @@ class doobooGame extends Game {
     this.gameName = "두부게임";
     this.dbCount = 10;
     this.turn = 0;
-    this.starttTime = millis();
+    this.startTime = millis();
     this.bgmOn = true;
     this.userPlayed = false;
     this.infoStarted = false;
@@ -63,10 +63,8 @@ class doobooGame extends Game {
         textSize(32);
         textAlign(CENTER);
         rectMode(CENTER);
-        fill(255);
-        rect(w / 2, h / 2, w / 3, h / 3);
         fill(0);
-        text("두부 모수를 키보드에 입력해 주세요.", w / 2, h / 2);
+        text("두부 모수를 키보드에 입력해 주세요.", w / 2, 2*h / 3);
       } else {
         this.infoStarted = false;
       }
@@ -111,7 +109,7 @@ class doobooGame extends Game {
         this.turnStarted = true;
         this.currentTime = millis();
       } else if (this.turnStarted) {
-        if (millis() - this.currentTime < 1200) {
+        if (millis() - this.currentTime < 1600) {
           this.dbCall();
         } else {
           if(this.dbCount != 1 && this.dbCount != 2 && this.dbCount != 4 && this.dbCount != 5){
@@ -155,9 +153,8 @@ class doobooGame extends Game {
 
   dbCall(){
     console.log('dbcall');
-    fill(255);
-    rect(w / 2, h / 2, w / 3, h / 3);
     fill(0);
+    let x = 0.2 * w + 0.17 * h * this.idx;
     if(this.dbCount == 1){
       text("두부 한 모!", x, 0.3*h);
       
@@ -284,3 +281,4 @@ class doobooGame extends Game {
   }
 
 }
+
