@@ -1,15 +1,18 @@
 class doobooGame extends Game {
-  constructor(_idx, _gameList, _dbCount) {
+  constructor(_idx, _gameList) {
     super(_idx, _gameList);
     this.gameName = "두부게임";
-    this.dbCount = _dbCount;
+    this.dbCount = 10;
     this.turn = 0;
-    this.currentTime = millis();
+    this.starttTime = millis();
     this.bgmOn = true;
-    this.dbCallOn = true;
-    this.dbIsSquareOn = true;
-    this.rhythmIsLifeOn = true;
-    this.idx = 0;
+    this.userPlayed = false;
+    this.infoStarted = false;
+    this.infoTime = 0;
+    this.currentTime = 0;
+    this.endStarted = false;
+    this.endTime = 0;
+    this.loseIssue = 0;
   }
   
 
@@ -19,22 +22,22 @@ class doobooGame extends Game {
     textAlign(CENTER);
     rectMode(CENTER);
     if(this.bgmOn){
-      if(millis() - this.currentTime < 1200){
+      if(millis() - this.startTime < 1200){
         fill(255);
         rect(w / 2, h / 2, w / 3, h / 3);
         fill(0);
         text("두~부 두부 두부", w / 2, h / 2);
-      } else if(millis() - this.currentTime < 2400){
+      } else if(millis() - this.startTime < 2400){
         fill(255);
         rect(w / 2, h / 2, w / 3, h / 3);
         fill(0);
         text("으쌰!으쌰!으쌰!으쌰!", w / 2, h / 2);
-      } else if(millis() - this.currentTime < 3600){
+      } else if(millis() - this.startTime < 3600){
         fill(255);
         rect(w / 2, h / 2, w / 3, h / 3);
         fill(0);
         text("두~부 두부 두부", w / 2, h / 2);
-      } else if(millis() - this.currentTime < 4800){
+      } else if(millis() - this.startTime < 4800){
         fill(255);
         rect(w / 2, h / 2, w / 3, h / 3);
         fill(0);
@@ -50,51 +53,78 @@ class doobooGame extends Game {
 
 
   playerTurn(){
-    //6초 안에 key input이 없다면 rhythmIsLife() 호출 후 gameOver = true;하는 메소드를 구현하고 싶습니다...
-    if(keyIsPressed){
-      this.keyPressed();
-      this.dbCall();
-      if(this.dbCount != 1 && this.dbCount != 2 && this.dbCount != 4 && this.dbCount != 5){
-        this.dbIsSquare();
-        this.turn= 0;
-        this.gameOver = true;
+    if (!this.userPlayed) {
+      this.infoStarted = true;
+      this.infoTime = millis();
+      this.userPlayed = true;
+    } else if (this.infoStarted) {
+      if (millis() - this.infoTime < 2000) {
+        // instructions:
+        textSize(32);
+        textAlign(CENTER);
+        rectMode(CENTER);
+        fill(255);
+        rect(w / 2, h / 2, w / 3, h / 3);
+        fill(0);
+        text("두부 모수를 키보드에 입력해 주세요.", w / 2, h / 2);
       } else {
-        this.point(this.dbCount);
+        this.infoStarted = false;
+      }
+    } else if (!this.turnStarted) {
+      this.dbCount = 10;
+      this.dbCount = this.temp;
+      if (this.dbCount != 10) {
+        nowGame.turnStarted = true;
+        nowGame.currentTime = millis();
+        this.temp = 10;
+      }
+    } else if (this.turnStarted) {
+      if (millis() - this.currentTime < 1200) {
+      this.dbCall();
+      } else {
+        if(this.dbCount != 1 && this.dbCount != 2 && this.dbCount != 4 && this.dbCount != 5){
+        this.loseIssue = 1;
+        this.gameend();
+      } else {
+        this.point();
+        this.turnStarted = false;
         this.turn++;
       }
-    } else {
-      //this.rhythmIsLife();
-      //this.turn= 0;
-      //this.gameOver=true;
     }
   }
+}
+
 
   npcTurn(){
     console.log('npcturn');
-    this.currentTime = millis();
-    if(this.turn > 10){
-      this.dbCount = int(random(0,10));
-      this.dbCall();
-      if (this.dbCount == 1 || this.dbCount == 2 || this.dbCount == 4 || this.dbCount == 5){
-        this.point();
-        this.turn++;
-      } else {
-        this.dbIsSquare();
-        this.turn = 0;
-        this.gameOver = true;
-      }
+    if (this.everyone[this.idx].die) {
+      this.idx++;
+      this.idx = this.idx % 6;
     } else {
-      let dbNum = [1,2,4,5];
-      this.dbCount = dbNum[int(random(0,4))];
-      this.dbCallOn = true;
-      this.dbCall();
-      this.point();
-      this.turn++;
+      if (!this.turnStarted) {
+        if(this.turn > 10){
+          this.dbCount = int(random(0,10));
+        } else {
+          let dbNum = [1,2,4,5];
+          this.dbCount = dbNum[int(random(0,4))];
+        }
+        this.turnStarted = true;
+        this.currentTime = millis();
+      } else if (this.turnStarted) {
+        if (millis() - this.currentTime < 1200) {
+          this.dbCall();
+        } else {
+          if(this.dbCount != 1 && this.dbCount != 2 && this.dbCount != 4 && this.dbCount != 5){
+          this.gameend();
+        } else {
+          this.point();
+          this.turnStarted = false;
+          this.turn++;
+        }
       }
     }
-      
-
-  
+  }
+}
 
   point(){
     console.log('point');
@@ -125,49 +155,41 @@ class doobooGame extends Game {
 
   dbCall(){
     console.log('dbcall');
-    console.log(this.currentTime);
-    let x = (0.1)*w*(this.idx+1);
-    if(this.dbCallOn){
-      if(millis() - this.currentTime < 1200){
-        fill(255);
-        rect(w / 2, h / 2, w / 3, h / 3);
-        fill(0);
-        if(this.dbCount == 1){
-          text("두부 한 모!", x, 0.3*h);
-          
-        } else if(this.dbCount == 2){
-          text("두부 두 모!", x, 0.3*h);
-          
-        } else if(this.dbCount == 4){
-          text("두부 네 모!", x, 0.3*h);
-          
-        } else if(this.dbCount == 5){
-          text("두부 다섯 모!", x, 0.3*h);
-          
-        } else if(this.dbCount == 3){
-          text("두부 세 모!", x, 0.3*h);
-          
-        } else if(this.dbCount == 0){
-          text("두부 빵 모!", x, 0.3*h);
-          
-        } else if(this.dbCount == 6){
-          text("두부 여섯 모!", x, 0.3*h);
-          
-        } else if(this.dbCount == 7){
-          text("두부 일곱 모!", x, 0.3*h);
-          
-        } else if(this.dbCount == 8){
-          text("두부 여덟 모!", x, 0.3*h);
-          
-        } else if(this.dbCount == 9){
-          text("두부 아홉 모!", x, 0.3*h);
-        }
-       } else {
-        this.dbCallOn = false;
-        this.turn++;
-        }
-      }
+    fill(255);
+    rect(w / 2, h / 2, w / 3, h / 3);
+    fill(0);
+    if(this.dbCount == 1){
+      text("두부 한 모!", x, 0.3*h);
+      
+    } else if(this.dbCount == 2){
+      text("두부 두 모!", x, 0.3*h);
+      
+    } else if(this.dbCount == 4){
+      text("두부 네 모!", x, 0.3*h);
+      
+    } else if(this.dbCount == 5){
+      text("두부 다섯 모!", x, 0.3*h);
+      
+    } else if(this.dbCount == 3){
+      text("두부 세 모!", x, 0.3*h);
+      
+    } else if(this.dbCount == 0){
+      text("두부 빵 모!", x, 0.3*h);
+      
+    } else if(this.dbCount == 6){
+      text("두부 여섯 모!", x, 0.3*h);
+      
+    } else if(this.dbCount == 7){
+      text("두부 일곱 모!", x, 0.3*h);
+      
+    } else if(this.dbCount == 8){
+      text("두부 여덟 모!", x, 0.3*h);
+      
+    } else if(this.dbCount == 9){
+      text("두부 아홉 모!", x, 0.3*h);
     }
+  }
+
   
 
   dbIsSquare(){
@@ -176,60 +198,27 @@ class doobooGame extends Game {
     textAlign(CENTER);
     rectMode(CENTER);
     if(this.dbIsSquareOn){
-      if(millis() - this.currentTime < 1200){
+      if(millis() - this.endTime < 1200){
         fill(255);
         rect(w / 2, h / 2, w / 3, h / 3);
         fill(0);
         text("두부는 네모!", w / 2, h / 2);
-      } else if(millis() - this.currentTime < 2400){
+      } else if(millis() - this.endTime < 2400){
         fill(255);
         rect(w / 2, h / 2, w / 3, h / 3);
         fill(0);
         text("두부는 네모!", w / 2, h / 2);
-      } else if(millis() - this.currentTime < 3600){
+      } else if(millis() - this.endTime < 3600){
         fill(255);
         rect(w / 2, h / 2, w / 3, h / 3);
         fill(0);
         text("네모! 네모!", w / 2, h / 2);
-      } else if(millis() - this.currentTime < 4800){
+      } else if(millis() - this.endTime < 4800){
         fill(255);
         rect(w / 2, h / 2, w / 3, h / 3);
         fill(0);
         text("네모! 네모! 네모!", w / 2, h / 2);
-      } else {
-        this.dbIsSquareOn = false;
-        this.turn++;
       }
-    }
-  }
-
-
-
-
-  
-
-  keyPressed(){
-    console.log(keyCode);
-    if (keyCode === Digit1){
-      this.dbCount = 1;
-    } else if (keyCode === Digit2){
-      this.dbCount = 2;
-    } else if (keyCode === Digit3){
-      this.dbCount = 3;
-    } else if (keyCode === Digit4){
-      this.dbCount = 4;
-    } else if (keyCode === Digit5){
-      this.dbCount = 5;
-    } else if (keyCode === Digit6){
-      this.dbCount = 6;
-    } else if (keyCode === Digit7){
-      this.dbCount = 7;
-    } else if (keyCode === Digit8){
-      this.dbCount = 8;
-    } else if (keyCode === Digit9){
-      this.dbCount = 9;
-    } else if (keyCode === Digit0){
-      this.dbCount = 0;
     }
   }
 
@@ -239,29 +228,45 @@ class doobooGame extends Game {
     textAlign(CENTER);
     rectMode(CENTER);
     if(this.rhythmIsLifeOn){
-      if(millis() - this.currentTime < 1200){
+      if(millis() - this.endTime < 1200){
         fill(255);
         rect(w / 2, h / 2, w / 3, h / 3);
         fill(0);
         text("박자는 생명!", w / 2, h / 2);
-      } else if(millis() - this.currentTime < 2400){
+      } else if(millis() - this.endTime < 2400){
         fill(255);
         rect(w / 2, h / 2, w / 3, h / 3);
         fill(0);
         text("박자는 생명!", w / 2, h / 2);
-      } else if(millis() - this.currentTime < 3600){
+      } else if(millis() - this.endTime < 3600){
         fill(255);
         rect(w / 2, h / 2, w / 3, h / 3);
         fill(0);
         text("생명! 생명!!", w / 2, h / 2);
-      } else if(millis() - this.currentTime < 4800){
+      } else if(millis() - this.endTime < 4800){
         fill(255);
         rect(w / 2, h / 2, w / 3, h / 3);
         fill(0);
         text("생명! 생명! 생명!", w / 2, h / 2);
+      }
+    }
+  }
+
+  gameend() {
+    if (!this.endStarted) {
+      this.endStarted = true;
+      this.endTime = millis();
+    } else {
+      if (millis() - this.endTime < 4800) {
+        if(this.loseIssue == 1){
+          this.dbIsSquare();
+        } else if(this.loseIssue == 2) {
+          this.rhythmIsLife();
+        }
       } else {
-        this.rhythmIsLifeOn = false;
-        this.turn++;
+        this.gameOver = true;
+        this.everyone[this.idx].lose();
+        this.gameList.gameNum++;
       }
     }
   }
