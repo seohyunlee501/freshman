@@ -123,7 +123,7 @@ class subwayGame extends Game {
     } else {
       if (!this.turnStarted) {
         let temp = random();
-        if(temp < 0.99){
+        if(temp < 0.88){
           let lineIdx = Math.floor(random(0, this.stationList[this.currentLine].length));
           this.npcStationName = this.stationList[this.currentLine][lineIdx];
           this.stationList[this.currentLine].splice(lineIdx, 1);
