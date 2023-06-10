@@ -48,7 +48,7 @@ class eyeGame extends Game {
     
     this.randChar.sort(() => random() - 0.5);
     this.randChar[0][1] = 700;
-    this.randChar[1][1] = Math.floor(random(500, 1000) / 100) * 100
+    this.randChar[1][1] = Math.floor(random(500, 1200) / 100) * 100
 
     for (let i = 0; i < 5; i++){
       console.log(this.randChar[i][1], this.randChar[i][3]);
@@ -324,10 +324,10 @@ class eyeGame extends Game {
       if(millis() - this.endStartTime < 2000){
         fill(255);
         rectMode(CENTER);
-        rect(w/2, h/2, w/3, h/3);
+        rect(w/2, h/2, w/2, h/3);
         fill(0);
         textAlign(CENTER);
-        textSize(50);
+        textSize(32);
         text('눈치는 생명! 눈치는 생명!', w / 2, h * 0.45);
         text('생명! 생명! 생명! 생명! 생명!', w / 2, h * 0.55);
       }else if(millis() - this.endStartTime > 2000){
@@ -342,7 +342,7 @@ class eyeGame extends Game {
         rect(w/2, h/2, w/3, h/3);
         fill(0);
         textAlign(CENTER);
-        textSize(50);
+        textSize(32);
         text('휴~ 살았다', w / 2, h / 2);
       }else if(millis() - this.endStartTime > 2000){
         this.gameOver = true;

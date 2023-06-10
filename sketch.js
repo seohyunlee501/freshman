@@ -64,11 +64,11 @@ function setup() {
   button = createButton("submit");
   noCursor();
   subwayInput = createInput("");
-  subwayInput.size(w / 12);
-  subwayInput.position(w * 0.5, h * 0.55);
+  subwayInput.size(w / 10);
+  subwayInput.position(w * 0.45, h * 0.55);
   subwayInput.hide();
   subwayButton = createButton("확인");
-  subwayButton.position(w * 0.5, h * 0.6);
+  subwayButton.position(w * 0.47, h * 0.63);
   subwayButton.hide();
 }
 
@@ -156,6 +156,7 @@ function draw() {
     image(cursor, mouseX, mouseY, 0.1 * h, 0.1 * h);
   }
 
+  // subwayGame setup
   if(mode == 4 && nowGame.gameName == "지하철게임"){
     if(nowGame.playerInput == true){
       fill(255);
@@ -167,6 +168,7 @@ function draw() {
       text('역 이름을 입력하세요!', w * 0.5, h * 0.45);
       subwayInput.show();
       subwayButton.show();
+      subwayButton.mousePressed(saveStations);
     }
   }
 }
@@ -335,4 +337,14 @@ function keyPressed() {
       nowGame.lineSelection = 4;
     }
   }
+}
+
+function saveStations() {
+  nowGame.stationName = subwayInput.value();
+  nowGame.stationIdx = nowGame.stationList[nowGame.currentLine].indexOf(nowGame.stationName);
+  subwayInput.hide();
+  subwayButton.hide();
+  nowGame.playerCurrentTime = millis();
+  nowGame.playerStarted= true;
+  nowGame.playerInput = false;
 }
