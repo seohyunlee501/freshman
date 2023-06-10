@@ -6,7 +6,7 @@ class baboGame extends Game {
     this.myRec = new p5.SpeechRec(); // new P5.SpeechRec object
     this.video = createCapture(VIDEO);
     this.video.size(0.5 * w, 0.5 * h);
-    this.myHand = ml5.handpose(video, this.modelLoaded);
+    this.myHand = ml5.handpose(this.video, this.modelLoaded);
     this.inputVoice = 0;
     this.inputHand = 0;
     this.startTime = millis();
@@ -21,6 +21,7 @@ class baboGame extends Game {
     this.endStarted = false;
     this.endTime = 0;
     this.loseIssue = "";
+    this.predictions;
   }
   modelLoaded() {}
   intro() {
@@ -111,9 +112,9 @@ class baboGame extends Game {
       this.infoStarted = true;
       this.infoTime = millis();
       this.myRec.start();
-      this.handpose.on("hand", (results) => {
-        predictions = results;
-      });
+      //this.myHand.on("hand", (results) => {
+      //this.predictions = results;
+      //});
       this.userPlayed = true;
     } else {
       if (millis() - this.infoTime < 2000) {
