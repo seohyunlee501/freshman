@@ -30,6 +30,7 @@ class subwayGame extends Game {
     this.stationName = '';
     this.stationIdx = 999;
     this.playerCurrentTime = 0;
+    this.endStarted = false;
   }
   
   intro() {
@@ -55,7 +56,6 @@ class subwayGame extends Game {
   }
 
   lineSelect() {
-    console.log('line selection');
     textSize(32);
     textAlign(CENTER);
     rectMode(CENTER);
@@ -82,15 +82,12 @@ class subwayGame extends Game {
   }
 
   stationInput() {
-    console.log('station input')
     this.playerInput = true;
   }
 
   playerturn() {
     if(!this.pturnStarted) {
-      console.log('pturnstarted')
       if(this.stationIdx == -1){
-        console.log('gameend');
         this.gameend();
         this.loseIssue = '입력';
       }else if(this.stationIdx < 999) {
