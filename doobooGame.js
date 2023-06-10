@@ -4,79 +4,52 @@ class doobooGame extends Game {
     this.gameName = "두부게임";
     this.dbCount = _dbCount;
     this.turn = 0;
-    this.x1 = w/2;
-    this.y1 = h/2;
-    this.x2 = w/2;
-    this.y2 = h/2;
-    this.x3 = w/2;
-    this.y3 = h/2;
-    this.x4 = w/2;
-    this.y4 = h/2;
-    this.whosTurn = 0;
+    this.currentTime = millis();
+    this.bgmOn = true;
   }
   round() {
-    this.gameOver=false;
-    this.dbBgm();
-    /*while(!this.gameOver){
-      if(this.this.idx == 3){
-        this.playerTurn();
-      } else {
-        this.npcTurn();
-      }
-    }*/
+    if(this.turn == 0){
+      this.dbBgm();
+    } else {
+        if(this.this.idx == 3){
+          this.playerTurn();
+        } else {
+          this.npcTurn();
+        }
+    }
   }
 
   dbBgm(){
-    let currentTime = millis();
-    let bgmOn = true;
-
-    textAlign(CENTER, CENTER);
-
-    function draw(){
-  
-      if(bgmOn){
-        if(millis() - currentTime < 1200){
-          text("두~부 두부 두부", this.x1, this.y1);
-        }
-    
-        if(millis() - currentTime > 1200 && millis() - currentTime < 2400){
-          this.x1 = -999;
-          this.y1 = -999;
-          text("으쌰!으쌰!으쌰!으쌰!", this.x2, this.y2);
-        }
-    
-        if(millis() - currentTime > 2400 && millis() - currentTime < 3600){
-          this.x2 = -999;
-          this.y2 = -999;
-          text("두~부 두부 두부", this.x3, this.y3);
-        }
-    
-        if(millis() - currentTime > 3600 && millis() - currentTime < 4800){
-          this.x3 = -999;
-          this.y3 = -999;
-          text("으쌰!으쌰!으쌰!으쌰!", this.x4, this.y4);
-        }
-    
-        if(millis() - currentTime > 4800){
-          this.x4 = -999;
-          this.y4 = -999;
-          bgmOn = false;
-
-          /*text("두~부 두부 두부",w/2, h/2);
-      
-          text("으쌰!으쌰!으쌰!으쌰!",w/2, h/2);
-      
-          text("두~부 두부 두부",w/2, h/2);
-      
-          text("으쌰!으쌰!으쌰!으쌰!",w/2, h/2);
-
-          각 텍스트들이 한줄당 1.5초씩 나왔다 사라지게 하고 싶습니다.
-
-        */
-        
-        }
+    textSize(32);
+    textAlign(CENTER);
+    rectMode(CENTER);
+    if(this.bgmOn){
+      if(millis() - this.currentTime < 1200){
+        fill(255);
+        rect(w / 2, h / 2, w / 3, h / 3);
+        fill(0);
+        text("두~부 두부 두부", w / 2, h / 2);
+      } else if(millis() - this.currentTime < 2400){
+        fill(255);
+        rect(w / 2, h / 2, w / 3, h / 3);
+        fill(0);
+        text("으쌰!으쌰!으쌰!으쌰!", w / 2, h / 2);
+      } else if(millis() - this.currentTime < 3600){
+        fill(255);
+        rect(w / 2, h / 2, w / 3, h / 3);
+        fill(0);
+        text("두~부 두부 두부", w / 2, h / 2);
+      } else if(millis() - this.currentTime < 4800){
+        fill(255);
+        rect(w / 2, h / 2, w / 3, h / 3);
+        fill(0);
+        text("으쌰!으쌰!으쌰!으쌰!", w / 2, h / 2);
+      } else {
+        this.bgmOn = false;
+        this.turn++;
       }
     }
+    
   }
 
 
