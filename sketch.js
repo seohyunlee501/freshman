@@ -5,7 +5,6 @@ let eventStory;
 let story;
 
 let chars = [];
-let characterImages = []; // 이미지용
 let player;
 let gender;
 let bSelecting = false;
