@@ -2,6 +2,7 @@ let mode = 0;
 
 let introStory;
 let eventStory;
+let story;
 
 let chars = [];
 let player;
@@ -27,6 +28,11 @@ let playerimg, bImg, gImg;
 let title;
 let cursor, cursor_clicked;
 let arrow, bubble_l, bubble_r;
+let bg2, bg2_1, bg5;
+let imgs_npc = {};
+let imgs_player = {};
+let subwayInput;
+let subwayButton;
 
 function preload() {
   retroFont = loadFont("fonts/DungGeunMo.ttf");
@@ -47,6 +53,23 @@ function preload() {
     let temp = "Assets/gamebutton_" + (j + 1) + ".png";
     gameButton[j] = loadImage(temp);
   }
+  bg2 = loadImage("Assets/background_mode2.jpg");
+  bg2_1 = loadImage("Assets/background_mode2_1.jpg");
+  bg5 = loadImage("Assets/background_mode5.jpg");
+  soju_img = loadImage("Assets/soju_1.png"); // 빨뚜
+  soju_img_g = loadImage("Assets/soju_2.png"); // 초록뚜껑
+  item_img = loadImage("Assets/item_1.png");
+  imgs_npc["g_1"] = loadImage("Assets/npc_g_1.png");
+  for (let i = 1; i <= 4; i++) {
+    for (let j = 1; j <= 6; j++) {
+      let idx = `${i}_${j}`;
+      imgs_npc[idx] = loadImage(`Assets/npc_${idx}.png`);
+    }
+  }
+  for (let i = 1; i <= 5; i++) {
+    imgs_player[`m_${i}`] = loadImage(`Assets/player_m_${i}.png`);
+    imgs_player[`f_${i}`] = loadImage(`Assets/player_f_${i}.png`);
+  }
   arrow = loadImage("Assets/arrow.png");
   bubble_l = loadImage("Assets/bubble_left.png");
   bubble_r = loadImage("Assets/bubble_right.png");
@@ -60,6 +83,23 @@ function setup() {
   sojuInput = createInput();
   button = createButton("submit");
   noCursor();
+  story = new Story();
+  for (let i = 1; i < 5; i++) {
+    chars[i - 1] = new PlayerNPC(int(random(5, 7)), i);
+  }
+  chars[4] = new PlayerNPC(10, "g");
+  let temp = chars[2];
+  chars[2] = chars[4];
+  chars[4] = temp;
+  player = new Player();
+  gameSelect = new gameList(chars, player);
+  subwayInput = createInput("");
+  subwayInput.size(w / 10);
+  subwayInput.position(w * 0.45, h * 0.55);
+  subwayInput.hide();
+  subwayButton = createButton("확인");
+  subwayButton.position(w * 0.47, h * 0.63);
+  subwayButton.hide();
 }
 
 function draw() {
@@ -89,20 +129,10 @@ function draw() {
       introdisplay(w * 0.7, h * 0.5, "girl");
       break;
     case 2:
-      bSelecting = false;
-      gSelecting = false;
+      // bSelecting = false;
+      // gSelecting = false;
       textFont(movieFont);
-      introStory = new Story(2, player);
-      introStory.display();
-      for (let i = 1; i < 5; i++) {
-        chars[i - 1] = new PlayerNPC(int(random(5, 7)), i);
-      }
-      chars[4] = new PlayerNPC(10, "g");
-      let temp = chars[2];
-      chars[2] = chars[4];
-      chars[4] = temp;
-      gameSelect = new gameList(chars, player);
-      mode = 3;
+      story.drawScene();
       break;
     case 3:
       gameSelect.display();
@@ -122,8 +152,8 @@ function draw() {
       break;
     case 5:
       textFont(movieFont);
-      eventStory = new Story(5, player);
-      eventStory.display();
+      // eventStory = new Story(5, player);
+      story.drawScene();
       break;
     case 6:
       player.gameover();
@@ -139,16 +169,35 @@ function draw() {
 
   //cursor
   if (mouseIsPressed) {
-    imageMode(CENTER);
-    image(cursor_clicked, mouseX, mouseY, 0.1 * h, 0.1 * h);
+    imageMode(CORNER);
+    image(cursor_clicked, mouseX, mouseY, 0.07 * h, 0.07 * h);
   } else {
-    imageMode(CENTER);
-    image(cursor, mouseX, mouseY, 0.1 * h, 0.1 * h);
+    imageMode(CORNER);
+    image(cursor, mouseX, mouseY, 0.07 * h, 0.07 * h);
+  }
+
+  // subwayGame setup
+  if (mode == 4 && nowGame.gameName == "지하철게임") {
+    if (nowGame.playerInput == true) {
+      fill(255);
+      rectMode(CENTER);
+      rect(w / 2, h / 2, w / 2, h / 2);
+      fill(0);
+      textAlign(CENTER);
+      textSize(32);
+      text("역 이름을 입력하세요!", w * 0.5, h * 0.45);
+      subwayInput.show();
+      subwayButton.show();
+      subwayButton.mousePressed(saveStations);
+    }
   }
 }
 
 function mousePressed() {
   //game select
+  if ((mode == 2 || mode == 5) && story) {
+    story.mousePressed();
+  }
   if (mode == 3) {
     if (mouseY > 0.2 * h && mouseY < 0.5 * h) {
       if (mouseX > 0.13 * w && mouseX < 0.37 * w) {
@@ -223,7 +272,6 @@ function mouseClicked() {
     ) {
       bSelecting = false;
       gSelecting = true;
-
       selectPlayer("girl");
     }
   }
@@ -273,7 +321,7 @@ function selectPlayer(_gen) {
 function setPlayer() {
   let name = nameInput.value();
   let soju = sojuInput.value();
-  player = new Player(name, soju, gender);
+  player.set(name, soju, gender);
   nameInput.value("");
   sojuInput.value("");
   nameInput.position(-0.25 * w, -0.4 * h);
@@ -318,4 +366,63 @@ function keyPressed() {
       nowGame.temp = 9;
     }
   }
+  if (mode == 4 && nowGame.gameName == "눈치게임") {
+    if (keyCode === 13) {
+      nowGame.interruption = true;
+    }
+  }
+  if (
+    mode == 4 &&
+    nowGame.gameName == "지하철게임" &&
+    nowGame.lineSelected == false
+  ) {
+    console.log(keyCode);
+    if (keyCode === 50 || keyCode === 98) {
+      nowGame.lineSelection = 2;
+    } else if (keyCode === 51 || keyCode === 99) {
+      nowGame.lineSelection = 3;
+    } else if (keyCode === 52 || keyCode === 100) {
+      nowGame.lineSelection = 4;
+    } else {
+      nowGame.lineSelection = -1;
+    }
+  }
+    if (mode == 4 && nowGame.gameName == "두부게임") {
+    console.log("key pressed");
+    console.log(keyCode);
+    if (keyCode === 48 || keyCode === 96) {
+      nowGame.temp = 0;
+    } else if (keyCode === 49 || keyCode === 97) {
+      nowGame.temp = 1;
+    } else if (keyCode === 50 || keyCode === 98) {
+      nowGame.temp = 2;
+    } else if (keyCode === 51 || keyCode === 99) {
+      nowGame.temp = 3;
+    } else if (keyCode === 52 || keyCode === 100) {
+      nowGame.temp = 4;
+    } else if (keyCode === 53 || keyCode === 101) {
+      nowGame.temp = 5;
+    } else if (keyCode === 54 || keyCode === 102) {
+      nowGame.temp = 6;
+    } else if (keyCode === 55 || keyCode === 103) {
+      nowGame.temp = 7;
+    } else if (keyCode === 56 || keyCode === 104) {
+      nowGame.temp = 8;
+    } else if (keyCode === 57 || keyCode === 105) {
+      nowGame.temp = 9;
+    }
+  }
+
+}
+
+function saveStations() {
+  nowGame.stationName = subwayInput.value();
+  nowGame.stationIdx = nowGame.stationList[nowGame.currentLine].indexOf(
+    nowGame.stationName
+  );
+  subwayInput.hide();
+  subwayButton.hide();
+  nowGame.playerCurrentTime = millis();
+  nowGame.playerStarted = true;
+  nowGame.playerInput = false;
 }

@@ -18,11 +18,11 @@ class PlayerNPC {
     let temp = path;
     if (this.old) {
       path = "Assets/" + temp + "_1.png";
-      this.image[0] = loadImage(path);
+      this.image[0] = imgs_npc["g_1"]
     } else {
       for (let i = 0; i < 5; i++) {
         path = "Assets/" + temp + "_" + (i + 1) + ".png";
-        this.image[i] = loadImage(path);
+        this.image[i] = imgs_npc[`${this.idx}_${i}`]
       }
     }
   }
