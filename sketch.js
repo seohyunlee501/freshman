@@ -321,13 +321,11 @@ function keyPressed() {
     }
   }
   if (mode == 4 && nowGame.gameName == "눈치게임") {
-    console.log("key pressed");
     if (keyCode === 13) {
       nowGame.interruption = true;
     }
   }
   if (mode == 4 && nowGame.gameName == "지하철게임" && nowGame.lineSelected == false) {
-    console.log("key pressed");
     console.log(keyCode);
     if (keyCode === 50 || keyCode === 98) {
       nowGame.lineSelection = 2;
@@ -335,6 +333,8 @@ function keyPressed() {
       nowGame.lineSelection = 3;
     } else if (keyCode === 52 || keyCode === 100) {
       nowGame.lineSelection = 4;
+    } else {
+      nowGame.lineSelection = -1;
     }
   }
 }
