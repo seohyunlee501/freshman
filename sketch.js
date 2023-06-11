@@ -169,23 +169,23 @@ function draw() {
 
   //cursor
   if (mouseIsPressed) {
-    imageMode(CENTER);
-    image(cursor_clicked, mouseX, mouseY, 0.1 * h, 0.1 * h);
+    imageMode(CORNER);
+    image(cursor_clicked, mouseX, mouseY, 0.07 * h, 0.07 * h);
   } else {
-    imageMode(CENTER);
-    image(cursor, mouseX, mouseY, 0.1 * h, 0.1 * h);
+    imageMode(CORNER);
+    image(cursor, mouseX, mouseY, 0.07 * h, 0.07 * h);
   }
 
   // subwayGame setup
-  if(mode == 4 && nowGame.gameName == "지하철게임"){
-    if(nowGame.playerInput == true){
+  if (mode == 4 && nowGame.gameName == "지하철게임") {
+    if (nowGame.playerInput == true) {
       fill(255);
       rectMode(CENTER);
       rect(w / 2, h / 2, w / 2, h / 2);
       fill(0);
       textAlign(CENTER);
       textSize(32);
-      text('역 이름을 입력하세요!', w * 0.5, h * 0.45);
+      text("역 이름을 입력하세요!", w * 0.5, h * 0.45);
       subwayInput.show();
       subwayButton.show();
       subwayButton.mousePressed(saveStations);
@@ -327,7 +327,7 @@ function setPlayer() {
   nameInput.position(-0.25 * w, -0.4 * h);
   sojuInput.position(-0.25 * w, -0.5 * h);
   button.position(-0.68 * w, -0.65 * h);
-  mode = 5;
+  mode = 2;
 }
 
 function keyPressed() {
@@ -347,7 +347,11 @@ function keyPressed() {
       nowGame.interruption = true;
     }
   }
-  if (mode == 4 && nowGame.gameName == "지하철게임" && nowGame.lineSelected == false) {
+  if (
+    mode == 4 &&
+    nowGame.gameName == "지하철게임" &&
+    nowGame.lineSelected == false
+  ) {
     console.log(keyCode);
     if (keyCode === 50 || keyCode === 98) {
       nowGame.lineSelection = 2;
@@ -363,10 +367,12 @@ function keyPressed() {
 
 function saveStations() {
   nowGame.stationName = subwayInput.value();
-  nowGame.stationIdx = nowGame.stationList[nowGame.currentLine].indexOf(nowGame.stationName);
+  nowGame.stationIdx = nowGame.stationList[nowGame.currentLine].indexOf(
+    nowGame.stationName
+  );
   subwayInput.hide();
   subwayButton.hide();
   nowGame.playerCurrentTime = millis();
-  nowGame.playerStarted= true;
+  nowGame.playerStarted = true;
   nowGame.playerInput = false;
 }
