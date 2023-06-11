@@ -88,6 +88,7 @@ function setup() {
   chars[2] = chars[4];
   chars[4] = temp;
   player = new Player();
+  gameSelect = new gameList(chars, player);
 }
 
 function draw() {
@@ -121,7 +122,6 @@ function draw() {
       // gSelecting = false;
       textFont(movieFont);
       story.drawScene();
-      gameSelect = new gameList(chars, player);
       break;
     case 3:
       gameSelect.display();
@@ -301,5 +301,5 @@ function setPlayer() {
   nameInput.position(-0.25 * w, -0.4 * h);
   sojuInput.position(-0.25 * w, -0.5 * h);
   button.position(-0.68 * w, -0.65 * h);
-  mode = 2;
+  mode = 5;
 }

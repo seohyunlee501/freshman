@@ -172,9 +172,9 @@ class Story {
       (this.scene === "5-3" || this.scene === "5-4" || this.scene === "5-5") &&
       this.kkk
     ) {
-      mode = 6;
+      mode = 3;
+      this.ready = false;
     }
-    // 5-3, 5-4, 5-5에서 클릭했을 때 mode 6으로 넘어가고 싶은데 else if (5-3 || 5-4 || 5-5){mode =6;} 을 추가하면 scene이 뜨지 않음
   }
 
   drawNumberInput() {
