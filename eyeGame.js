@@ -310,7 +310,6 @@ class eyeGame extends Game {
   playerLose() {
     this.endStartTime = millis();
     console.log("GAME OVER!"); // should be changed with display
-    this.player.alcholblood++;
     this.idx = 3;
     this.npcOneDisplay = false;
     this.npcTwoDisplay = false;
@@ -328,7 +327,7 @@ class eyeGame extends Game {
         fill(0);
         textAlign(CENTER);
         textSize(32);
-        text('눈치는 생명! 눈치는 생명!', w / 2, h * 0.45);
+        text('눈치는 생명! 생명!', w / 2, h * 0.45);
         text('생명! 생명! 생명! 생명! 생명!', w / 2, h * 0.55);
       }else if(millis() - this.endStartTime > 2000){
         this.gameOver = true;
