@@ -28,6 +28,11 @@ let playerimg, bImg, gImg;
 let title;
 let cursor, cursor_clicked;
 let arrow, bubble_l, bubble_r;
+let bg2, bg2_1, bg5;
+let imgs_npc = {};
+let imgs_player = {};
+let subwayInput;
+let subwayButton;
 
 function preload() {
   retroFont = loadFont("fonts/DungGeunMo.ttf");
@@ -65,6 +70,9 @@ function preload() {
     imgs_player[`m_${i}`] = loadImage(`Assets/player_m_${i}.png`);
     imgs_player[`f_${i}`] = loadImage(`Assets/player_f_${i}.png`);
   }
+  arrow = loadImage("Assets/arrow.png");
+  bubble_l = loadImage("Assets/bubble_left.png");
+  bubble_r = loadImage("Assets/bubble_right.png");
 }
 
 function setup() {
