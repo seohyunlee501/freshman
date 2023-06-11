@@ -41,9 +41,19 @@ class Player {
   }
   gameover() {
     if (this.die) {
-      
+      imageMode(CENTER);
+      image(gameLost, w / 2, h / 2, w, h);
+      imageMode(CENTER);
+      push();
+      scale(1, -1);
+      translate(0, height);
+      image(this.image[5], w * 0.8, - h * 0.8);
+      pop();
     } else {
-
+      imageMode(CENTER);
+      image(gameWon, w / 2, h / 2, w, h);
+      let a = this.alcolblood - 3;
+      image(this.image[a], w * 0.8, h * 0.6);
     }
   }
 }
