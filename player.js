@@ -41,7 +41,9 @@ class Player {
   }
   gameover() {
     if (this.die) {
+      
     } else {
+
     }
   }
 }
