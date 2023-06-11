@@ -363,6 +363,32 @@ function keyPressed() {
       nowGame.lineSelection = -1;
     }
   }
+    if (mode == 4 && nowGame.gameName == "두부게임") {
+    console.log("key pressed");
+    console.log(keyCode);
+    if (keyCode === 48 || keyCode === 96) {
+      nowGame.temp = 0;
+    } else if (keyCode === 49 || keyCode === 97) {
+      nowGame.temp = 1;
+    } else if (keyCode === 50 || keyCode === 98) {
+      nowGame.temp = 2;
+    } else if (keyCode === 51 || keyCode === 99) {
+      nowGame.temp = 3;
+    } else if (keyCode === 52 || keyCode === 100) {
+      nowGame.temp = 4;
+    } else if (keyCode === 53 || keyCode === 101) {
+      nowGame.temp = 5;
+    } else if (keyCode === 54 || keyCode === 102) {
+      nowGame.temp = 6;
+    } else if (keyCode === 55 || keyCode === 103) {
+      nowGame.temp = 7;
+    } else if (keyCode === 56 || keyCode === 104) {
+      nowGame.temp = 8;
+    } else if (keyCode === 57 || keyCode === 105) {
+      nowGame.temp = 9;
+    }
+  }
+
 }
 
 function saveStations() {
