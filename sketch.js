@@ -327,7 +327,7 @@ function setPlayer() {
   nameInput.position(-0.25 * w, -0.4 * h);
   sojuInput.position(-0.25 * w, -0.5 * h);
   button.position(-0.68 * w, -0.65 * h);
-  mode = 2;
+  mode = 5;
 }
 
 function keyPressed() {
