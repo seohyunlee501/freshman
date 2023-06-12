@@ -84,7 +84,7 @@ function setup() {
   nameInput = createInput();
   sojuInput = createInput();
   button = createButton("submit");
-  noCursor();
+  //noCursor();
   story = new Story();
   for (let i = 1; i < 5; i++) {
     chars[i - 1] = new PlayerNPC(int(random(5, 7)), i);
@@ -141,6 +141,7 @@ function draw() {
       story.drawScene();
       break;
     case 3:
+      imageMode(CENTER);
       gameSelect.display();
       //temp = gameSelect.gameNum;
       break;
@@ -173,16 +174,16 @@ function draw() {
     image(reset, 0.05 * w, 0.05 * h, 0.05 * w, 0.1 * h);
   }
 
-  //cursor
-  if (mouseIsPressed) {
-    imageMode(CORNER);
-    image(cursor_clicked, mouseX, mouseY, 0.07 * h, 0.07 * h);
-    imageMode(CENTER);
-  } else {
-    imageMode(CORNER);
-    image(cursor, mouseX, mouseY, 0.07 * h, 0.07 * h);
-    imageMode(CENTER);
-  }
+  // //cursor
+  // if (mouseIsPressed) {
+  //   imageMode(CORNER);
+  //   image(cursor_clicked, mouseX, mouseY, 0.07 * h, 0.07 * h);
+  //   imageMode(CENTER);
+  // } else {
+  //   imageMode(CORNER);
+  //   image(cursor, mouseX, mouseY, 0.07 * h, 0.07 * h);
+  //   imageMode(CENTER);
+  // }
 
   // subwayGame setup
   if (mode == 4 && nowGame.gameName == "지하철게임") {
