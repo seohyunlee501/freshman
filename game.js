@@ -13,6 +13,7 @@ class Game {
     this.gameOver = false;
     //everyone list
     this.everyone = _gameList.everyone;
+    console.log(this.everyone);
   }
   display() {
     //background

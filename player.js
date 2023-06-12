@@ -3,11 +3,9 @@ class Player {
     this.alcholblood = 0;
     this.die = false;
     this.image = [];
-    console.log("player called");
   }
 
   set(_name, _soju, _gen) {
-    console.log("player set");
     this.name = _name;
     this.soju = _soju;
     this.gen = _gen;
@@ -18,9 +16,7 @@ class Player {
       gKey = "f";
     }
     for (let i = 1; i <= 5; i++) {
-      console.log(`${gKey}_${i}`);
       this.image[i] = imgs_player[`${gKey}_${i}`];
-      console.log(this.image[i]);
     }
   }
 

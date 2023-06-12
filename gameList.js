@@ -1,6 +1,5 @@
 class gameList {
   constructor(_chars, _player) {
-    console.log("gameList called");
     this.chars = _chars;
     this.player = _player;
     this.gameNum = 1;
@@ -10,7 +9,6 @@ class gameList {
     this.everyone[5] = temp;
   }
   display() {
-    console.log("gameList display called");
     //title
     rectMode(CORNER);
     fill(112, 173, 71);
