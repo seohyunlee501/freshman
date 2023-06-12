@@ -86,14 +86,6 @@ function setup() {
   button = createButton("submit");
   //noCursor();
   story = new Story();
-  for (let i = 1; i < 5; i++) {
-    chars[i - 1] = new PlayerNPC(int(random(5, 7)), i);
-  }
-  chars[4] = new PlayerNPC(10, "g");
-  let temp = chars[2];
-  chars[2] = chars[4];
-  chars[4] = temp;
-  player = new Player();
 
   subwayInput = createInput("");
   subwayInput.size(w / 10);
@@ -234,6 +226,13 @@ function mousePressed() {
 function mouseClicked() {
   if ((mode == 2 || mode == 5) && story) {
     if (story.scene === "2-4") {
+      for (let i = 1; i < 5; i++) {
+        chars[i - 1] = new PlayerNPC(int(random(5, 7)), i);
+      }
+      chars[4] = new PlayerNPC(10, "g");
+      let temp = chars[2];
+      chars[2] = chars[4];
+      chars[4] = temp;
       gameSelect = new gameList(chars, player);
       gameSelect.player.alcholblood += 4;
     }
@@ -334,13 +333,14 @@ function selectPlayer(_gen) {
 function setPlayer() {
   let name = nameInput.value();
   let soju = sojuInput.value();
-  player.set(name, soju, gender);
+  player = new Player(name, soju, gender);
+  //player.set(name, soju, gender);
   //console.log(name, soju, gender);
   nameInput.value("");
   sojuInput.value("");
-  nameInput.position(-0.25 * w, -0.4 * h);
-  sojuInput.position(-0.25 * w, -0.5 * h);
-  button.position(-0.68 * w, -0.65 * h);
+  nameInput.hide();
+  sojuInput.hide();
+  button.hide();
   mode = 2;
 }
 
@@ -409,6 +409,7 @@ function saveStations() {
   nowGame.stationIdx = nowGame.stationList[nowGame.currentLine].indexOf(
     nowGame.stationName
   );
+  subwayInput("");
   subwayInput.hide();
   subwayButton.hide();
   nowGame.playerCurrentTime = millis();
