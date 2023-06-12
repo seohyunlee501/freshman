@@ -3,7 +3,7 @@ class eyeGame extends Game {
     super(_idx, _gameList);
     this.gameName = "눈치게임";
     this.turn = 0;
-    this.failureInterval = 299;
+    this.failureInterval = 401;
     this.lastCalledTime = 0;
     this.currentNumber = 1;
     this.randChar = [[],[],[],[],[]];
@@ -45,11 +45,11 @@ class eyeGame extends Game {
       this.randChar[i-1][2] = false;
       this.randChar[i-1][3] = i
     }
-    
+
     this.randChar.sort(() => random() - 0.5);
     this.randChar[0][1] = 700;
     this.randChar[1][1] = Math.floor(random(500, 1200) / 100) * 100
-
+    
     for (let i = 0; i < 5; i++){
       console.log(this.randChar[i][1], this.randChar[i][3]);
     }
@@ -217,7 +217,7 @@ class eyeGame extends Game {
         this.lastCalledTime = millis();
         this.randChar[1][2] = true;
         this.currentNumber++;
-      }else if(this.randChar[1][0].die == false && this.randChar[1][2] == false && this.randChar[1][1] < this.failureInterval){
+      }else if(this.randChar[1][0].die == false && this.randChar[1][2] == false && this.randChar[1][1] < this.failureInterval && this.randChar[0][2] == true){
         this.idx = this.randChar[1][3];
         this.npcTwoDisplay = true;
         console.log(this.currentNumber);
@@ -238,7 +238,7 @@ class eyeGame extends Game {
         this.lastCalledTime = millis();
         this.randChar[2][2] = true;
         this.currentNumber++;
-      }else if(this.randChar[2][0].die == false && this.randChar[2][2] == false && this.randChar[2][1] < this.failureInterval){
+      }else if(this.randChar[2][0].die == false && this.randChar[2][2] == false && this.randChar[2][1] < this.failureInterval && this.randChar[1][2] == true){
         this.idx = this.randChar[2][3];
         this.npcThreeDisplay = true;
         console.log(this.currentNumber);
@@ -258,7 +258,7 @@ class eyeGame extends Game {
         this.lastCalledTime = millis();
         this.randChar[3][2] = true;
         this.currentNumber++;
-      }else if(this.randChar[3][0].die == false && this.randChar[3][2] == false && this.randChar[3][1] < this.failureInterval){
+      }else if(this.randChar[3][0].die == false && this.randChar[3][2] == false && this.randChar[3][1] < this.failureInterval && this.randChar[2][2] == true){
         this.idx = this.randChar[3][3];
         this.npcFourDisplay = true;
         console.log(this.currentNumber);
@@ -284,7 +284,7 @@ class eyeGame extends Game {
           this.playerLose();
           this.endPlayer = true;
         }
-      }else if(this.randChar[4][0].die == false && this.randChar[4][2] == false && this.randChar[4][1] < this.failureInterval){
+      }else if(this.randChar[4][0].die == false && this.randChar[4][2] == false && this.randChar[4][1] < this.failureInterval && this.randChar[3][2] == true){
         this.idx = this.randChar[4][3];
         this.npcFiveDisplay = true;
         console.log(this.currentNumber);

@@ -31,6 +31,8 @@ class subwayGame extends Game {
     this.stationIdx = 999;
     this.playerCurrentTime = 0;
     this.endStarted = false;
+    this.gamefinishedByWrongInput = false;
+    this.gamefinishedByWrongStation = false;
   }
   
   intro() {
@@ -63,6 +65,13 @@ class subwayGame extends Game {
     rect(w / 2, h / 2, w / 3, h / 3);
     fill(0);
     text("숫자 패드로 지하철 노선을 고르세요!", w / 2, h / 2);
+    if(this.lineSelection == -1) {
+      this.lineSelected = true;
+      this.gamefinishedByWrongInput = true;
+      this.gameend();
+      this.loseIssue = '호선';
+    }
+
     if(this.lineSelection == 2){
       this.currentLine = 2;
       this.lineSelected = true;
@@ -75,9 +84,7 @@ class subwayGame extends Game {
     }else if(this.lineSelection == 0){
       //do nothing
     }else{
-      this.gameend();
-      this.loseIssue = '호선';
-      this.lineSelected = true;
+
     }
   }
 
@@ -88,6 +95,7 @@ class subwayGame extends Game {
   playerturn() {
     if(!this.pturnStarted) {
       if(this.stationIdx == -1){
+        this.gamefinishedByWrongStation = true;
         this.gameend();
         this.loseIssue = '입력';
       }else if(this.stationIdx < 999) {
@@ -104,6 +112,7 @@ class subwayGame extends Game {
         textSize(50);
         text(this.stationName + '!', 0, 0);
         pop();
+        console.log(this.stationIdx + '999');
       } else {
         this.playerEnd = true;
         this.pturnstarted = false;
@@ -187,19 +196,27 @@ class subwayGame extends Game {
   }
 
   round() {
-    if(this.turn == 0) {
-      this.intro();
-    } else if(!this.lineSelected){
-      this.lineSelect();
-    } else {
-      if(this.idx == 3) {
-        if(this.playerInput == false && this.playerStarted == false){
-          this.stationInput();
-        } else if(this.playerStarted == true && this.playerEnd == false) {
-          this.playerturn();
-        }
+    if(this.gamefinishedByWrongInput){
+      this.loseIssue = '호선';
+      this.gameend();
+    }else if(this.gamefinishedByWrongStation){
+      this.loseIssue = '입력';
+      this.gameend();
+    }else{
+      if(this.turn == 0) {
+        this.intro();
+      } else if(!this.lineSelected){
+        this.lineSelect();
       } else {
-        this.npcturn();
+        if(this.idx == 3) {
+          if(this.playerInput == false && this.playerStarted == false){
+            this.stationInput();
+          } else if(this.playerStarted == true && this.playerEnd == false) {
+            this.playerturn();
+          }
+        } else {
+          this.npcturn();
+        }
       }
     }
   }
