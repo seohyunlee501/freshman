@@ -29,8 +29,8 @@ let title;
 let cursor, cursor_clicked;
 let arrow, bubble_l, bubble_r;
 let bg2, bg2_1, bg5;
-let imgs_npc = {};
-let imgs_player = {};
+let imgs_npc = [];
+let imgs_player = [];
 let subwayInput;
 let subwayButton;
 
@@ -228,6 +228,7 @@ function mouseClicked() {
   if ((mode == 2 || mode == 5) && story) {
     if (story.scene === "2-4") {
       gameSelect = new gameList(chars, player);
+      gameSelect.player.alcholblood += 4;
     }
     story.mousePressed();
   }
@@ -327,6 +328,7 @@ function setPlayer() {
   let name = nameInput.value();
   let soju = sojuInput.value();
   player.set(name, soju, gender);
+  //console.log(name, soju, gender);
   nameInput.value("");
   sojuInput.value("");
   nameInput.position(-0.25 * w, -0.4 * h);

@@ -3,9 +3,11 @@ class Player {
     this.alcholblood = 0;
     this.die = false;
     this.image = [];
+    console.log("player called");
   }
 
   set(_name, _soju, _gen) {
+    console.log("player set");
     this.name = _name;
     this.soju = _soju;
     this.gen = _gen;
@@ -16,7 +18,9 @@ class Player {
       gKey = "f";
     }
     for (let i = 1; i <= 5; i++) {
+      console.log(`${gKey}_${i}`);
       this.image[i] = imgs_player[`${gKey}_${i}`];
+      console.log(this.image[i]);
     }
   }
 
@@ -27,14 +31,12 @@ class Player {
     }
   }
   display(x, y) {
-    //console.log("alcholblood:", this.alcholblood);
     let a = this.alcholblood - 3;
     let img = this.image[a];
     imageMode(CENTER);
     image(img, x, y, h * 0.3, h * 0.3);
   }
   displaybig(x, y) {
-    //console.log("alcholblood:", this.alcholblood);
     let a = this.alcholblood - 3;
     let img = this.image[a];
     imageMode(CENTER);
@@ -48,13 +50,9 @@ class Player {
       push();
       scale(1, -1);
       translate(0, height);
-      image(this.image[5], w * 0.8, - h * 0.8);
+      image(this.image[5], w * 0.8, -h * 0.8);
       pop();
     } else {
-      imageMode(CENTER);
-      image(gameWon, w / 2, h / 2, w, h);
-      let a = this.alcolblood - 3;
-      image(this.image[a], w * 0.8, h * 0.6);
     }
   }
 }
