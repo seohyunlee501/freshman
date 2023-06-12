@@ -116,12 +116,12 @@ class Story {
   }
 
   drawPlayer() {
-    if (gender == "boy") {
+    if (bSelecting) {
       push();
       scale(-1, 1);
       image(imgs_player["m_1"], -w * 0.25, h * 0.5, h, h);
       pop();
-    } else if (gender == "girl") {
+    } else if (gSelecting) {
       push();
       scale(-1, 1);
       image(imgs_player["f_1"], -w * 0.25, h * 0.5, h, h);
