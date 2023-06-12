@@ -87,7 +87,7 @@ function setup() {
   //noCursor();
   story = new Story();
 
-  subwayInput = createInput("");
+  subwayInput = createInput();
   subwayInput.size(w / 10);
   subwayInput.position(w * 0.45, h * 0.55);
   subwayInput.hide();
@@ -409,7 +409,7 @@ function saveStations() {
   nowGame.stationIdx = nowGame.stationList[nowGame.currentLine].indexOf(
     nowGame.stationName
   );
-  subwayInput("");
+  subwayInput.value("");
   subwayInput.hide();
   subwayButton.hide();
   nowGame.playerCurrentTime = millis();
