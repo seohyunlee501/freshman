@@ -2,6 +2,7 @@ let mode = 0;
 
 let introStory;
 let eventStory;
+let story;
 
 let chars = [];
 let player;
@@ -53,6 +54,23 @@ function preload() {
   for (let j = 0; j < 6; j++) {
     let temp = "Assets/gamebutton_" + (j + 1) + ".png";
     gameButton[j] = loadImage(temp);
+  }
+  bg2 = loadImage("Assets/background_mode2.jpg");
+  bg2_1 = loadImage("Assets/background_mode2_1.jpg");
+  bg5 = loadImage("Assets/background_mode5.jpg");
+  soju_img = loadImage("Assets/soju_1.png"); // 빨뚜
+  soju_img_g = loadImage("Assets/soju_2.png"); // 초록뚜껑
+  item_img = loadImage("Assets/item_1.png");
+  imgs_npc["g_1"] = loadImage("Assets/npc_g_1.png");
+  for (let i = 1; i <= 4; i++) {
+    for (let j = 1; j <= 6; j++) {
+      let idx = `${i}_${j}`;
+      imgs_npc[idx] = loadImage(`Assets/npc_${idx}.png`);
+    }
+  }
+  for (let i = 1; i <= 5; i++) {
+    imgs_player[`m_${i}`] = loadImage(`Assets/player_m_${i}.png`);
+    imgs_player[`f_${i}`] = loadImage(`Assets/player_f_${i}.png`);
   }
   arrow = loadImage("Assets/arrow.png");
   bubble_l = loadImage("Assets/bubble_left.png");
@@ -117,20 +135,10 @@ function draw() {
       introdisplay(w * 0.7, h * 0.5, "girl");
       break;
     case 2:
-      bSelecting = false;
-      gSelecting = false;
+      // bSelecting = false;
+      // gSelecting = false;
       textFont(movieFont);
-      introStory = new Story(2, player);
-      introStory.display();
-      for (let i = 1; i < 5; i++) {
-        chars[i - 1] = new PlayerNPC(int(random(5, 7)), i);
-      }
-      chars[4] = new PlayerNPC(10, "g");
-      let temp = chars[2];
-      chars[2] = chars[4];
-      chars[4] = temp;
-      gameSelect = new gameList(chars, player);
-      mode = 3;
+      story.drawScene();
       break;
     case 3:
       gameSelect.display();
@@ -150,8 +158,8 @@ function draw() {
       break;
     case 5:
       textFont(movieFont);
-      eventStory = new Story(5, player);
-      eventStory.display();
+      // eventStory = new Story(5, player);
+      story.drawScene();
       break;
     case 6:
       player.gameover();
@@ -230,7 +238,17 @@ function mouseClicked() {
     }
     story.mousePressed();
   }
-
+  //start button
+  if (mode == 0) {
+    if (
+      mouseX > 0.5 * w - 0.1 * w &&
+      mouseX < 0.5 * w + 0.1 * w &&
+      mouseY > 0.81 * h - 0.1 * w &&
+      mouseY < 0.81 * h + 0.1 * w
+    ) {
+      mode = 1;
+    }
+  }
   //reset button
   else if (mode != 1 && mode != 6) {
     if (
@@ -266,7 +284,6 @@ function mouseClicked() {
     ) {
       bSelecting = false;
       gSelecting = true;
-
       selectPlayer("girl");
     }
   }
@@ -320,9 +337,9 @@ function setPlayer() {
   //console.log(name, soju, gender);
   nameInput.value("");
   sojuInput.value("");
-  nameInput.hide();
-  sojuInput.hide();
-  button.hide();
+  nameInput.position(-0.25 * w, -0.4 * h);
+  sojuInput.position(-0.25 * w, -0.5 * h);
+  button.position(-0.68 * w, -0.65 * h);
   mode = 2;
 }
 
@@ -391,10 +408,10 @@ function saveStations() {
   nowGame.stationIdx = nowGame.stationList[nowGame.currentLine].indexOf(
     nowGame.stationName
   );
-  subwayInput.value("");
   subwayInput.hide();
   subwayButton.hide();
   nowGame.playerCurrentTime = millis();
   nowGame.playerStarted = true;
   nowGame.playerInput = false;
 }
+

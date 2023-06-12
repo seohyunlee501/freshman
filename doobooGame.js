@@ -58,7 +58,7 @@ class doobooGame extends Game {
       this.infoTime = millis();
       this.userPlayed = true;
     } else if (this.infoStarted) {
-      if (millis() - this.infoTime < 2000) {
+      if (millis() - this.infoTime < 1400) {
         // instructions:
         textSize(32);
         textAlign(CENTER);
@@ -280,5 +280,7 @@ class doobooGame extends Game {
   }
 
 }
+
+
 
 

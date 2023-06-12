@@ -1,21 +1,22 @@
 class Player {
   constructor(_name, _soju, _gen) {
-    this.name = _name;
-    this.soju = _soju;
-    this.gen = _gen;
     this.alcholblood = 0;
     this.die = false;
     this.image = [];
-    let path = "player_";
+  }
+
+  set(_name, _soju, _gen) {
+    this.name = _name;
+    this.soju = _soju;
+    this.gen = _gen;
+    let gKey = "";
     if (this.gen == "boy") {
-      path = path + "m";
+      gKey = "m";
     } else if (this.gen == "girl") {
-      path = path + "f";
+      gKey = "f";
     }
-    let temp = path;
-    for (let i = 0; i < 5; i++) {
-      path = "Assets/" + temp + "_" + (i + 1) + ".png";
-      this.image[i] = loadImage(path);
+    for (let i = 1; i <= 5; i++) {
+      this.image[i] = imgs_player[`${gKey}_${i}`];
     }
   }
 
@@ -51,3 +52,4 @@ class Player {
     }
   }
 }
+

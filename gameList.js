@@ -50,3 +50,4 @@ class gameList {
     this.player.displaybig(w * 0.87, 0.9 * h);
   }
 }
+
