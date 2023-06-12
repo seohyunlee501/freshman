@@ -1,6 +1,5 @@
 class Game {
   constructor(_idx, _gameList) {
-    console.log("called");
     this.turn = 0;
     this.idx = _idx;
     this.gameList = _gameList;
@@ -13,7 +12,6 @@ class Game {
     this.gameOver = false;
     //everyone list
     this.everyone = _gameList.everyone;
-    console.log(this.everyone);
   }
   display() {
     //background

@@ -28,18 +28,20 @@ class PlayerNPC {
     }
   }
   lose() {
-    this.alcholblood += 1;
-    if (this.alcholblood >= this.soju) {
-      this.die = true;
+    if (this.idx != "g") {
+      this.alcholblood += 1;
+      if (this.alcholblood >= this.soju) {
+        this.die = true;
+      }
     }
   }
   display(x, y) {
-    console.log("who?", this.idx);
-    console.log("alcholblood:", this.alcholblood);
+    //console.log("who?", this.idx);
+    //console.log("alcholblood:", this.alcholblood);
     let img = this.image[this.alcholblood];
-    console.log("who?", this.idx);
+    //console.log("who?", this.idx);
     imageMode(CENTER);
-    console.log("who?", this.idx);
+    //console.log("who?", this.idx);
     image(img, x, y, h * 0.3, h * 0.3);
   }
 }

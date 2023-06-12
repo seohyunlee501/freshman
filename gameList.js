@@ -39,6 +39,7 @@ class gameList {
     fill(255);
     translate(w * 0.27, h * 0.86);
     rect(0, 0, w * 0.6, h * 0.08);
+    console.log(this.player.alcholblood);
     for (let i = 0; i < this.player.alcholblood; i++) {
       fill(10 * i, 255 - 10 * i, 50);
       rect(0.005 * h + 0.05 * i, 0.005 * h, 0.045 * w, 0.07 * h);
