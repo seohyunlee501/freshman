@@ -135,8 +135,8 @@ function draw() {
       introdisplay(w * 0.7, h * 0.5, "girl");
       break;
     case 2:
-      // bSelecting = false;
-      // gSelecting = false;
+      bSelecting = false;
+      gSelecting = false;
       textFont(movieFont);
       story.drawScene();
       break;
@@ -238,17 +238,7 @@ function mouseClicked() {
     }
     story.mousePressed();
   }
-  //start button
-  if (mode == 0) {
-    if (
-      mouseX > 0.5 * w - 0.1 * w &&
-      mouseX < 0.5 * w + 0.1 * w &&
-      mouseY > 0.81 * h - 0.1 * w &&
-      mouseY < 0.81 * h + 0.1 * w
-    ) {
-      mode = 1;
-    }
-  }
+
   //reset button
   else if (mode != 1 && mode != 6) {
     if (
@@ -337,9 +327,9 @@ function setPlayer() {
   //console.log(name, soju, gender);
   nameInput.value("");
   sojuInput.value("");
-  nameInput.position(-0.25 * w, -0.4 * h);
-  sojuInput.position(-0.25 * w, -0.5 * h);
-  button.position(-0.68 * w, -0.65 * h);
+  nameInput.hide();
+  sojuInput.hide();
+  button.hide();
   mode = 2;
 }
 
@@ -408,6 +398,7 @@ function saveStations() {
   nowGame.stationIdx = nowGame.stationList[nowGame.currentLine].indexOf(
     nowGame.stationName
   );
+  subwayInput.value("");
   subwayInput.hide();
   subwayButton.hide();
   nowGame.playerCurrentTime = millis();
