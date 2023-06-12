@@ -92,7 +92,7 @@ function setup() {
   chars[2] = chars[4];
   chars[4] = temp;
   player = new Player();
-  gameSelect = new gameList(chars, player);
+
   subwayInput = createInput("");
   subwayInput.size(w / 10);
   subwayInput.position(w * 0.45, h * 0.55);
@@ -197,9 +197,6 @@ function draw() {
 
 function mousePressed() {
   //game select
-  if ((mode == 2 || mode == 5) && story) {
-    story.mousePressed();
-  }
   if (mode == 3) {
     if (mouseY > 0.2 * h && mouseY < 0.5 * h) {
       if (mouseX > 0.13 * w && mouseX < 0.37 * w) {
@@ -228,6 +225,12 @@ function mousePressed() {
 }
 
 function mouseClicked() {
+  if ((mode == 2 || mode == 5) && story) {
+    if (story.scene === "2-4") {
+      gameSelect = new gameList(chars, player);
+    }
+    story.mousePressed();
+  }
   //start button
   if (mode == 0) {
     if (

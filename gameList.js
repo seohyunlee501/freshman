@@ -10,6 +10,7 @@ class gameList {
     this.everyone[5] = temp;
   }
   display() {
+    console.log("gameList display called");
     //title
     rectMode(CORNER);
     fill(112, 173, 71);

@@ -119,33 +119,33 @@ class Story {
     if (bSelecting) {
       push();
       scale(-1, 1);
-      image(imgs_player["m_1"], -w * 0.25, h * 0.5, -w, h * 1.5);
+      image(imgs_player["m_1"], -w * 0.25, h * 0.5, h, h);
       pop();
     } else if (gSelecting) {
       push();
       scale(-1, 1);
-      image(imgs_player["f_1"], -w * 0.25, h * 0.5, -w, h * 1.5);
+      image(imgs_player["f_1"], -w * 0.25, h * 0.5, h, h);
       pop();
     }
   }
 
   drawNPC(scene) {
     if (scene == "2-1") {
-      image(imgs_npc["1_1"], w * 0.75, h * 0.5, w, h * 1.5);
+      image(imgs_npc["1_1"], w * 0.75, h * 0.5, h, h);
     } else if (scene == "2-4") {
-      image(imgs_npc["g_1"], w * 0.75, h * 0.5, w, h * 1.5);
+      image(imgs_npc["g_1"], w * 0.75, h * 0.5, h, h);
     } else if (scene == "5-1") {
-      image(imgs_npc["g_1"], w * 0.5, h * 0.5, w, h * 1.5);
+      image(imgs_npc["g_1"], w * 0.5, h * 0.5, h, h);
     }
   } // 변수 써서 하기? 캐릭터 이미지 프리로드하기
 
   drawObject(obj_img) {
     if (obj_img == "soju") {
-      image(soju_img, w * 0.7, h * 0.75, w * 0.2, h * 0.2);
+      image(soju_img, w * 0.7, h * 0.75, h * 0.2, h * 0.2);
     } else if (obj_img == "item") {
-      image(item_img, w * 0.4, h * 0.8, w * 0.2, h * 0.2);
+      image(item_img, w * 0.4, h * 0.8, h * 0.2, h * 0.2);
     } else if (obj_img == "soju_green") {
-      image(soju_img_g, w * 0.6, h * 0.75, w * 0.2, h * 0.2);
+      image(soju_img_g, w * 0.6, h * 0.75, h * 0.2, h * 0.2);
     }
   }
 
