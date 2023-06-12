@@ -26,14 +26,12 @@ class Player {
     }
   }
   display(x, y) {
-    //console.log("alcholblood:", this.alcholblood);
     let a = this.alcholblood - 3;
     let img = this.image[a];
     imageMode(CENTER);
     image(img, x, y, h * 0.3, h * 0.3);
   }
   displaybig(x, y) {
-    //console.log("alcholblood:", this.alcholblood);
     let a = this.alcholblood - 3;
     let img = this.image[a];
     imageMode(CENTER);
@@ -41,6 +39,14 @@ class Player {
   }
   gameover() {
     if (this.die) {
+      imageMode(CENTER);
+      image(gameLost, w / 2, h / 2, w, h);
+      imageMode(CENTER);
+      push();
+      scale(1, -1);
+      translate(0, height);
+      image(this.image[5], w * 0.8, -h * 0.8);
+      pop();
     } else {
     }
   }

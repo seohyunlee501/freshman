@@ -88,6 +88,7 @@ class brGame extends Game {
         pop();
       } else {
         if (this.brNum >= 31) {
+          this.loseIssue = "32";
           this.gameend();
         } else {
           this.turnStarted = false;

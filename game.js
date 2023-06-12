@@ -1,6 +1,5 @@
 class Game {
   constructor(_idx, _gameList) {
-    console.log("called");
     this.turn = 0;
     this.idx = _idx;
     this.gameList = _gameList;
