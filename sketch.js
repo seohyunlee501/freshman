@@ -135,8 +135,8 @@ function draw() {
       introdisplay(w * 0.7, h * 0.5, "girl");
       break;
     case 2:
-      // bSelecting = false;
-      // gSelecting = false;
+      bSelecting = false;
+      gSelecting = false;
       textFont(movieFont);
       story.drawScene();
       break;
