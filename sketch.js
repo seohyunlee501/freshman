@@ -171,9 +171,11 @@ function draw() {
   if (mouseIsPressed) {
     imageMode(CORNER);
     image(cursor_clicked, mouseX, mouseY, 0.07 * h, 0.07 * h);
+    imageMode(CENTER);
   } else {
     imageMode(CORNER);
     image(cursor, mouseX, mouseY, 0.07 * h, 0.07 * h);
+    imageMode(CENTER);
   }
 
   // subwayGame setup
@@ -363,7 +365,7 @@ function keyPressed() {
       nowGame.lineSelection = -1;
     }
   }
-    if (mode == 4 && nowGame.gameName == "두부게임") {
+  if (mode == 4 && nowGame.gameName == "두부게임") {
     console.log("key pressed");
     console.log(keyCode);
     if (keyCode === 48 || keyCode === 96) {
@@ -388,7 +390,6 @@ function keyPressed() {
       nowGame.temp = 9;
     }
   }
-
 }
 
 function saveStations() {
