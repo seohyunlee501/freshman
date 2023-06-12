@@ -33,10 +33,12 @@ let imgs_npc = [];
 let imgs_player = [];
 let subwayInput;
 let subwayButton;
+let startButton;
 
 function preload() {
   retroFont = loadFont("fonts/DungGeunMo.ttf");
   movieFont = loadFont("fonts/a시네마M.ttf");
+  startButton = loadImage("Assets/button.png");
   bImg = loadImage("Assets/player_m_1.png");
   gImg = loadImage("Assets/player_f_1.png");
   title = loadImage("Assets/title.png");
@@ -111,18 +113,22 @@ function draw() {
   switch (mode) {
     case 0:
       //start button
-      fill(0);
-      rectMode(CENTER);
-      rect(0.5 * w, 0.7 * h, 0.1 * w, 0.1 * h);
+      imageMode(CENTER);
+      image(startButton, 0.5 * w, 0.81 * h, 0.1 * w, 0.1 * w);
+      fill(252, 212, 0);
+      textSize(50);
+      textAlign(CENTER, CENTER);
+      textFont(movieFont);
+      text("▶", 0.5 * w, 0.805 * h);
+      fill(255);
+      textFont(retroFont);
+      text("PRESS HERE TO START", 0.5 * w, 0.7 * h);
       //title image
       push();
       translate(w * 0.5, h * 0.4);
       imageMode(CENTER);
       image(title, 0, 0, 0.916 * w * 0.5, 0.491 * w * 0.5);
       pop();
-      fill(255);
-      textSize(50);
-      text("START", 0.5 * w, 0.71 * h);
       break;
     case 1:
       introdisplay(w * 0.3, h * 0.5, "boy");
@@ -235,10 +241,10 @@ function mouseClicked() {
   //start button
   if (mode == 0) {
     if (
-      mouseX > 0.5 * w - 0.3 * w &&
-      mouseX < 0.5 * w + 0.3 * w &&
-      mouseY > 0.7 * h - 0.1 * h &&
-      mouseY < 0.7 * h + 0.1 * h
+      mouseX > 0.5 * w - 0.1 * w &&
+      mouseX < 0.5 * w + 0.1 * w &&
+      mouseY > 0.81 * h - 0.1 * w &&
+      mouseY < 0.81 * h + 0.1 * w
     ) {
       mode = 1;
     }
