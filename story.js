@@ -141,7 +141,7 @@ class Story {
 
   drawObject(obj_img) {
     if (obj_img == "soju") {
-      image(soju_img, w * 0.7, h * 0.75, h * 0.2, h * 0.2);
+      image(soju_img, w * 0.65, h * 0.75, h * 0.2, h * 0.2);
     } else if (obj_img == "item") {
       image(item_img, w * 0.4, h * 0.8, h * 0.2, h * 0.2);
     } else if (obj_img == "soju_green") {
