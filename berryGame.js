@@ -36,7 +36,7 @@ class berryGame extends Game {
     if (this.bgmOn) {
       if (millis() - this.startTime < 2000) {
         fill(255);
-        rect(w / 2, h / 2, w / 3, h / 3);
+        rect(w / 2, h / 2, w / 2, h / 4);
         fill(0);
         text("딸기 당근 수박 참외 메론~ 게임!", w / 2, h / 2);
       } else {
