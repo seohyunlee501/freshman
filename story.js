@@ -74,7 +74,8 @@ class Story {
         this.drawNPC("5-1");
         this.drawObject("item");
         this.drawTextbox();
-        this.drawSceneText(`- 오 맞아 19학번이야!`);
+        this.drawSceneText(`- 오 맞아 19학번이야! 이건 선물 ^-^`);
+        player.alcholblood -= 2;
         break;
       case "5-4":
         console.log("5-4");
@@ -85,6 +86,7 @@ class Story {
         this.drawObject("soju_green");
         this.drawTextbox();
         this.drawSceneText(`- ... 내가 그렇게 늙어보여...?`);
+        player.lose();
         break;
       case "5-5":
         console.log("5-5");
@@ -141,7 +143,7 @@ class Story {
 
   drawObject(obj_img) {
     if (obj_img == "soju") {
-      image(soju_img, w * 0.7, h * 0.75, h * 0.2, h * 0.2);
+      image(soju_img, w * 0.65, h * 0.75, h * 0.2, h * 0.2);
     } else if (obj_img == "item") {
       image(item_img, w * 0.4, h * 0.8, h * 0.2, h * 0.2);
     } else if (obj_img == "soju_green") {
