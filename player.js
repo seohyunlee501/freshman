@@ -25,6 +25,7 @@ class Player {
     this.alcholblood++;
     if (this.alcholblood >= 8) {
       this.die = true;
+      this.gameover();
     }
   }
   display(x, y) {
