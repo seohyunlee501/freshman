@@ -4,6 +4,8 @@ class Story {
     this.numberInput = null;
     this.submitButton = null;
     this.kkk = false;
+    this.alcholbloodMinus = false;
+    this.alcholbloodPlus = false;
   }
   checkScene() {
     if (!this.ready) {
@@ -75,7 +77,10 @@ class Story {
         this.drawObject("item");
         this.drawTextbox();
         this.drawSceneText(`- 오 맞아 19학번이야! 이건 선물 ^-^`);
-        // player.alcholblood -= 2;
+        if(!this.alcholbloodMinus){
+          player.alcholblood -= 2;
+          this.alcholbloodMinus = true;
+        }
         break;
       case "5-4":
         console.log("5-4");
@@ -86,7 +91,10 @@ class Story {
         this.drawObject("soju_green");
         this.drawTextbox();
         this.drawSceneText(`- ... 내가 그렇게 늙어보여...?`);
-        player.lose();
+        if(!this.alcholbloodPlus){
+          player.alcholblood += 2;
+          this.alcholbloodPlus = true;
+        }
         break;
       case "5-5":
         console.log("5-5");
