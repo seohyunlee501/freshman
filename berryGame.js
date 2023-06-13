@@ -37,7 +37,8 @@ class berryGame extends Game {
   }
 
   playerTurn() {
-    displayButtons();
+    //displayButtons();
+  
     if (this.whatBerry == 1) {
       if (this.berryCall) {
         if (millis() - this.startTime < 400) {
