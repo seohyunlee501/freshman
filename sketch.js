@@ -75,6 +75,12 @@ function preload() {
   arrow = loadImage("Assets/arrow.png");
   bubble_l = loadImage("Assets/bubble_left.png");
   bubble_r = loadImage("Assets/bubble_right.png");
+
+  carrot = loadImage("Assets/button_carrot.png");
+  k_melon = loadImage("Assets/button_k-melon.png");
+  melon = loadImage("Assets/button_melon.png");
+  watermelon = loadImage("Assets/button_watermelon.png");
+  strawberry = loadImage("Assets/button_strawberry.png");
 }
 
 function setup() {
@@ -227,6 +233,22 @@ function mousePressed() {
         mode = 4;
       }
     }
+  }
+
+  if (mode == 4 &&  nowGame == berryGame()) {
+    if (mouseY > 0.7 * h && mouseY < 0.9 * h) {
+      if (mouseX > 0.02 * w && mouseX < 0.18 * w) {
+        nowGame.whatBerry = 1;
+      } else if (mouseX > 0.17 * w && mouseX < 0.33 * w) {
+        nowGame.whatBerry = 2;
+      } else if (mouseX > 0.32 * w && mouseX < 0.48 * w) {
+        nowGame.whatBerry = 3;
+      } else if (mouseX > 0.47 * w && mouseX < 0.63 * w) {
+        nowGame.whatBerry = 4;
+      } else if (mouseX > 0.62 * w && mouseX < 0.78 * w) {
+        nowGame.whatBerry = 5;
+      }
+    } 
   }
 }
 
@@ -414,4 +436,5 @@ function saveStations() {
   nowGame.playerStarted = true;
   nowGame.playerInput = false;
 }
+
 
