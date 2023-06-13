@@ -54,9 +54,9 @@ class berryGame extends Game {
           text("딸기!", 0.2 * w + 0.51 * h , 0.3 * h);
         }
     }
-
     
     this.turn++;
+    this.idx++;
 
   }
 }
