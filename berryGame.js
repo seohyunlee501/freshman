@@ -17,17 +17,7 @@ class berryGame extends Game {
     this.berryCall = true;
     this.berryCallTime = 0;
   }
-  round() {
-    this.gameOver = false;
-    this.berryBGM();
-    while(!this.gameOver){
-      if(this.idx == 3){
-        this.playerTurn();
-      } else{
-        this.npcTurn();
-      }
-    }
-  }
+
 
   berryBgm(){
     textSize(32);
@@ -350,37 +340,3 @@ round() {
   }
 }
 }
-
-
-/*
-  round() {
-    turn = 0;
-    while(gameIsOn){
-      berryBGM();
-      if(idx == 4){
-        //timer
-        if(mouseIsClicked){
-          mousePressed();
-          
-          if (???){
-            //player fail
-            gameIsOn = false;
-          } else {
-            //player success
-          }
-        } else if (??){
-          //time is over
-          //bgm
-          gameIsOn = false;
-        }
-      } else{
-        if(turn >= 12){
-          //npc fail
-          //npc success
-          } else {
-          //npc success
-          }
-       turn++;
-    }
-
-  }*/
