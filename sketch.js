@@ -36,6 +36,11 @@ let subwayButton;
 let startButton;
 
 function preload() {
+  carrot = loadImage("Assets/button_carrot.png");
+  k_melon = loadImage("Assets/button_k-melon.png");
+  melon = loadImage("Assets/button_melon.png");
+  watermelon = loadImage("Assets/button_watermelon.png");
+  strawberry = loadImage("Assets/button_strawberry.png");
   retroFont = loadFont("fonts/DungGeunMo.ttf");
   movieFont = loadFont("fonts/a시네마M.ttf");
   startButton = loadImage("Assets/button.png");
@@ -199,6 +204,21 @@ function draw() {
 }
 
 function mousePressed() {
+  if (mode == 4 && nowGame.gameName == "딸기당근수박참외메론") {
+    if (mouseY > 0.7 * h && mouseY < 0.9 * h) {
+      if (mouseX > 0.02 * w && mouseX < 0.18 * w) {
+        nowGame.whatBerry = 1;
+      } else if (mouseX > 0.17 * w && mouseX < 0.33 * w) {
+        nowGame.whatBerry = 2;
+      } else if (mouseX > 0.32 * w && mouseX < 0.48 * w) {
+        nowGame.whatBerry = 3;
+      } else if (mouseX > 0.47 * w && mouseX < 0.63 * w) {
+        nowGame.whatBerry = 4;
+      } else if (mouseX > 0.62 * w && mouseX < 0.78 * w) {
+        nowGame.whatBerry = 5;
+      }
+    }
+  }
   //game select
   if (mode == 3) {
     if (mouseY > 0.2 * h && mouseY < 0.5 * h) {

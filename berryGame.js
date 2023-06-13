@@ -37,7 +37,7 @@ class berryGame extends Game {
   }
 
   playerTurn() {
-    //displayButtons();
+    this.displayButtons();
     let fruit = ["딸기!", "당근!", "수박!", "참외!", "메론!"];
     if (!this.userPlayed) {
       this.infoStarted = true;
@@ -45,7 +45,10 @@ class berryGame extends Game {
       this.whatBerry = [];
       this.userPlayed = true;
     } else if (!this.turnStarted) {
-      if (this.whatBerry.length == 5) {
+      let temp = 0;
+      if (this.turn % 14 <= 8) temp = this.turn % 14;
+      else if (this.turn % 14 > 8) temp = 16 - (this.turn % 14);
+      if (this.whatBerry.length == temp) {
         this.turnStarted = true;
         this.currentTime = millis();
       }
@@ -56,6 +59,7 @@ class berryGame extends Game {
         this.turn++;
         this.idx++;
         this.idx = this.idx % 6;
+        this.whatBerry = [];
       }
     }
   }
@@ -235,7 +239,7 @@ class berryGame extends Game {
     }
   }
   displayButtons() {
-    this.shuffleArray();
+    //this.shuffleArray();
     //buttons[] 순서대로 이미지 가져와서 배치
     imageMode(CENTER);
     image(strawberry, w * 0.1, h * 0.8, w * 0.16, h * 0.2);
@@ -337,7 +341,7 @@ class berryGame extends Game {
       } else {
         this.npcTurn();
       }
-      this.displayButtons();
+      //this.displayButtons();
     }
   }
 }
