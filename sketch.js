@@ -232,7 +232,7 @@ function mousePressed() {
     }
   }
 
-  if (mode == 4 &&  nowGame == berryGame()) {
+  if (mode == 4 && nowGame.gameName == "딸기당근수박참외메론") {
     if (mouseY > 0.7 * h && mouseY < 0.9 * h) {
       if (mouseX > 0.02 * w && mouseX < 0.18 * w) {
         nowGame.whatBerry = 1;
@@ -245,7 +245,7 @@ function mousePressed() {
       } else if (mouseX > 0.62 * w && mouseX < 0.78 * w) {
         nowGame.whatBerry = 5;
       }
-    } 
+    }
   }
 }
 
@@ -443,5 +443,3 @@ function saveStations() {
   nowGame.playerStarted = true;
   nowGame.playerInput = false;
 }
-
-
