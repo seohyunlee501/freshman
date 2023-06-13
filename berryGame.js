@@ -46,6 +46,7 @@ class berryGame extends Game {
 
       this.turn++;
       this.idx++;
+      this.idx = this.idx % 6;
     }
   }
 
@@ -68,6 +69,7 @@ class berryGame extends Game {
           this.berryCall = false;
           this.turn++;
           this.idx++;
+          this.idx = this.idx % 6;
         }
       }
     } else if (this.turn % 14 == 2 || (this.turn % 14 == 0 && this.turn != 0)) {
@@ -84,6 +86,7 @@ class berryGame extends Game {
           this.berryCall = false;
           this.turn++;
           this.idx++;
+          this.idx = this.idx % 6;
         }
       }
     } else if (this.turn % 14 == 3 || this.turn % 14 == 13) {
@@ -100,6 +103,7 @@ class berryGame extends Game {
           this.berryCall = false;
           this.turn++;
           this.idx++;
+          this.idx = this.idx % 6;
         }
       }
     } else if (this.turn % 14 == 4 || this.turn % 14 == 12) {
@@ -116,6 +120,7 @@ class berryGame extends Game {
           this.berryCall = false;
           this.turn++;
           this.idx++;
+          this.idx = this.idx % 6;
         }
       }
     } else if (this.turn % 14 == 5 || this.turn % 14 == 11) {
@@ -140,6 +145,7 @@ class berryGame extends Game {
           this.berryCall = false;
           this.turn++;
           this.idx++;
+          this.idx = this.idx % 6;
         }
       }
     } else if (this.turn % 14 == 6 || this.turn % 14 == 10) {
@@ -164,6 +170,7 @@ class berryGame extends Game {
           this.berryCall = false;
           this.turn++;
           this.idx++;
+          this.idx = this.idx % 6;
         }
       }
     } else if (this.turn % 14 == 7 || this.turn % 14 == 9) {
@@ -188,6 +195,7 @@ class berryGame extends Game {
           this.berryCall = false;
           this.turn++;
           this.idx++;
+          this.idx = this.idx % 6;
         }
       }
     } else if (this.turn % 14 == 8) {
@@ -212,6 +220,7 @@ class berryGame extends Game {
           this.berryCall = false;
           this.turn++;
           this.idx++;
+          this.idx = this.idx % 6;
         }
       }
     }
