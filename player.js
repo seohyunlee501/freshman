@@ -23,7 +23,7 @@ class Player {
 
   lose() {
     this.alcholblood++;
-    if (this.alcholblood >= 10) {
+    if (this.alcholblood >= 8) {
       this.die = true;
     }
   }
@@ -49,6 +49,7 @@ class Player {
       translate(0, height);
       image(this.image[5], w * 0.8, -h * 0.8);
       pop();
+      mode = 6;
     } else {
     }
   }
