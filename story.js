@@ -75,7 +75,7 @@ class Story {
         this.drawObject("item");
         this.drawTextbox();
         this.drawSceneText(`- 오 맞아 19학번이야! 이건 선물 ^-^`);
-        player.alcholblood -= 2;
+        // player.alcholblood -= 2;
         break;
       case "5-4":
         console.log("5-4");
