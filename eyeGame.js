@@ -31,7 +31,7 @@ class eyeGame extends Game {
     this.endStartTime;
     this.endPlayer = false;
     this.endNPC = false;
-
+    
     for (let i = 0; i < 3; i++) {
       this.randChar[i][0] = this.chars[i];
       this.randChar[i][1] = Math.floor(random(100, 1500) / 100) * 100; //this.randChar[i][1]: callInterval
@@ -63,6 +63,7 @@ class eyeGame extends Game {
     if(!this.gameOver && this.currentNumber < 5){
       if(this.currentNumber == 1){
         this.showNums(3, 1);
+        this.playerNumber = 1;
         console.log(this.currentNumber); //should be displayed later
         this.currentNumber++;
         this.lastCalledTime = millis();
