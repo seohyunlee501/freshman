@@ -16,6 +16,7 @@ class berryGame extends Game {
     this.whatBerry = 0;
     this.berryCall = true;
     this.berryCallTime = 0;
+    this.turnStarted = false;
   }
 
   berryBgm() {
@@ -54,178 +55,184 @@ class berryGame extends Game {
     fill(0);
     let x = 0.2 * w + 0.17 * h * this.idx;
     fill(255);
-
-    if (this.turn % 14 == 1) {
-      if (this.berryCall) {
-        if (millis() - this.berryCallTime < 400) {
-          text("...", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 800) {
-          text("...", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 1200) {
-          text("...", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 1600) {
-          text("딸기!", x, 0.3 * h);
-        } else {
-          this.berryCall = false;
-          this.turn++;
-          this.idx++;
-          this.idx = this.idx % 6;
+    if (!this.turnStarted) {
+      this.turnStarted = true;
+      this.berryCallTime = millis();
+    } else if (this.turnStarted) {
+      if (this.turn % 14 == 1) {
+        if (this.berryCall) {
+          if (millis() - this.berryCallTime < 400) {
+            text("...", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 800) {
+            text("...", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 1200) {
+            text("...", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 1600) {
+            text("딸기!", x, 0.3 * h);
+          } else {
+            this.berryCall = false;
+            this.turn++;
+            this.idx++;
+            this.idx = this.idx % 6;
+          }
         }
-      }
-    } else if (this.turn % 14 == 2 || (this.turn % 14 == 0 && this.turn != 0)) {
-      if (this.berryCall) {
-        if (millis() - this.berryCallTime < 400) {
-          text("...", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 800) {
-          text("...", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 1200) {
-          text("딸기!", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 1600) {
-          text("당근!", x, 0.3 * h);
-        } else {
-          this.berryCall = false;
-          this.turn++;
-          this.idx++;
-          this.idx = this.idx % 6;
+      } else if (
+        this.turn % 14 == 2 ||
+        (this.turn % 14 == 0 && this.turn != 0)
+      ) {
+        if (this.berryCall) {
+          if (millis() - this.berryCallTime < 400) {
+            text("...", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 800) {
+            text("...", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 1200) {
+            text("딸기!", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 1600) {
+            text("당근!", x, 0.3 * h);
+          } else {
+            this.berryCall = false;
+            this.turn++;
+            this.idx++;
+            this.idx = this.idx % 6;
+          }
         }
-      }
-    } else if (this.turn % 14 == 3 || this.turn % 14 == 13) {
-      if (this.berryCall) {
-        if (millis() - this.berryCallTime < 400) {
-          text("...", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 800) {
-          text("딸기!", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 1200) {
-          text("당근!", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 1600) {
-          text("수박!", x, 0.3 * h);
-        } else {
-          this.berryCall = false;
-          this.turn++;
-          this.idx++;
-          this.idx = this.idx % 6;
+      } else if (this.turn % 14 == 3 || this.turn % 14 == 13) {
+        if (this.berryCall) {
+          if (millis() - this.berryCallTime < 400) {
+            text("...", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 800) {
+            text("딸기!", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 1200) {
+            text("당근!", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 1600) {
+            text("수박!", x, 0.3 * h);
+          } else {
+            this.berryCall = false;
+            this.turn++;
+            this.idx++;
+            this.idx = this.idx % 6;
+          }
         }
-      }
-    } else if (this.turn % 14 == 4 || this.turn % 14 == 12) {
-      if (this.berryCall) {
-        if (millis() - this.berryCallTime < 400) {
-          text("딸기", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 800) {
-          text("당근!", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 1200) {
-          text("수박!", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 1600) {
-          text("참외!", x, 0.3 * h);
-        } else {
-          this.berryCall = false;
-          this.turn++;
-          this.idx++;
-          this.idx = this.idx % 6;
+      } else if (this.turn % 14 == 4 || this.turn % 14 == 12) {
+        if (this.berryCall) {
+          if (millis() - this.berryCallTime < 400) {
+            text("딸기", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 800) {
+            text("당근!", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 1200) {
+            text("수박!", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 1600) {
+            text("참외!", x, 0.3 * h);
+          } else {
+            this.berryCall = false;
+            this.turn++;
+            this.idx++;
+            this.idx = this.idx % 6;
+          }
         }
-      }
-    } else if (this.turn % 14 == 5 || this.turn % 14 == 11) {
-      if (this.berryCall) {
-        if (millis() - this.berryCallTime < 400) {
-          text("딸기!", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 800) {
-          text("당근!", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 1200) {
-          text("수박!", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 1600) {
-          text("참외!", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 2000) {
-          text("...", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 2400) {
-          text("...", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 2800) {
-          text("...", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 3200) {
-          text("메론!", x, 0.3 * h);
-        } else {
-          this.berryCall = false;
-          this.turn++;
-          this.idx++;
-          this.idx = this.idx % 6;
+      } else if (this.turn % 14 == 5 || this.turn % 14 == 11) {
+        if (this.berryCall) {
+          if (millis() - this.berryCallTime < 400) {
+            text("딸기!", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 800) {
+            text("당근!", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 1200) {
+            text("수박!", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 1600) {
+            text("참외!", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 2000) {
+            text("...", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 2400) {
+            text("...", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 2800) {
+            text("...", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 3200) {
+            text("메론!", x, 0.3 * h);
+          } else {
+            this.berryCall = false;
+            this.turn++;
+            this.idx++;
+            this.idx = this.idx % 6;
+          }
         }
-      }
-    } else if (this.turn % 14 == 6 || this.turn % 14 == 10) {
-      if (this.berryCall) {
-        if (millis() - this.berryCallTime < 400) {
-          text("딸기!", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 800) {
-          text("당근!", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 1200) {
-          text("수박!", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 1600) {
-          text("참외!", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 2000) {
-          text("...", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 2400) {
-          text("...", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 2800) {
-          text("메론!", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 3200) {
-          text("딸기!", x, 0.3 * h);
-        } else {
-          this.berryCall = false;
-          this.turn++;
-          this.idx++;
-          this.idx = this.idx % 6;
+      } else if (this.turn % 14 == 6 || this.turn % 14 == 10) {
+        if (this.berryCall) {
+          if (millis() - this.berryCallTime < 400) {
+            text("딸기!", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 800) {
+            text("당근!", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 1200) {
+            text("수박!", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 1600) {
+            text("참외!", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 2000) {
+            text("...", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 2400) {
+            text("...", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 2800) {
+            text("메론!", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 3200) {
+            text("딸기!", x, 0.3 * h);
+          } else {
+            this.berryCall = false;
+            this.turn++;
+            this.idx++;
+            this.idx = this.idx % 6;
+          }
         }
-      }
-    } else if (this.turn % 14 == 7 || this.turn % 14 == 9) {
-      if (this.berryCall) {
-        if (millis() - this.berryCallTime < 400) {
-          text("딸기!", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 800) {
-          text("당근!", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 1200) {
-          text("수박!", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 1600) {
-          text("참외!", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 2000) {
-          text("...", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 2400) {
-          text("메론!", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 2800) {
-          text("딸기!", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 3200) {
-          text("당근!", x, 0.3 * h);
-        } else {
-          this.berryCall = false;
-          this.turn++;
-          this.idx++;
-          this.idx = this.idx % 6;
+      } else if (this.turn % 14 == 7 || this.turn % 14 == 9) {
+        if (this.berryCall) {
+          if (millis() - this.berryCallTime < 400) {
+            text("딸기!", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 800) {
+            text("당근!", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 1200) {
+            text("수박!", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 1600) {
+            text("참외!", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 2000) {
+            text("...", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 2400) {
+            text("메론!", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 2800) {
+            text("딸기!", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 3200) {
+            text("당근!", x, 0.3 * h);
+          } else {
+            this.berryCall = false;
+            this.turn++;
+            this.idx++;
+            this.idx = this.idx % 6;
+          }
         }
-      }
-    } else if (this.turn % 14 == 8) {
-      if (this.berryCall) {
-        if (millis() - this.berryCallTime < 400) {
-          text("딸기!", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 800) {
-          text("당근!", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 1200) {
-          text("수박!", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 1600) {
-          text("참외!", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 2000) {
-          text("메론!", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 2400) {
-          text("딸기!", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 2800) {
-          text("당근!", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 3200) {
-          text("수박!", x, 0.3 * h);
-        } else {
-          this.berryCall = false;
-          this.turn++;
-          this.idx++;
-          this.idx = this.idx % 6;
+      } else if (this.turn % 14 == 8) {
+        if (this.berryCall) {
+          if (millis() - this.berryCallTime < 400) {
+            text("딸기!", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 800) {
+            text("당근!", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 1200) {
+            text("수박!", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 1600) {
+            text("참외!", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 2000) {
+            text("메론!", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 2400) {
+            text("딸기!", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 2800) {
+            text("당근!", x, 0.3 * h);
+          } else if (millis() - this.berryCallTime < 3200) {
+            text("수박!", x, 0.3 * h);
+          } else {
+            this.berryCall = false;
+            this.turn++;
+            this.idx++;
+            this.idx = this.idx % 6;
+          }
         }
       }
     }
   }
-
   displayButtons() {
     this.shuffleArray();
     //buttons[] 순서대로 이미지 가져와서 배치
