@@ -39,10 +39,38 @@ class gameList {
     fill(255);
     translate(w * 0.27, h * 0.86);
     rect(0, 0, w * 0.6, h * 0.08);
-    console.log(this.player.alcholblood);
+    console.log("alcholblood", this.player.alcholblood);
     for (let i = 0; i < this.player.alcholblood; i++) {
-      fill(10 * i, 255 - 10 * i, 50);
-      rect(0.005 * h + 0.05 * i, 0.005 * h, 0.045 * w, 0.07 * h);
+      // switch (i) {
+      //   //녹색
+      //   case 0:
+      //     fill(0, 128, 0);
+      //   case 1:
+      //     fill(0, 160, 0);
+      //   case 2:
+      //     fill(129, 193, 71);
+      //   //라임
+      //   case 3:
+      //     fill(191, 255, 0);
+      //   //개나리
+      //   case 4:
+      //     fill(247, 230, 0);
+      //   //금색
+      //   case 5:
+      //     fill(247, 230, 0);
+      //   //귤색
+      //   case 6:
+      //     fill(248, 155, 0);
+      //   //다홍
+      //   case 7:
+      //     fill(248, 57, 0);
+      // }
+      fill(
+        120 * (i == 2) + 200 * (i == 3) + 248 * (i >= 4),
+        (120 + 40 * i) * (i < 4) + (240 - 40 * (i % 4)) * (i >= 4),
+        0
+      );
+      rect(0.005 * h + 0.075 * w * i, 0.005 * h, 0.075 * w, 0.07 * h);
     }
     pop();
 

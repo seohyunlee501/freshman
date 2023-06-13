@@ -3,6 +3,7 @@ class Player {
     this.alcholblood = 0;
     this.die = false;
     this.image = [];
+    this.set(_name, _soju, _gen);
   }
 
   set(_name, _soju, _gen) {

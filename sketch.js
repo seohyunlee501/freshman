@@ -90,18 +90,10 @@ function setup() {
   nameInput = createInput();
   sojuInput = createInput();
   button = createButton("submit");
-  noCursor();
+  //noCursor();
   story = new Story();
-  for (let i = 1; i < 5; i++) {
-    chars[i - 1] = new PlayerNPC(int(random(5, 7)), i);
-  }
-  chars[4] = new PlayerNPC(10, "g");
-  let temp = chars[2];
-  chars[2] = chars[4];
-  chars[4] = temp;
-  player = new Player();
 
-  subwayInput = createInput("");
+  subwayInput = createInput();
   subwayInput.size(w / 10);
   subwayInput.position(w * 0.45, h * 0.55);
   subwayInput.hide();
@@ -137,6 +129,10 @@ function draw() {
       pop();
       break;
     case 1:
+      textAlign(CENTER);
+      textSize(50);
+      fill(255);
+      text("select your character.", w * 0.5, h * 0.15);
       introdisplay(w * 0.3, h * 0.5, "boy");
       introdisplay(w * 0.7, h * 0.5, "girl");
       break;
@@ -147,6 +143,7 @@ function draw() {
       story.drawScene();
       break;
     case 3:
+      imageMode(CENTER);
       gameSelect.display();
       //temp = gameSelect.gameNum;
       break;
@@ -179,16 +176,16 @@ function draw() {
     image(reset, 0.05 * w, 0.05 * h, 0.05 * w, 0.1 * h);
   }
 
-  //cursor
-  if (mouseIsPressed) {
-    imageMode(CORNER);
-    image(cursor_clicked, mouseX, mouseY, 0.07 * h, 0.07 * h);
-    imageMode(CENTER);
-  } else {
-    imageMode(CORNER);
-    image(cursor, mouseX, mouseY, 0.07 * h, 0.07 * h);
-    imageMode(CENTER);
-  }
+  // //cursor
+  // if (mouseIsPressed) {
+  //   imageMode(CORNER);
+  //   image(cursor_clicked, mouseX, mouseY, 0.07 * h, 0.07 * h);
+  //   imageMode(CENTER);
+  // } else {
+  //   imageMode(CORNER);
+  //   image(cursor, mouseX, mouseY, 0.07 * h, 0.07 * h);
+  //   imageMode(CENTER);
+  // }
 
   // subwayGame setup
   if (mode == 4 && nowGame.gameName == "지하철게임") {
@@ -255,6 +252,13 @@ function mousePressed() {
 function mouseClicked() {
   if ((mode == 2 || mode == 5) && story) {
     if (story.scene === "2-4") {
+      for (let i = 1; i < 5; i++) {
+        chars[i - 1] = new PlayerNPC(int(random(5, 7)), i);
+      }
+      chars[4] = new PlayerNPC(10, "g");
+      let temp = chars[2];
+      chars[2] = chars[4];
+      chars[4] = temp;
       gameSelect = new gameList(chars, player);
       gameSelect.player.alcholblood += 4;
     }
@@ -296,7 +300,6 @@ function mouseClicked() {
     ) {
       bSelecting = true;
       gSelecting = false;
-
       selectPlayer("boy");
     } else if (
       mouseX > 0.55 * w &&
@@ -316,7 +319,7 @@ function introdisplay(_x, _y, _gen) {
   let x = _x;
   let y = _y;
   rectMode(CENTER);
-  fill(255);
+  fill(255, 255, 255, 150);
   rect(x, y, 0.3 * w, 0.5 * h);
 
   if (_gen == "boy") {
@@ -325,9 +328,11 @@ function introdisplay(_x, _y, _gen) {
     playerimg = gImg;
   }
   imageMode(CENTER);
-  image(playerimg, x, y, playerimg.width, playerimg.height);
+  image(playerimg, x, y, playerimg.width * 1.2, playerimg.height * 1.2);
   if ((bSelecting && _gen == "boy") || (gSelecting && _gen == "girl")) {
-    fill(0, 0, 0, 200);
+    fill(0, 0, 0, 100);
+    push();
+    strokeWeight(5);
     rectMode(CENTER);
     rect(x, y, 0.3 * w, 0.5 * h);
     fill(255);
@@ -335,6 +340,7 @@ function introdisplay(_x, _y, _gen) {
     textSize(30);
     text("이름:", x - w * 0.13, 0.4 * h);
     text("주량(잔):", x - w * 0.13, 0.5 * h);
+    pop();
   }
 }
 function selectPlayer(_gen) {
@@ -355,7 +361,8 @@ function selectPlayer(_gen) {
 function setPlayer() {
   let name = nameInput.value();
   let soju = sojuInput.value();
-  player.set(name, soju, gender);
+  player = new Player(name, soju, gender);
+  //player.set(name, soju, gender);
   //console.log(name, soju, gender);
   nameInput.value("");
   sojuInput.value("");
