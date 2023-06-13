@@ -13,7 +13,7 @@ class berryGame extends Game {
     this.endStarted = false;
     this.endTime = 0;
     this.loseIssue = 0;
-    this.whatBerry = 0;
+    this.whatBerry = [];
     this.berryCall = true;
     this.berryCallTime = 0;
     this.turnStarted = false;
@@ -38,17 +38,25 @@ class berryGame extends Game {
 
   playerTurn() {
     //displayButtons();
-  
-    if (this.whatBerry == 1) {
-      if (this.berryCall) {
-        if (millis() - this.startTime < 400) {
-          text("딸기!", 0.2 * w + 0.51 * h, 0.3 * h);
-        }
+    let fruit = ["딸기!", "당근!", "수박!", "참외!", "메론!"];
+    if (!this.userPlayed) {
+      this.infoStarted = true;
+      this.infoTime = millis();
+      this.whatBerry = [];
+      this.userPlayed = true;
+    } else if (!this.turnStarted) {
+      if (this.whatBerry.length == 5) {
+        this.turnStarted = true;
+        this.currentTime = millis();
       }
-
-      this.turn++;
-      this.idx++;
-      this.idx = this.idx % 6;
+    } else if (this.turnStarted) {
+      if (millis() - this.startTime < 400) {
+        text(fruit[this.whatBerry[-1] - 1], 0.2 * w + 0.51 * h, 0.3 * h);
+      } else {
+        this.turn++;
+        this.idx++;
+        this.idx = this.idx % 6;
+      }
     }
   }
 
