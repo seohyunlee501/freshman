@@ -18,7 +18,6 @@ class berryGame extends Game {
     this.berryCallTime = 0;
   }
 
-
   berryBgm() {
     textSize(32);
     textAlign(CENTER);
@@ -39,7 +38,7 @@ class berryGame extends Game {
   playerTurn() {
     displayButtons();
     if (this.whatBerry == 1) {
-      if (this.beryyCall) {
+      if (this.berryCall) {
         if (millis() - this.startTime < 400) {
           text("딸기!", 0.2 * w + 0.51 * h, 0.3 * h);
         }
@@ -47,7 +46,6 @@ class berryGame extends Game {
 
       this.turn++;
       this.idx++;
-
     }
   }
 
@@ -57,7 +55,7 @@ class berryGame extends Game {
     fill(255);
 
     if (this.turn % 14 == 1) {
-      if (this.beryyCall) {
+      if (this.berryCall) {
         if (millis() - this.berryCallTime < 400) {
           text("...", x, 0.3 * h);
         } else if (millis() - this.berryCallTime < 800) {
@@ -72,9 +70,8 @@ class berryGame extends Game {
           this.idx++;
         }
       }
-
-    } else if (this.turn % 14 == 2 || this.turn % 14 == 0 && this.turn != 0) {
-      if (this.beryyCall) {
+    } else if (this.turn % 14 == 2 || (this.turn % 14 == 0 && this.turn != 0)) {
+      if (this.berryCall) {
         if (millis() - this.berryCallTime < 400) {
           text("...", x, 0.3 * h);
         } else if (millis() - this.berryCallTime < 800) {
@@ -89,9 +86,8 @@ class berryGame extends Game {
           this.idx++;
         }
       }
-
     } else if (this.turn % 14 == 3 || this.turn % 14 == 13) {
-      if (this.beryyCall) {
+      if (this.berryCall) {
         if (millis() - this.berryCallTime < 400) {
           text("...", x, 0.3 * h);
         } else if (millis() - this.berryCallTime < 800) {
@@ -106,9 +102,8 @@ class berryGame extends Game {
           this.idx++;
         }
       }
-
     } else if (this.turn % 14 == 4 || this.turn % 14 == 12) {
-      if (this.beryyCall) {
+      if (this.berryCall) {
         if (millis() - this.berryCallTime < 400) {
           text("딸기", x, 0.3 * h);
         } else if (millis() - this.berryCallTime < 800) {
@@ -123,9 +118,8 @@ class berryGame extends Game {
           this.idx++;
         }
       }
-
     } else if (this.turn % 14 == 5 || this.turn % 14 == 11) {
-      if (this.beryyCall) {
+      if (this.berryCall) {
         if (millis() - this.berryCallTime < 400) {
           text("딸기!", x, 0.3 * h);
         } else if (millis() - this.berryCallTime < 800) {
@@ -148,9 +142,8 @@ class berryGame extends Game {
           this.idx++;
         }
       }
-
     } else if (this.turn % 14 == 6 || this.turn % 14 == 10) {
-      if (this.beryyCall) {
+      if (this.berryCall) {
         if (millis() - this.berryCallTime < 400) {
           text("딸기!", x, 0.3 * h);
         } else if (millis() - this.berryCallTime < 800) {
@@ -173,9 +166,8 @@ class berryGame extends Game {
           this.idx++;
         }
       }
-
     } else if (this.turn % 14 == 7 || this.turn % 14 == 9) {
-      if (this.beryyCall) {
+      if (this.berryCall) {
         if (millis() - this.berryCallTime < 400) {
           text("딸기!", x, 0.3 * h);
         } else if (millis() - this.berryCallTime < 800) {
@@ -198,9 +190,8 @@ class berryGame extends Game {
           this.idx++;
         }
       }
-
     } else if (this.turn % 14 == 8) {
-      if (this.beryyCall) {
+      if (this.berryCall) {
         if (millis() - this.berryCallTime < 400) {
           text("딸기!", x, 0.3 * h);
         } else if (millis() - this.berryCallTime < 800) {
@@ -226,12 +217,9 @@ class berryGame extends Game {
     }
   }
 
-
-
-
   displayButtons() {
     this.shuffleArray();
-    //buttons[] 순서대로 이미지 가져와서 배치 
+    //buttons[] 순서대로 이미지 가져와서 배치
     imageMode(CENTER);
     image(strawberry, w * 0.1, h * 0.8, w * 0.16, h * 0.2);
     image(carrot, w * 0.25, h * 0.8, w * 0.16, h * 0.2);
@@ -304,7 +292,6 @@ class berryGame extends Game {
     }
   }
 
-
   gameend() {
     if (!this.endStarted) {
       this.endStarted = true;
@@ -323,8 +310,6 @@ class berryGame extends Game {
       }
     }
   }
-
-
 
   round() {
     if (this.turn == 0) {
