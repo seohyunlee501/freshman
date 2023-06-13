@@ -74,8 +74,8 @@ class doobooGame extends Game {
       this.dbCount = this.temp;
       console.log("temp:", this.temp);
       if (this.dbCount != 10) {
-        nowGame.turnStarted = true;
-        nowGame.currentTime = millis();
+        this.turnStarted = true;
+        this.currentTime = millis();
         this.temp = 10;
       }
     } else if (this.turnStarted) {

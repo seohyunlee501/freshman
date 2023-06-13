@@ -77,10 +77,6 @@ class Story {
         this.drawObject("item");
         this.drawTextbox();
         this.drawSceneText(`- 오 맞아 19학번이야! 이건 선물 ^-^`);
-        if(!this.alcholbloodMinus){
-          player.alcholblood -= 2;
-          this.alcholbloodMinus = true;
-        }
         break;
       case "5-4":
         console.log("5-4");
@@ -205,10 +201,12 @@ class Story {
         let number = parseInt(this.numberInput.value());
         if (number === 19) {
           this.scene = "5-3";
+          player.alcholblood -= 2;
         } else if (number < 19) {
           this.scene = "5-4";
         } else if (number > 19) {
           this.scene = "5-5";
+          player.alcholblood += 1;
         }
         this.kkk = true;
       });
