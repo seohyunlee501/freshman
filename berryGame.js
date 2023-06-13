@@ -45,7 +45,10 @@ class berryGame extends Game {
       this.whatBerry = [];
       this.userPlayed = true;
     } else if (!this.turnStarted) {
-      if (this.whatBerry.length == 5) {
+      let temp = 0;
+      if (this.turn % 14 <= 8) temp = this.turn % 14;
+      else if (this.turn % 14 > 8) temp = 16 - (this.turn % 14);
+      if (this.whatBerry.length == temp) {
         this.turnStarted = true;
         this.currentTime = millis();
       }
@@ -56,6 +59,7 @@ class berryGame extends Game {
         this.turn++;
         this.idx++;
         this.idx = this.idx % 6;
+        this.whatBerry = [];
       }
     }
   }
