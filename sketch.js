@@ -177,17 +177,6 @@ function draw() {
     image(reset, 0.05 * w, 0.05 * h, 0.05 * w, 0.1 * h);
   }
 
-  // //cursor
-  // if (mouseIsPressed) {
-  //   imageMode(CORNER);
-  //   image(cursor_clicked, mouseX, mouseY, 0.07 * h, 0.07 * h);
-  //   imageMode(CENTER);
-  // } else {
-  //   imageMode(CORNER);
-  //   image(cursor, mouseX, mouseY, 0.07 * h, 0.07 * h);
-  //   imageMode(CENTER);
-  // }
-
   // subwayGame setup
   if (mode == 4 && nowGame.gameName == "지하철게임") {
     if (nowGame.playerInput == true) {
@@ -346,11 +335,17 @@ function introdisplay(_x, _y, _gen) {
 function selectPlayer(_gen) {
   if (_gen == "boy") {
     fill(255);
+    nameInput.show();
+    sojuInput.show();
+    button.show();
     nameInput.position(0.25 * w, 0.4 * h);
     sojuInput.position(0.25 * w, 0.5 * h);
     button.position(0.28 * w, 0.65 * h);
     gender = "boy";
   } else if (_gen == "girl") {
+    nameInput.show();
+    sojuInput.show();
+    button.show();
     nameInput.position(0.65 * w, 0.4 * h);
     sojuInput.position(0.65 * w, 0.5 * h);
     button.position(0.68 * w, 0.65 * h);
