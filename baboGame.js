@@ -2,11 +2,19 @@ class baboGame extends Game {
   constructor(_idx, _gameList) {
     super(_idx, _gameList);
     this.gameName = "바보게임";
+    //voice
     this.recording = false;
     this.myRec = new p5.SpeechRec(); // new P5.SpeechRec object
+    //hand
     this.video = createCapture(VIDEO);
-    this.video.size(0.5 * w, 0.5 * h);
+    this.video.size(0.3 * w, 0.5 * h);
     this.myHand = ml5.handpose(this.video, this.modelLoaded);
+    // Call onNewHandPosePrediction every time a new handPose is predicted
+    this.myHand.on("predict", this.onNewPrediction);
+    // Hide the video element, and just show the canvas
+    this.video.hide();
+    this.handReady = false;
+    //else
     this.inputVoice = 0;
     this.inputHand = 0;
     this.startTime = millis();
@@ -23,6 +31,189 @@ class baboGame extends Game {
     this.loseIssue = "";
     this.predictions;
   }
+  modelLoaded() {
+    console.log("HandPose model ready!");
+    this.handReady = true;
+  }
+  onNewPrediction() {
+    if (predictions && predictions.length > 0) {
+      curHandPose = predictions[0];
+      // console.log(curHandPose);
+    } else {
+      curHandPose = null;
+    }
+  }
+  drawHand(handPose) {
+    // Draw landmarks
+    // Find tight bounding box
+    const tightBoundingBox = drawKeypoints(handPose);
+    drawSkeleton(handPose);
+
+    // Draw tight bounding box
+    noFill();
+    stroke(boundingBoxColor);
+    const tightBoundingBoxWidth =
+      tightBoundingBox.right - tightBoundingBox.left;
+    const tightBoundingBoxHeight =
+      tightBoundingBox.bottom - tightBoundingBox.top;
+    rect(
+      tightBoundingBox.left,
+      tightBoundingBox.top,
+      tightBoundingBoxWidth,
+      tightBoundingBoxHeight
+    );
+
+    // Draw hand pose bounding box
+    const bb = handPose.boundingBox;
+    const bbWidth = bb.bottomRight[0] - bb.topLeft[0];
+    const bbHeight = bb.bottomRight[1] - bb.topLeft[1];
+    rect(bb.topLeft[0], bb.topLeft[1], bbWidth, bbHeight);
+
+    // Draw confidence
+    fill(boundingBoxColor);
+    noStroke();
+    text(
+      nfc(handPose.handInViewConfidence, 2),
+      tightBoundingBox.left,
+      tightBoundingBox.top - 15
+    );
+  }
+
+  drawKeypoints(handPose) {
+    if (!handPose) {
+      return;
+    }
+
+    let boundingBoxLeft = handPose.landmarks[0][0];
+    let boundingBoxTop = handPose.landmarks[0][1];
+    let boundingBoxRight = boundingBoxLeft;
+    let boundingBoxBottom = boundingBoxTop;
+
+    // draw keypoints
+    // While each keypoints supplies a 3D point (x,y,z), we only draw
+    // the x, y point.
+    for (let j = 0; j < handPose.landmarks.length; j += 1) {
+      const landmark = handPose.landmarks[j];
+      fill(kpColor);
+      noStroke();
+      circle(landmark[0], landmark[1], kpCircleDiameter);
+      if (landmark[0] < boundingBoxLeft) {
+        boundingBoxLeft = landmark[0];
+      } else if (landmark[0] > boundingBoxRight) {
+        boundingBoxRight = landmark[0];
+      }
+
+      if (landmark[1] < boundingBoxTop) {
+        boundingBoxTop = landmark[1];
+      } else if (landmark[1] > boundingBoxBottom) {
+        boundingBoxBottom = landmark[1];
+      }
+    }
+
+    // return the bounding box
+    return {
+      left: boundingBoxLeft,
+      right: boundingBoxRight,
+      top: boundingBoxTop,
+      bottom: boundingBoxBottom,
+    };
+  }
+
+  drawSkeleton(handPose) {
+    if (!handPose) {
+      return;
+    }
+
+    stroke(skeletonColor);
+    noFill();
+
+    // Loop through all the skeletons detected
+    const a = handPose.annotations;
+
+    // For every skeleton, loop through all body connections
+    for (let i = 0; i < a.thumb.length - 1; i++) {
+      line(a.thumb[i][0], a.thumb[i][1], a.thumb[i + 1][0], a.thumb[i + 1][1]);
+    }
+    for (let i = 0; i < a.indexFinger.length - 1; i++) {
+      line(
+        a.indexFinger[i][0],
+        a.indexFinger[i][1],
+        a.indexFinger[i + 1][0],
+        a.indexFinger[i + 1][1]
+      );
+    }
+    for (let i = 0; i < a.middleFinger.length - 1; i++) {
+      line(
+        a.middleFinger[i][0],
+        a.middleFinger[i][1],
+        a.middleFinger[i + 1][0],
+        a.middleFinger[i + 1][1]
+      );
+    }
+    for (let i = 0; i < a.ringFinger.length - 1; i++) {
+      line(
+        a.ringFinger[i][0],
+        a.ringFinger[i][1],
+        a.ringFinger[i + 1][0],
+        a.ringFinger[i + 1][1]
+      );
+    }
+    for (let i = 0; i < a.pinky.length - 1; i++) {
+      line(a.pinky[i][0], a.pinky[i][1], a.pinky[i + 1][0], a.pinky[i + 1][1]);
+    }
+
+    line(a.palmBase[0][0], a.palmBase[0][1], a.thumb[0][0], a.thumb[0][1]);
+    line(
+      a.palmBase[0][0],
+      a.palmBase[0][1],
+      a.indexFinger[0][0],
+      a.indexFinger[0][1]
+    );
+    line(
+      a.palmBase[0][0],
+      a.palmBase[0][1],
+      a.middleFinger[0][0],
+      a.middleFinger[0][1]
+    );
+    line(
+      a.palmBase[0][0],
+      a.palmBase[0][1],
+      a.ringFinger[0][0],
+      a.ringFinger[0][1]
+    );
+    line(a.palmBase[0][0], a.palmBase[0][1], a.pinky[0][0], a.pinky[0][1]);
+
+    noStroke();
+    fill(skeletonColor);
+    const xTextMargin = kpCircleDiameter / 2 + 3;
+    text(
+      "Thumb",
+      a.thumb[a.thumb.length - 1][0] + xTextMargin,
+      a.thumb[a.thumb.length - 1][1]
+    );
+    text(
+      "Index Finger",
+      a.indexFinger[a.indexFinger.length - 1][0] + xTextMargin,
+      a.indexFinger[a.indexFinger.length - 1][1]
+    );
+    text(
+      "Middle Finger",
+      a.middleFinger[a.middleFinger.length - 1][0] + xTextMargin,
+      a.middleFinger[a.middleFinger.length - 1][1]
+    );
+    text(
+      "Ring Finger",
+      a.ringFinger[a.ringFinger.length - 1][0] + xTextMargin,
+      a.ringFinger[a.ringFinger.length - 1][1]
+    );
+    text(
+      "Pinky",
+      a.pinky[a.pinky.length - 1][0] + xTextMargin,
+      a.pinky[a.pinky.length - 1][1]
+    );
+    text("Palm Base", a.palmBase[0][0] + xTextMargin, a.palmBase[0][1]);
+  }
+
   intro() {
     textSize(32);
     textAlign(CENTER);
@@ -48,7 +239,6 @@ class baboGame extends Game {
   showResult() {
     if (!this.turnStarted && this.myRec.resultValue == true) {
       //myRec input 받아오기
-      //this.myRec.text(this.myRec.resultString, w / 2, h / 2);
       this.inputVoice = this.myRec.resultString;
       console.log(this.inputVoice);
       if (this.inputVoice == "일" || this.inputVoice == "1") {
@@ -95,10 +285,6 @@ class baboGame extends Game {
           this.loseIssue = "babo";
           this.gameend();
           this.turnStarted = false;
-        } else if (this.inputVoice != this.hand) {
-          this.loseIssue = "babo2";
-          this.gameend();
-          this.turnStarted = false;
         }
       } else {
         this.turnStarted = false;
@@ -143,14 +329,14 @@ class baboGame extends Game {
       this.idx = this.idx % 6;
     } else {
       if (!this.turnStarted) {
-        htemp = this.hand;
-        this.voice = htemp;
+        this.voice = int(random(1, 6));
         this.hand = int(random(1, 6));
         if (this.idx == 2 || !this.userPlayed) {
-          if (this.voice == this.hand) {
-            this.hand = ((this.voice + 1) % 5) + 1;
+          while (this.voice == this.hand) {
+            console.log("while");
+            this.hand = int(random(1, 6));
           }
-        } else if (this.turn > 7) {
+        } else if (this.turn == 7) {
           this.hand = this.voice;
         }
         this.turnStarted = true;
@@ -199,8 +385,6 @@ class baboGame extends Game {
           text("발음은 생명!", w / 2, h / 2 + 0.05 * h);
         } else if (this.loseIssue == "babo") {
           text("당신은 바보입니다!", w / 2, h / 2);
-        } else if (this.loseIssue == "babo2") {
-          text("앞 사람의 손을 잘 읽으세요!", w / 2, h / 2);
         } else {
           text("휴 살았다!", w / 2, h / 2);
         }
@@ -213,6 +397,9 @@ class baboGame extends Game {
   }
 
   round() {
+    if (curHandPose) {
+      drawHand(curHandPose);
+    }
     if (this.turn == 0) {
       this.intro();
     } else {
