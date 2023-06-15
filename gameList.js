@@ -32,7 +32,7 @@ class gameList {
     //혈중알콜농도
     textAlign(LEFT, CENTER);
     textSize(30);
-    text("혈중알콜농도", 0.13 * w, 0.9 * h);
+    text("혈중알콜농도(잔):", 0.13 * w, 0.9 * h);
 
     push();
     rectMode(CORNER);

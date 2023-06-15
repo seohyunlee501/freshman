@@ -29,13 +29,13 @@ class Player {
     }
   }
   display(x, y) {
-    let a = this.alcholblood - 3;
+    let a = this.alcholblood - 2;
     let img = this.image[a];
     imageMode(CENTER);
     image(img, x, y, h * 0.3, h * 0.3);
   }
   displaybig(x, y) {
-    let a = this.alcholblood - 3;
+    let a = this.alcholblood - 2;
     let img = this.image[a];
     imageMode(CENTER);
     image(img, x, y, w * 0.3, w * 0.3);

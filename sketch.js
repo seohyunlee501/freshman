@@ -82,6 +82,8 @@ function preload() {
   arrow = loadImage("Assets/arrow.png");
   bubble_l = loadImage("Assets/bubble_left.png");
   bubble_r = loadImage("Assets/bubble_right.png");
+  bg = loadImage("Assets/background.png");
+  table = loadImage("Assets/table.png");
 }
 
 function setup() {
@@ -91,6 +93,9 @@ function setup() {
   nameInput = createInput();
   sojuInput = createInput();
   button = createButton("submit");
+  nameInput.hide();
+  sojuInput.hide();
+  button.hide();
   //noCursor();
   story = new Story();
 
@@ -119,9 +124,15 @@ function draw() {
       textAlign(CENTER, CENTER);
       textFont(movieFont);
       text("▶", 0.5 * w, 0.805 * h);
+      textSize(30);
+      text("서문19 신민정", 0.1 * w, 0.9 * h);
+      text("전기19 이서현", 0.3 * w, 0.9 * h);
+      text("경영19 김재현", 0.7 * w, 0.9 * h);
+      text("자전19 나정현", 0.9 * w, 0.9 * h);
       fill(255);
+      textSize(50);
       textFont(retroFont);
-      text("PRESS HERE TO START", 0.5 * w, 0.7 * h);
+      text("PRESS TO START", 0.5 * w, 0.9 * h);
       //title image
       push();
       translate(w * 0.5, h * 0.4);
@@ -174,7 +185,7 @@ function draw() {
   if (mode != 0 && mode != 1 && mode != 6) {
     fill(0);
     imageMode(CORNER);
-    image(reset, 0.05 * w, 0.05 * h, 0.05 * w, 0.1 * h);
+    image(reset, 0.05 * w, 0.05 * h, 0.1 * h, 0.1 * h);
   }
 
   // subwayGame setup
@@ -268,7 +279,7 @@ function mouseClicked() {
   else if (mode != 1 && mode != 6) {
     if (
       mouseX > 0.05 * w &&
-      mouseX < 0.1 * w &&
+      mouseX < 0.05 * w + 0.1 * h &&
       mouseY > 0.05 * h &&
       mouseY < 0.15 * h
     ) {
