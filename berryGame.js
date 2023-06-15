@@ -4,6 +4,7 @@ class berryGame extends Game {
     this.gameName = "딸기당근수박참외메론";
     this.turn = 0;
     this.buttons = [strawberry, carrot, watermelon, k_melon, melon];
+    this.buttons = [1, 2, 3, 4, 5];
     this.startTime = millis();
     this.bgmOn = true;
     this.userPlayed = false;
@@ -354,6 +355,7 @@ class berryGame extends Game {
         this.npcTurn();
       }
 
+      //this.displayButtons();
     }
   }
 }

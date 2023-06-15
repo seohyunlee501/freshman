@@ -4,6 +4,9 @@ class baboGame extends Game {
     this.gameName = "바보게임";
     this.recording = false;
     this.myRec = new p5.SpeechRec(); // new P5.SpeechRec object
+    this.video = createCapture(VIDEO);
+    this.video.size(0.5 * w, 0.5 * h);
+    this.myHand = ml5.handpose(this.video, this.modelLoaded);
     this.inputVoice = 0;
     this.inputHand = 0;
     this.startTime = millis();
@@ -18,6 +21,7 @@ class baboGame extends Game {
     this.endStarted = false;
     this.endTime = 0;
     this.loseIssue = "";
+    this.predictions;
   }
   intro() {
     textSize(32);
@@ -91,6 +95,10 @@ class baboGame extends Game {
           this.loseIssue = "babo";
           this.gameend();
           this.turnStarted = false;
+        } else if (this.inputVoice != this.hand) {
+          this.loseIssue = "babo2";
+          this.gameend();
+          this.turnStarted = false;
         }
       } else {
         this.turnStarted = false;
@@ -107,6 +115,9 @@ class baboGame extends Game {
       this.infoStarted = true;
       this.infoTime = millis();
       this.myRec.start();
+      //this.myHand.on("hand", (results) => {
+      //this.predictions = results;
+      //});
       this.userPlayed = true;
     } else {
       if (millis() - this.infoTime < 2000) {
@@ -132,14 +143,14 @@ class baboGame extends Game {
       this.idx = this.idx % 6;
     } else {
       if (!this.turnStarted) {
-        this.voice = int(random(1, 6));
+        htemp = this.hand;
+        this.voice = htemp;
         this.hand = int(random(1, 6));
         if (this.idx == 2 || !this.userPlayed) {
-          while (this.voice == this.hand) {
-            console.log("while");
-            this.hand = int(random(1, 6));
+          if (this.voice == this.hand) {
+            this.hand = ((this.voice + 1) % 5) + 1;
           }
-        } else if (this.turn == 7) {
+        } else if (this.turn > 7) {
           this.hand = this.voice;
         }
         this.turnStarted = true;
@@ -188,6 +199,8 @@ class baboGame extends Game {
           text("발음은 생명!", w / 2, h / 2 + 0.05 * h);
         } else if (this.loseIssue == "babo") {
           text("당신은 바보입니다!", w / 2, h / 2);
+        } else if (this.loseIssue == "babo2") {
+          text("앞 사람의 손을 잘 읽으세요!", w / 2, h / 2);
         } else {
           text("휴 살았다!", w / 2, h / 2);
         }

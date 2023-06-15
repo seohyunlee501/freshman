@@ -36,13 +36,6 @@ class brGame extends Game {
       }
     }
   }
-  // showResult() {
-  //   push();
-  //   translate(0.2 * w + 0.17 * h * this.idx, 0.4 * h);
-  //   imageMode(CENTER);
-  //   image(bubble_r, 0, 0, 0.2 * h, 0.07 * h);
-  //   pop();
-  // }
   playerturn() {
     if (!this.userPlayed) {
       this.infoStarted = true;
@@ -83,7 +76,11 @@ class brGame extends Game {
         textAlign(CENTER, CENTER);
         fill(255);
         textSize(50);
-        text(this.threeNum, 0, 0);
+        let temptext = this.threeNum;
+        if (this.brNum == 31) {
+          temptext = "힝..." + temptext;
+        }
+        text(temptext, 0, 0);
         //console.log(this.threeNum);
         pop();
       } else {
@@ -107,6 +104,15 @@ class brGame extends Game {
     } else {
       if (!this.turnStarted) {
         let temp = int(random(1, 4));
+        if (this.brNum == 28) {
+          if (this.idx == 2) {
+            temp = 2;
+          } else {
+            temp = 1;
+          }
+        } else if (this.brNum == 29 || this.brNum == 30) {
+          temp = 1;
+        }
         this.threeNum = [];
         for (let i = 0; i < temp; i++) {
           this.brNum++;
@@ -122,7 +128,11 @@ class brGame extends Game {
           textAlign(CENTER, CENTER);
           fill(255);
           textSize(50);
-          text(this.threeNum, 0, 0);
+          let temptext = this.threeNum;
+          if (this.brNum == 31) {
+            temptext = "힝..." + temptext;
+          }
+          text(temptext, 0, 0);
           pop();
         } else {
           if (this.brNum >= 31) {

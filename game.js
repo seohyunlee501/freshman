@@ -6,8 +6,6 @@ class Game {
     this.player = _gameList.player;
     this.chars = _gameList.chars;
     this.gameNum = _gameList.gameNum;
-    this.bg = loadImage("Assets/background.png");
-    this.table = loadImage("Assets/desk.png");
     this.gameName = "";
     this.gameOver = false;
     //everyone list
@@ -16,7 +14,7 @@ class Game {
   display() {
     //background
     imageMode(CENTER);
-    image(this.bg, 0.5 * w, 0.5 * h, w, h);
+    image(bg, 0.5 * w, 0.5 * h, w, h);
 
     //title
     rectMode(CORNER);
@@ -58,7 +56,7 @@ class Game {
     }
     //table
     imageMode(CENTER);
-    image(this.table, 0.4 * w, 0.6 * h);
+    image(table, 0.2 * w + 0.17 * h * 2.5, 0.6 * h, 0.6 * w, 0.2 * h);
     //bottles
   }
 }

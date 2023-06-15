@@ -35,7 +35,14 @@ let subwayInput;
 let subwayButton;
 let startButton;
 
+let infoButton = [];
+
 function preload() {
+  carrot = loadImage("Assets/button_carrot.png");
+  k_melon = loadImage("Assets/button_k-melon.png");
+  melon = loadImage("Assets/button_melon.png");
+  watermelon = loadImage("Assets/button_watermelon.png");
+  strawberry = loadImage("Assets/button_strawberry.png");
   retroFont = loadFont("fonts/DungGeunMo.ttf");
   movieFont = loadFont("fonts/a시네마M.ttf");
   startButton = loadImage("Assets/button.png");
@@ -44,6 +51,8 @@ function preload() {
   title = loadImage("Assets/title.png");
   cursor = loadImage("Assets/cursor.png");
   cursor_clicked = loadImage("Assets/cursor_clicked.png");
+  //cursor.style("z-index", 10);
+  //cursor_clicked.style("z-index", 10);
   reset = loadImage("Assets/reset.png");
   handimg = [];
   for (let i = 0; i < 5; i++) {
@@ -75,12 +84,8 @@ function preload() {
   arrow = loadImage("Assets/arrow.png");
   bubble_l = loadImage("Assets/bubble_left.png");
   bubble_r = loadImage("Assets/bubble_right.png");
-
-  carrot = loadImage("Assets/button_carrot.png");
-  k_melon = loadImage("Assets/button_k-melon.png");
-  melon = loadImage("Assets/button_melon.png");
-  watermelon = loadImage("Assets/button_watermelon.png");
-  strawberry = loadImage("Assets/button_strawberry.png");
+  bg = loadImage("Assets/background.png");
+  table = loadImage("Assets/table.png");
 }
 
 function setup() {
@@ -90,6 +95,9 @@ function setup() {
   nameInput = createInput();
   sojuInput = createInput();
   button = createButton("submit");
+  nameInput.hide();
+  sojuInput.hide();
+  button.hide();
   //noCursor();
   story = new Story();
 
@@ -100,6 +108,11 @@ function setup() {
   subwayButton = createButton("확인");
   subwayButton.position(w * 0.47, h * 0.63);
   subwayButton.hide();
+  for (let j = 0; j < 6; j++) {
+    infoButton[j] = createButton("i");
+    infoButton[j].class("info");
+    infoButton[j].hide();
+  }
 }
 
 function draw() {
@@ -118,9 +131,15 @@ function draw() {
       textAlign(CENTER, CENTER);
       textFont(movieFont);
       text("▶", 0.5 * w, 0.805 * h);
+      textSize(30);
+      text("서문19 신민정", 0.1 * w, 0.9 * h);
+      text("전기19 이서현", 0.3 * w, 0.9 * h);
+      text("경영19 김재현", 0.7 * w, 0.9 * h);
+      text("자전19 나정현", 0.9 * w, 0.9 * h);
       fill(255);
+      textSize(50);
       textFont(retroFont);
-      text("PRESS HERE TO START", 0.5 * w, 0.7 * h);
+      text("PRESS TO START", 0.5 * w, 0.9 * h);
       //title image
       push();
       translate(w * 0.5, h * 0.4);
@@ -173,19 +192,8 @@ function draw() {
   if (mode != 0 && mode != 1 && mode != 6) {
     fill(0);
     imageMode(CORNER);
-    image(reset, 0.05 * w, 0.05 * h, 0.05 * w, 0.1 * h);
+    image(reset, 0.05 * w, 0.05 * h, 0.1 * h, 0.1 * h);
   }
-
-  // //cursor
-  // if (mouseIsPressed) {
-  //   imageMode(CORNER);
-  //   image(cursor_clicked, mouseX, mouseY, 0.07 * h, 0.07 * h);
-  //   imageMode(CENTER);
-  // } else {
-  //   imageMode(CORNER);
-  //   image(cursor, mouseX, mouseY, 0.07 * h, 0.07 * h);
-  //   imageMode(CENTER);
-  // }
 
   // subwayGame setup
   if (mode == 4 && nowGame.gameName == "지하철게임") {
@@ -205,6 +213,21 @@ function draw() {
 }
 
 function mousePressed() {
+  if (mode == 4 && nowGame.gameName == "딸기당근수박참외메론") {
+    if (mouseY > 0.7 * h && mouseY < 0.9 * h) {
+      if (mouseX > 0.02 * w && mouseX < 0.18 * w) {
+        nowGame.whatBerry = 1;
+      } else if (mouseX > 0.17 * w && mouseX < 0.33 * w) {
+        nowGame.whatBerry = 2;
+      } else if (mouseX > 0.32 * w && mouseX < 0.48 * w) {
+        nowGame.whatBerry = 3;
+      } else if (mouseX > 0.47 * w && mouseX < 0.63 * w) {
+        nowGame.whatBerry = 4;
+      } else if (mouseX > 0.62 * w && mouseX < 0.78 * w) {
+        nowGame.whatBerry = 5;
+      }
+    }
+  }
   //game select
   if (mode == 3) {
     if (mouseY > 0.2 * h && mouseY < 0.5 * h) {
@@ -279,7 +302,7 @@ function mouseClicked() {
   else if (mode != 1 && mode != 6) {
     if (
       mouseX > 0.05 * w &&
-      mouseX < 0.1 * w &&
+      mouseX < 0.05 * w + 0.1 * h &&
       mouseY > 0.05 * h &&
       mouseY < 0.15 * h
     ) {
@@ -346,11 +369,17 @@ function introdisplay(_x, _y, _gen) {
 function selectPlayer(_gen) {
   if (_gen == "boy") {
     fill(255);
+    nameInput.show();
+    sojuInput.show();
+    button.show();
     nameInput.position(0.25 * w, 0.4 * h);
     sojuInput.position(0.25 * w, 0.5 * h);
     button.position(0.28 * w, 0.65 * h);
     gender = "boy";
   } else if (_gen == "girl") {
+    nameInput.show();
+    sojuInput.show();
+    button.show();
     nameInput.position(0.65 * w, 0.4 * h);
     sojuInput.position(0.65 * w, 0.5 * h);
     button.position(0.68 * w, 0.65 * h);

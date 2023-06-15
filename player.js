@@ -23,18 +23,19 @@ class Player {
 
   lose() {
     this.alcholblood++;
-    if (this.alcholblood >= 10) {
+    if (this.alcholblood >= 8) {
       this.die = true;
+      this.gameover();
     }
   }
   display(x, y) {
-    let a = this.alcholblood - 3;
+    let a = this.alcholblood - 2;
     let img = this.image[a];
     imageMode(CENTER);
     image(img, x, y, h * 0.3, h * 0.3);
   }
   displaybig(x, y) {
-    let a = this.alcholblood - 3;
+    let a = this.alcholblood - 2;
     let img = this.image[a];
     imageMode(CENTER);
     image(img, x, y, w * 0.3, w * 0.3);
@@ -49,6 +50,7 @@ class Player {
       translate(0, height);
       image(this.image[5], w * 0.8, -h * 0.8);
       pop();
+      mode = 6;
     } else {
     }
   }

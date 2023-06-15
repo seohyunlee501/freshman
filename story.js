@@ -4,6 +4,8 @@ class Story {
     this.numberInput = null;
     this.submitButton = null;
     this.kkk = false;
+    this.alcholbloodMinus = false;
+    this.alcholbloodPlus = false;
   }
   checkScene() {
     if (!this.ready) {
@@ -85,7 +87,10 @@ class Story {
         this.drawObject("soju_green");
         this.drawTextbox();
         this.drawSceneText(`- ... 내가 그렇게 늙어보여...?`);
-        player.lose();
+        if (!this.alcholbloodPlus) {
+          player.alcholblood += 2;
+          this.alcholbloodPlus = true;
+        }
         break;
       case "5-5":
         console.log("5-5");
@@ -196,7 +201,7 @@ class Story {
         let number = parseInt(this.numberInput.value());
         if (number === 19) {
           this.scene = "5-3";
-          player.alcholblood -= 2;
+          player.alcholblood -= 1;
         } else if (number < 19) {
           this.scene = "5-4";
         } else if (number > 19) {
