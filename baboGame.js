@@ -95,6 +95,10 @@ class baboGame extends Game {
           this.loseIssue = "babo";
           this.gameend();
           this.turnStarted = false;
+        } else if (this.inputVoice != this.hand) {
+          this.loseIssue = "babo2";
+          this.gameend();
+          this.turnStarted = false;
         }
       } else {
         this.turnStarted = false;
@@ -195,6 +199,8 @@ class baboGame extends Game {
           text("발음은 생명!", w / 2, h / 2 + 0.05 * h);
         } else if (this.loseIssue == "babo") {
           text("당신은 바보입니다!", w / 2, h / 2);
+        } else if (this.loseIssue == "babo2") {
+          text("앞 사람의 손을 잘 읽으세요!", w / 2, h / 2);
         } else {
           text("휴 살았다!", w / 2, h / 2);
         }
