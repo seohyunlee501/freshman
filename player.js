@@ -1,39 +1,40 @@
 class Player {
   constructor(_name, _soju, _gen) {
-    this.name = _name;
-    this.soju = _soju;
-    this.gen = _gen;
     this.alcholblood = 0;
     this.die = false;
     this.image = [];
-    let path = "player_";
+    this.set(_name, _soju, _gen);
+  }
+
+  set(_name, _soju, _gen) {
+    this.name = _name;
+    this.soju = _soju;
+    this.gen = _gen;
+    let gKey = "";
     if (this.gen == "boy") {
-      path = path + "m";
+      gKey = "m";
     } else if (this.gen == "girl") {
-      path = path + "f";
+      gKey = "f";
     }
-    let temp = path;
-    for (let i = 0; i < 5; i++) {
-      path = "Assets/" + temp + "_" + (i + 1) + ".png";
-      this.image[i] = loadImage(path);
+    for (let i = 1; i <= 5; i++) {
+      this.image[i] = imgs_player[`${gKey}_${i}`];
     }
   }
 
   lose() {
     this.alcholblood++;
-    if (this.alcholblood >= 10) {
+    if (this.alcholblood >= 8) {
       this.die = true;
+      this.gameover();
     }
   }
   display(x, y) {
-    //console.log("alcholblood:", this.alcholblood);
     let a = this.alcholblood - 3;
     let img = this.image[a];
     imageMode(CENTER);
     image(img, x, y, h * 0.3, h * 0.3);
   }
   displaybig(x, y) {
-    //console.log("alcholblood:", this.alcholblood);
     let a = this.alcholblood - 3;
     let img = this.image[a];
     imageMode(CENTER);
@@ -41,6 +42,15 @@ class Player {
   }
   gameover() {
     if (this.die) {
+      imageMode(CENTER);
+      image(gameLost, w / 2, h / 2, w, h);
+      imageMode(CENTER);
+      push();
+      scale(1, -1);
+      translate(0, height);
+      image(this.image[5], w * 0.8, -h * 0.8);
+      pop();
+      mode = 6;
     } else {
     }
   }

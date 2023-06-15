@@ -1,6 +1,5 @@
 class Game {
   constructor(_idx, _gameList) {
-    console.log("called");
     this.turn = 0;
     this.idx = _idx;
     this.gameList = _gameList;
@@ -33,16 +32,20 @@ class Game {
 
     //혈중알콜농도
     textAlign(CENTER);
-    textSize(20);
-    text("혈중알콜농도", 0.9 * w, 0.25 * h);
+    textSize(30);
+    text("혈중알콜농도", 0.825 * w, 0.25 * h);
 
     push();
-    rectMode(CENTER);
-    translate(w * 0.9, h * 0.6);
-    rect(0, 0, w * 0.05, h * 0.6);
-    for (let i = 1; i <= this.player.alcholblood; i++) {
-      fill(10 * i, 255 - 10 * i, 20);
-      rect(0, 0.25 * h + (i - 1) / 10, 0.045 * w, 0.09 * h);
+    rectMode(CORNER);
+    translate(w * 0.8, h * 0.3);
+    rect(0, 0, h * 0.1, h * 0.6);
+    for (let i = 0; i < this.player.alcholblood; i++) {
+      fill(
+        120 * (i == 2) + 200 * (i == 3) + 248 * (i >= 4),
+        (120 + 40 * i) * (i < 4) + (240 - 40 * (i % 4)) * (i >= 4),
+        0
+      );
+      rect(0.01 * h, 0.52 * h - 0.07 * h * i, 0.08 * h, 0.07 * h);
     }
     pop();
 
