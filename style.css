@@ -27,14 +27,13 @@ button {
   width: 120px;
   height: 70px;
   font-size: 30px;
-  font-family: sans-serif;
+  font-family: retro;
   text-transform: uppercase;
   text-align: center;
   position: relative;
   text-decoration: none;
   display: inline-block;
   overflow: hidden;
-  font-family: retro;
   cursor: url("Assets/cursor.cur") 0 0, auto;
   padding: 5px;
   border: 3px solid;
@@ -51,4 +50,15 @@ button:hover {
 
 button:active {
   cursor: url("Assets/cursor_clicked.cur") 0 0, auto;
+}
+
+.info {
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  text-transform: none;
+  font-size: 50px;
+  background-color: #70ad47;
+  border-color: white;
+  color: white;
 }

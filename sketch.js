@@ -35,6 +35,8 @@ let subwayInput;
 let subwayButton;
 let startButton;
 
+let infoButton = [];
+
 function preload() {
   carrot = loadImage("Assets/button_carrot.png");
   k_melon = loadImage("Assets/button_k-melon.png");
@@ -106,6 +108,11 @@ function setup() {
   subwayButton = createButton("확인");
   subwayButton.position(w * 0.47, h * 0.63);
   subwayButton.hide();
+  for (let j = 0; j < 6; j++) {
+    infoButton[j] = createButton("i");
+    infoButton[j].class("info");
+    infoButton[j].hide();
+  }
 }
 
 function draw() {
