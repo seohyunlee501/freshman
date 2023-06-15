@@ -23,7 +23,6 @@ class baboGame extends Game {
     this.loseIssue = "";
     this.predictions;
   }
-  modelLoaded() {}
   intro() {
     textSize(32);
     textAlign(CENTER);
@@ -96,6 +95,10 @@ class baboGame extends Game {
           this.loseIssue = "babo";
           this.gameend();
           this.turnStarted = false;
+        } else if (this.inputVoice != this.hand) {
+          this.loseIssue = "babo2";
+          this.gameend();
+          this.turnStarted = false;
         }
       } else {
         this.turnStarted = false;
@@ -140,14 +143,14 @@ class baboGame extends Game {
       this.idx = this.idx % 6;
     } else {
       if (!this.turnStarted) {
-        this.voice = int(random(1, 6));
+        htemp = this.hand;
+        this.voice = htemp;
         this.hand = int(random(1, 6));
         if (this.idx == 2 || !this.userPlayed) {
-          while (this.voice == this.hand) {
-            console.log("while");
-            this.hand = int(random(1, 6));
+          if (this.voice == this.hand) {
+            this.hand = ((this.voice + 1) % 5) + 1;
           }
-        } else if (this.turn == 7) {
+        } else if (this.turn > 7) {
           this.hand = this.voice;
         }
         this.turnStarted = true;
@@ -196,6 +199,8 @@ class baboGame extends Game {
           text("발음은 생명!", w / 2, h / 2 + 0.05 * h);
         } else if (this.loseIssue == "babo") {
           text("당신은 바보입니다!", w / 2, h / 2);
+        } else if (this.loseIssue == "babo2") {
+          text("앞 사람의 손을 잘 읽으세요!", w / 2, h / 2);
         } else {
           text("휴 살았다!", w / 2, h / 2);
         }
