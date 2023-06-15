@@ -4,21 +4,47 @@ class berryGame extends Game {
     this.gameName = "딸기당근수박참외메론";
     this.turn = 0;
     this.buttons = [strawberry, carrot, watermelon, k_melon, melon];
-    this.buttons = [1, 2, 3, 4, 5];
     this.startTime = millis();
     this.bgmOn = true;
     this.userPlayed = false;
     this.infoStarted = false;
     this.infoTime = 0;
-    this.currentTime = 0;
+
     this.endStarted = false;
     this.endTime = 0;
     this.loseIssue = 0;
-    this.whatBerry = [];
+    this.whatBerry = 5;
+    this.whatBerryCheck = 5;
     this.berryCall = true;
     this.berryCallTime = 0;
     this.turnStarted = false;
     this.shuffleDone = false;
+
+    this.strawberry = 5;
+    this.carrot = 5;
+    this.watermelon = 5;
+    this.k_melon = 5;
+    this.melon = 5;
+
+
+    this.step1 = false
+    this.step1time = millis();
+    this.step2 = false
+    this.step2time = millis();
+    this.step3 = false
+    this.step3time = millis();
+    this.step4 = false
+    this.step4time = millis();
+    this.step5 = false
+    this.step5time = millis();
+    this.step6 = false
+    this.step6time = millis();
+    this.step7 = false
+    this.step7time = millis();
+    this.step8 = false
+    this.step8time = millis();
+
+
   }
 
   berryBgm() {
@@ -40,39 +66,505 @@ class berryGame extends Game {
 
   playerTurn() {
     let fruit = ["딸기!", "당근!", "수박!", "참외!", "메론!"];
-    
-    if(!this.shuffleDone){
+
+    if (!this.shuffleDone) {
       this.shuffleArray();
       this.shuffleDone = true;
     }
     this.displayButtons();
 
+
     if (!this.userPlayed) {
       this.infoStarted = true;
       this.infoTime = millis();
-      this.whatBerry = [];
       this.userPlayed = true;
-    } else if (!this.turnStarted) {
-      let temp = 0;
-      if (this.turn % 14 <= 8) temp = this.turn % 14;
-      else if (this.turn % 14 > 8) temp = 16 - (this.turn % 14);
-      if (this.whatBerry.length == temp) {
-        this.turnStarted = true;
-        this.currentTime = millis();
-      }
-    } else if (this.turnStarted) {
-      if (millis() - this.startTime < 400) {
-        text(fruit[this.whatBerry[-1] - 1], 0.2 * w + 0.51 * h, 0.3 * h);
+    } else if (this.infoStarted) {
+      if (millis() - this.infoTime < 2000) {
+        // instructions:
+        console.log('info');
+        textSize(32);
+        fill(255);
+        textAlign(CENTER);
+        rectMode(CENTER);
+        text(
+          "제한 시간 내에 아래 버튼을 순서대로 클릭하세요.",
+          0.2 * w + 0.17 * h * 3,
+          0.3 * h
+        );
       } else {
-        this.turn++;
-        this.idx++;
-        this.idx = this.idx % 6;
-        this.whatBerry = [];
-        this.shuffleDone = false;
+        this.infoStarted = false;
+      }
+    } else if (!this.turnStarted) {
+      this.whatBerryCheck = 5;
+      this.whatBerryCheck = this.whatBerry;
+      if (this.whatBerryCheck != 5) {
+        this.turnStarted = true;
+        this.step1time = millis();
+        this.whatBerry = 5;
+      }
+
+    } else if (this.turnStarted) {
+
+      if (!this.step1) {
+        if (millis() - this.step1time < 1500) {
+          let berryCheck;
+          if (this.buttons[this.whatBerryCheck] == strawberry) {
+            berryCheck = '딸기!'
+          } else if (this.buttons[this.whatBerryCheck] == carrot) {
+            berryCheck = '당근!'
+          } else if (this.buttons[this.whatBerryCheck] == watermelon) {
+            berryCheck = '수박!'
+          } else if (this.buttons[this.whatBerryCheck] == k_melon) {
+            berryCheck = '참외!'
+          } else if (this.buttons[this.whatBerryCheck] == melon) {
+            berryCheck = '메론!'
+          }
+
+          text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
+
+        } else {
+          if (this.buttons[this.whatBerryCheck] != strawberry) {
+            if (this.buttons[this.whatBerryCheck] == carrot
+              || this.buttons[this.whatBerryCheck] == watermelon
+              || this.buttons[this.whatBerryCheck] == k_melon
+              ||this.buttons[this.whatBerryCheck] == melon
+              ) {
+              this.loseIssue = 1;
+              this.gameend();
+            } else {
+              this.loseIssue = 2;
+              this.gameend();
+            }
+          } else {
+            if (this.turn % 14 == 1) {
+              this.turnStarted = false;
+              this.turn++;
+              this.idx = 4;
+            } else {
+              
+              this.whatBerryCheck = 5;
+              this.whatBerryCheck = this.whatBerry;
+              if (this.whatBerryCheck != 5) {
+                this.step2time = millis();
+                this.whatBerry = 5;
+                this.step1 = true;
+              }
+            }
+          }
+        }
+      } else if (this.step1) {
+        if (!this.step2) {
+          if (millis() - this.step2time < 1400) {
+            let berryCheck;
+            if (this.buttons[this.whatBerryCheck] == strawberry) {
+              berryCheck = '딸기!'
+            } else if (this.buttons[this.whatBerryCheck] == carrot) {
+              berryCheck = '당근!'
+            } else if (this.buttons[this.whatBerryCheck] == watermelon) {
+              berryCheck = '수박!'
+            } else if (this.buttons[this.whatBerryCheck] == k_melon) {
+              berryCheck = '참외!'
+            } else if (this.buttons[this.whatBerryCheck] == melon) {
+              berryCheck = '메론!'
+            }
+
+            text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
+          } else {
+            if (this.buttons[this.whatBerryCheck] != carrot) {
+              if (this.buttons[this.whatBerryCheck] == strawberry
+                || this.buttons[this.whatBerryCheck] == watermelon
+                || this.buttons[this.whatBerryCheck] == k_melon
+                ||this.buttons[this.whatBerryCheck] == melon
+                ) {
+                this.loseIssue = 1;
+                this.gameend();
+              } else {
+                this.loseIssue = 2;
+                this.gameend();
+              }
+            } else {
+              if (this.turn % 14 == 2 ||
+                (this.turn % 14 == 0 && this.turn != 0)) {
+                this.turnStarted = false;
+                this.turn++;
+                this.idx = 4;
+              } else {
+                
+                this.whatBerryCheck = 5;
+                this.whatBerryCheck = this.whatBerry;
+                if (this.whatBerryCheck != 5) {
+                  this.step3time = millis();
+                  this.whatBerry = 5;
+                  this.step2 = true;
+                }
+              }
+            }
+          }
+        } else if (this.step2) {
+          if (!this.step3) {
+            if (millis() - this.step3time < 1400) {
+              let berryCheck;
+
+              if (this.buttons[this.whatBerryCheck] == strawberry) {
+                berryCheck = '딸기!'
+              } else if (this.buttons[this.whatBerryCheck] == carrot) {
+                berryCheck = '당근!'
+              } else if (this.buttons[this.whatBerryCheck] == watermelon) {
+                berryCheck = '수박!'
+              } else if (this.buttons[this.whatBerryCheck] == k_melon) {
+                berryCheck = '참외!'
+              } else if (this.buttons[this.whatBerryCheck] == melon) {
+                berryCheck = '메론!'
+              }
+
+              text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
+            } else {
+              if (this.buttons[this.whatBerryCheck] != watermelon) {
+                if (this.buttons[this.whatBerryCheck] == carrot
+                  || this.buttons[this.whatBerryCheck] == strawberry
+                  || this.buttons[this.whatBerryCheck] == k_melon
+                  ||this.buttons[this.whatBerryCheck] == melon
+                  ) {
+                  this.loseIssue = 1;
+                  this.gameend();
+                } else {
+                  this.loseIssue = 2;
+                  this.gameend();
+                }
+              } else {
+                if (this.turn % 14 == 3 || this.turn % 14 == 13) {
+                  this.turnStarted = false;
+                  this.turn++;
+                  this.idx = 4;
+                } else {
+                  
+                  this.whatBerryCheck = 5;
+                  this.whatBerryCheck = this.whatBerry;
+                  if (this.whatBerryCheck != 5) {
+                    this.step4time = millis();
+                    this.whatBerry = 5;
+                    this.step3 = true;
+                  }
+                }
+              }
+            }
+          } else if (this.step3) {
+            if (!this.step4) {
+              if (millis() - this.step4time < 1400) {
+                let berryCheck;
+
+                if (this.buttons[this.whatBerryCheck] == strawberry) {
+                  berryCheck = '딸기!'
+                } else if (this.buttons[this.whatBerryCheck] == carrot) {
+                  berryCheck = '당근!'
+                } else if (this.buttons[this.whatBerryCheck] == watermelon) {
+                  berryCheck = '수박!'
+                } else if (this.buttons[this.whatBerryCheck] == k_melon) {
+                  berryCheck = '참외!'
+                } else if (this.buttons[this.whatBerryCheck] == melon) {
+                  berryCheck = '메론!'
+                }
+
+
+                text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
+              } else {
+                if (this.buttons[this.whatBerryCheck] != k_melon) {
+                  if (this.buttons[this.whatBerryCheck] == carrot
+                    || this.buttons[this.whatBerryCheck] == watermelon
+                    || this.buttons[this.whatBerryCheck] == strawberry
+                    ||this.buttons[this.whatBerryCheck] == melon
+                    ) {
+                    this.loseIssue = 1;
+                    this.gameend();
+                  } else {
+                    this.loseIssue = 2;
+                    this.gameend();
+                  }
+                } else {
+                  if (this.turn % 14 == 4 || this.turn % 14 == 12) {
+                    this.turnStarted = false;
+                    this.turn++;
+                    this.idx = 4;
+                  } else {
+                    
+                    this.whatBerryCheck = 5;
+                    this.whatBerryCheck = this.whatBerry;
+                    if (this.whatBerryCheck != 5) {
+                      this.step5time = millis();
+                      this.whatBerry = 5;
+                      this.step4 = true;
+                    }
+                  }
+                }
+              }
+            } else if (this.step4) {
+              if (!this.step5) {
+                if (millis() - this.step5time < 1400) {
+                  let berryCheck;
+
+                  if (this.buttons[this.whatBerryCheck] == strawberry) {
+                    berryCheck = '딸기!'
+                  } else if (this.buttons[this.whatBerryCheck] == carrot) {
+                    berryCheck = '당근!'
+                  } else if (this.buttons[this.whatBerryCheck] == watermelon) {
+                    berryCheck = '수박!'
+                  } else if (this.buttons[this.whatBerryCheck] == k_melon) {
+                    berryCheck = '참외!'
+                  } else if (this.buttons[this.whatBerryCheck] == melon) {
+                    berryCheck = '메론!'
+                  }
+
+
+                  text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
+                } else {
+                  if (this.buttons[this.whatBerryCheck] != melon) {
+                    if (this.buttons[this.whatBerryCheck] == carrot
+                      || this.buttons[this.whatBerryCheck] == watermelon
+                      || this.buttons[this.whatBerryCheck] == k_melon
+                      ||this.buttons[this.whatBerryCheck] == strawberry
+                      ) {
+                      this.loseIssue = 1;
+                      this.gameend();
+                    } else {
+                      this.loseIssue = 2;
+                      this.gameend();
+                    }
+                  } else {
+                    if (this.turn % 14 == 5 || this.turn % 14 == 11) {
+                      this.turnStarted = false;
+                      this.turn++;
+                      this.idx = 4;
+                    } else {
+                      
+                      this.whatBerryCheck = 5;
+                      this.whatBerryCheck = this.whatBerry;
+                      if (this.whatBerryCheck != 5) {
+                        this.step6time = millis();
+                        this.whatBerry = 5;
+                        this.step5 = true;
+                      }
+                    }
+                  }
+                }
+              } else if (this.step5) {
+                if (!this.step6) {
+                  if (millis() - this.step6time < 1400) {
+                    let berryCheck;
+
+                    if (this.buttons[this.whatBerryCheck] == strawberry) {
+                      berryCheck = '딸기!'
+                    } else if (this.buttons[this.whatBerryCheck] == carrot) {
+                      berryCheck = '당근!'
+                    } else if (this.buttons[this.whatBerryCheck] == watermelon) {
+                      berryCheck = '수박!'
+                    } else if (this.buttons[this.whatBerryCheck] == k_melon) {
+                      berryCheck = '참외!'
+                    } else if (this.buttons[this.whatBerryCheck] == melon) {
+                      berryCheck = '메론!'
+                    }
+
+
+                    text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
+                  } else {
+                    if (this.buttons[this.whatBerryCheck] != strawberry) {
+                      if (this.buttons[this.whatBerryCheck] == carrot
+                        || this.buttons[this.whatBerryCheck] == watermelon
+                        || this.buttons[this.whatBerryCheck] == k_melon
+                        ||this.buttons[this.whatBerryCheck] == melon
+                        ) {
+                        this.loseIssue = 1;
+                        this.gameend();
+                      } else {
+                        this.loseIssue = 2;
+                        this.gameend();
+                      }
+                    } else {
+                      if (this.turn % 14 == 6 || this.turn % 14 == 10) {
+                        this.turnStarted = false;
+                        this.turn++;
+                        this.idx = 4;
+                      } else {
+                        
+                        this.whatBerryCheck = 5;
+                        this.whatBerryCheck = this.whatBerry;
+                        if (this.whatBerryCheck != 5) {
+                          this.step7time = millis();
+                          this.whatBerry = 5;
+                          this.step6 = true;
+                        }
+                      }
+                    }
+                  }
+                } else if (this.step6) {
+                  if (!this.step7) {
+                    if (millis() - this.step6time < 1400) {
+                      let berryCheck;
+
+                      if (this.buttons[this.whatBerryCheck] == strawberry) {
+                        berryCheck = '딸기!'
+                      } else if (this.buttons[this.whatBerryCheck] == carrot) {
+                        berryCheck = '당근!'
+                      } else if (this.buttons[this.whatBerryCheck] == watermelon) {
+                        berryCheck = '수박!'
+                      } else if (this.buttons[this.whatBerryCheck] == k_melon) {
+                        berryCheck = '참외!'
+                      } else if (this.buttons[this.whatBerryCheck] == melon) {
+                        berryCheck = '메론!'
+                      }
+
+
+                      text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
+                    } else {
+                      if (this.buttons[this.whatBerryCheck] != carrot) {
+                        if (this.buttons[this.whatBerryCheck] == strawberry
+                          || this.buttons[this.whatBerryCheck] == watermelon
+                          || this.buttons[this.whatBerryCheck] == k_melon
+                          ||this.buttons[this.whatBerryCheck] == melon
+                          ) {
+                          this.loseIssue = 1;
+                          this.gameend();
+                        } else {
+                          this.loseIssue = 2;
+                          this.gameend();
+                        }
+                      } else {
+                        if (this.turn % 14 == 7 || this.turn % 14 == 9) {
+                          this.turnStarted = false;
+                          this.turn++;
+                          this.idx = 4;
+                        } else {
+                          
+                          this.whatBerryCheck = 5;
+                          this.whatBerryCheck = this.whatBerry;
+                          if (this.whatBerryCheck != 5) {
+                            this.step8time = millis();
+                            this.whatBerry = 5;
+                            this.step7 = true;
+                          }
+                        }
+                      }
+                    }
+                  } else if (this.step7) {
+                    if (!this.step8) {
+                      if (millis() - this.step6time < 1400) {
+                        let berryCheck;
+
+                        if (this.buttons[this.whatBerryCheck] == strawberry) {
+                          berryCheck = '딸기!'
+                        } else if (this.buttons[this.whatBerryCheck] == carrot) {
+                          berryCheck = '당근!'
+                        } else if (this.buttons[this.whatBerryCheck] == watermelon) {
+                          berryCheck = '수박!'
+                        } else if (this.buttons[this.whatBerryCheck] == k_melon) {
+                          berryCheck = '참외!'
+                        } else if (this.buttons[this.whatBerryCheck] == melon) {
+                          berryCheck = '메론!'
+                        }
+
+
+                        text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
+                      } else {
+                        if (this.buttons[this.whatBerryCheck] != watermelon) {
+                          if (this.buttons[this.whatBerryCheck] == carrot
+                            || this.buttons[this.whatBerryCheck] == strawberry
+                            || this.buttons[this.whatBerryCheck] == k_melon
+                            ||this.buttons[this.whatBerryCheck] == melon
+                            ) {
+                            this.loseIssue = 1;
+                            this.gameend();
+                          } else {
+                            this.loseIssue = 2;
+                            this.gameend();
+                          }
+                        } else {
+                          if (this.turn % 14 == 8) {
+                            this.turnStarted = false;
+                            this.turn++;
+                            this.idx = 4;
+                            this.step8 = true;
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
-  }
 
+
+    /*
+    if (millis() - this.currentTime < 1200) {
+      text(this.buttons[this.whatBerry]+'!', 0.2 * w + 0.51 * h, 0.3 * h);
+    } else {
+      if (this.whatBerry == 5) {
+        this.loseIssue = 2;
+        this.gameend();
+      } else if (
+        this.buttons[this.whatBerry] != strawberry
+      ) {
+        this.loseIssue = 1;
+        this.gameend();
+      } else {
+        if (this.turn % 14 == 1){
+          this.turnStarted = false;
+          this.turn++;
+          this.idx = 4;
+        } else if (this.turn % 14 == 2 ||
+          (this.turn % 14 == 0 && this.turn != 0)){
+          this.turnStarted = false;
+          this.turn++;
+          this.idx = 4;
+        }
+      }*/
+
+
+  
+
+  /*
+
+  if (!this.userPlayed) {
+    this.infoStarted = true;
+    this.infoTime = millis();
+    this.whatBerry = 5;
+    this.userPlayed = true;
+  } else if (!this.turnStarted) {
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    let temp = 0;
+    if (this.turn % 14 <= 8) temp = this.turn % 14;
+    else if (this.turn % 14 > 8) temp = 16 - (this.turn % 14);
+    if (this.whatBerry.length == temp) {
+      this.turnStarted = true;
+      this.currentTime = millis();
+    }
+  } else if (this.turnStarted) {
+    if (millis() - this.startTime < 400) {
+      text(fruit[this.whatBerry[-1] - 1], 0.2 * w + 0.51 * h, 0.3 * h);
+    } else {
+      this.turn++;
+      this.idx++;
+      this.idx = this.idx % 6;
+      this.whatBerry = [];
+      this.shuffleDone = false;
+    }
+  }*/
+
+  }
   npcTurn() {
     fill(0);
     let x = 0.2 * w + 0.17 * h * this.idx;
@@ -249,17 +741,15 @@ class berryGame extends Game {
   }
   displayButtons() {
     //buttons[] 순서대로 이미지 가져와서 배치
+
+
+
     imageMode(CENTER);
-    let one = this.buttons[0];
-    let two = this.buttons[1];
-    let three = this.buttons[2];
-    let four = this.buttons[3];
-    let five = this.buttons[4];
-    image(one, w * 0.1, h * 0.8, w * 0.16, h * 0.2);
-    image(two, w * 0.25, h * 0.8, w * 0.16, h * 0.2);
-    image(three, w * 0.4, h * 0.8, w * 0.16, h * 0.2);
-    image(four, w * 0.55, h * 0.8, w * 0.16, h * 0.2);
-    image(five, w * 0.7, h * 0.8, w * 0.16, h * 0.2);
+    image(this.buttons[0], w * 0.1, h * 0.8, w * 0.16, h * 0.2);
+    image(this.buttons[1], w * 0.25, h * 0.8, w * 0.16, h * 0.2);
+    image(this.buttons[2], w * 0.4, h * 0.8, w * 0.16, h * 0.2);
+    image(this.buttons[3], w * 0.55, h * 0.8, w * 0.16, h * 0.2);
+    image(this.buttons[4], w * 0.7, h * 0.8, w * 0.16, h * 0.2);
   }
 
   shuffleArray() {
@@ -267,7 +757,27 @@ class berryGame extends Game {
       const j = Math.floor(Math.random() * (i + 1));
       [this.buttons[i], this.buttons[j]] = [this.buttons[j], this.buttons[i]]; // 배열의 두 원소를 랜덤하게 교환
     }
+
+    for (let j = 0; j < 5; j++) {
+      if (this.buttons[j] == strawberry) {
+        this.strawberry = j;
+      }
+      if (this.buttons[j] == carrot) {
+        this.carrot = j;
+      }
+      if (this.buttons[j] == watermelon) {
+        this.watermelon = j;
+      }
+      if (this.buttons[j] == k_melon) {
+        this.k_melon = j;
+      }
+      if (this.buttons[j] == melon) {
+        this.melon = j;
+      }
+    }
   }
+
+
 
   rhythmIsLife() {
     console.log("rhythmislife");
@@ -359,3 +869,4 @@ class berryGame extends Game {
     }
   }
 }
+
