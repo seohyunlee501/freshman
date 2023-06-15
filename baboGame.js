@@ -23,7 +23,6 @@ class baboGame extends Game {
     this.loseIssue = "";
     this.predictions;
   }
-  modelLoaded() {}
   intro() {
     textSize(32);
     textAlign(CENTER);
@@ -140,14 +139,14 @@ class baboGame extends Game {
       this.idx = this.idx % 6;
     } else {
       if (!this.turnStarted) {
-        this.voice = int(random(1, 6));
+        htemp = this.hand;
+        this.voice = htemp;
         this.hand = int(random(1, 6));
         if (this.idx == 2 || !this.userPlayed) {
-          while (this.voice == this.hand) {
-            console.log("while");
-            this.hand = int(random(1, 6));
+          if (this.voice == this.hand) {
+            this.hand = ((this.voice + 1) % 5) + 1;
           }
-        } else if (this.turn == 7) {
+        } else if (this.turn > 7) {
           this.hand = this.voice;
         }
         this.turnStarted = true;
