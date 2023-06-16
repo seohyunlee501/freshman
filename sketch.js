@@ -35,6 +35,8 @@ let subwayInput;
 let subwayButton;
 let startButton;
 
+let gameLostImage, gameWinImage;
+
 let infoButton1,
   infoButton2,
   infoButton3,
@@ -97,6 +99,9 @@ function preload() {
   bubble_r = loadImage("Assets/bubble_right.png");
   bg = loadImage("Assets/background.png");
   table = loadImage("Assets/table.png");
+
+  gameLostImage = loadImage("Assets/gameover_lose.png");
+  gameWinImage = loadImage("Assets/gameover_win.png")
   for (let i = 1; i <= 6; i++) {
     tutorial[i - 1] = loadImage(`Assets/tutorial_${i}.jpg`);
   }
@@ -155,6 +160,27 @@ function setup() {
 
 function draw() {
   background(0, 64, 0);
+  // console.log(mode);
+   
+  //game lost condition
+  if(mode >= 3){
+    if(player.alcholblood >= 8) {
+      player.die = true;
+    }
+    if(player.die === true){
+      mode = 6;
+    }
+  }
+  
+  // game end display test
+  
+  if(mode == 3 && player.name === 'mode6win'){
+    mode = 6;
+  }else if(mode == 3 && player.name === 'mode6lose'){
+    player.die = true;
+    mode = 6;
+  }
+  
   console.log("mode", mode);
   textFont(retroFont);
   textAlign(CENTER, CENTER);
@@ -217,8 +243,10 @@ function draw() {
       nowGame.round();
       if (nowGame.gameOver) {
         idx = nowGame.idx;
-        if (gameSelect.gameNum == 5) {
+        if (gameSelect.gameNum == 4) {
           mode = 5;
+        } else if(gameSelect.gameNum == 7) {
+          mode = 6;
         } else {
           mode = 3;
         }
@@ -230,7 +258,15 @@ function draw() {
       story.drawScene();
       break;
     case 6:
+      // reset button
       player.gameover();
+      imageMode(CENTER);
+      image(startButton, 0.5 * w, 0.9 * h, 0.1 * w, 0.1 * w);
+      fill(252, 212, 0);
+      textSize(50);
+      textAlign(CENTER, CENTER);
+      textFont(movieFont);
+      text("▶", 0.5 * w, 0.895 * h);
       break;
   }
 
@@ -373,6 +409,8 @@ function mouseClicked() {
       mouseY > 0.05 * h &&
       mouseY < 0.15 * h
     ) {
+      subwayInput.hide();
+      subwayButton.hide();
       if (mode == 3) {
         mode = 0;
         infoButton1.hide();
@@ -408,6 +446,17 @@ function mouseClicked() {
       selectPlayer("girl");
     }
   }
+  // reset when game ended
+  if (mode == 6) {
+    if (
+      mouseX > 0.5 * w - 0.1 * w &&
+      mouseX < 0.5 * w + 0.1 * w &&
+      mouseY > 0.9 * h - 0.1 * w &&
+      mouseY < 0.9 * h + 0.1 * w
+    ) {
+      mode = 0;
+    }
+  }
 }
 
 //mode 1
@@ -435,7 +484,7 @@ function introdisplay(_x, _y, _gen) {
     textAlign(LEFT, TOP);
     textSize(30);
     text("이름:", x - w * 0.13, 0.4 * h);
-    text("주량(잔):", x - w * 0.13, 0.5 * h);
+    text("주량(병):", x - w * 0.13, 0.5 * h);
     pop();
   }
 }
@@ -525,7 +574,8 @@ function keyPressed() {
   if (
     mode == 4 &&
     nowGame.gameName == "지하철게임" &&
-    nowGame.lineSelected == false
+    nowGame.lineSelected == false &&
+    nowGame.gameStarted == false
   ) {
     //console.log(keyCode);
     if (keyCode === 50 || keyCode === 98) {
