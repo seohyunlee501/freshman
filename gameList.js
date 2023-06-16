@@ -34,7 +34,10 @@ class gameList {
         h * 0.3
       );
       infoButton[j].show();
-      infoButton[j].position(this.x[j % 3], this.y[int(j / 3)]);
+      infoButton[j].position(
+        this.x[j % 3] + h * 0.15,
+        this.y[int(j / 3)] - h * 0.12
+      );
     }
 
     //혈중알콜농도
@@ -86,4 +89,3 @@ class gameList {
     this.player.displaybig(w * 0.87, 0.9 * h);
   }
 }
-
