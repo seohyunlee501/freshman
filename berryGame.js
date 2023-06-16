@@ -22,20 +22,24 @@ class berryGame extends Game {
 
 
     this.step1 = false
-    this.step1time = millis();
     this.step2 = false
-    this.step2time = millis();
     this.step3 = false
-    this.step3time = millis();
     this.step4 = false
-    this.step4time = millis();
     this.step5 = false
-    this.step5time = millis();
     this.step6 = false
-    this.step6time = millis();
     this.step7 = false
-    this.step7time = millis();
     this.step8 = false
+    
+
+    this.step1time = millis();
+    
+    this.step2time = millis();
+    
+    this.step3time = millis();
+    this.step4time = millis();
+    this.step5time = millis();
+    this.step6time = millis();
+    this.step7time = millis();
     this.step8time = millis();
 
 
@@ -135,6 +139,15 @@ class berryGame extends Game {
               this.turn++;
               this.idx = 4;
               this.whatBerryCheck = 5;
+
+              this.step1 = false
+              this.step2 = false
+              this.step3 = false
+              this.step4 = false
+              this.step5 = false
+              this.step6 = false
+              this.step7 = false
+              this.step8 = false
             } else {
               
               this.whatBerryCheck = 5;
@@ -184,6 +197,15 @@ class berryGame extends Game {
                 this.turn++;
                 this.idx = 4;
                 this.whatBerryCheck = 5;
+
+                this.step1 = false
+              this.step2 = false
+              this.step3 = false
+              this.step4 = false
+              this.step5 = false
+              this.step6 = false
+              this.step7 = false
+              this.step8 = false
               } else {
                 
                 this.whatBerryCheck = 5;
@@ -233,6 +255,15 @@ class berryGame extends Game {
                   this.turn++;
                   this.idx = 4;
                   this.whatBerryCheck = 5;
+
+                  this.step1 = false
+                  this.step2 = false
+                  this.step3 = false
+                  this.step4 = false
+                  this.step5 = false
+                  this.step6 = false
+                  this.step7 = false
+                  this.step8 = false
                 } else {
                   
                   this.whatBerryCheck = 5;
@@ -283,6 +314,15 @@ class berryGame extends Game {
                     this.turn++;
                     this.idx = 4;
                     this.whatBerryCheck = 5;
+
+                    this.step1 = false
+                    this.step2 = false
+                    this.step3 = false
+                    this.step4 = false
+                    this.step5 = false
+                    this.step6 = false
+                    this.step7 = false
+                    this.step8 = false
                   } else {
                     
                     this.whatBerryCheck = 5;
@@ -333,6 +373,15 @@ class berryGame extends Game {
                       this.turn++;
                       this.idx = 4;
                       this.whatBerryCheck = 5;
+
+                      this.step1 = false
+                      this.step2 = false
+                      this.step3 = false
+                      this.step4 = false
+                      this.step5 = false
+                      this.step6 = false
+                      this.step7 = false
+                      this.step8 = false
                     } else {
                       
                       this.whatBerryCheck = 5;
@@ -383,6 +432,15 @@ class berryGame extends Game {
                         this.turn++;
                         this.idx = 4;
                         this.whatBerryCheck = 5;
+
+                        this.step1 = false
+                        this.step2 = false
+                        this.step3 = false
+                        this.step4 = false
+                        this.step5 = false
+                        this.step6 = false
+                        this.step7 = false
+                        this.step8 = false
                       } else {
                         
                         this.whatBerryCheck = 5;
@@ -433,6 +491,15 @@ class berryGame extends Game {
                           this.turn++;
                           this.idx = 4;
                           this.whatBerryCheck = 5;
+
+                          this.step1 = false
+                          this.step2 = false
+                          this.step3 = false
+                          this.step4 = false
+                          this.step5 = false
+                          this.step6 = false
+                          this.step7 = false
+                          this.step8 = false
                         } else {
                           
                           this.whatBerryCheck = 5;
