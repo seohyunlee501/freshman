@@ -16,6 +16,7 @@ class eyeGame extends Game {
     this.npcThreeDisplay = false;
     this.npcFourDisplay = false;
     this.npcFiveDisplay = false;
+    this.playerDisplay = false;
     this.tempOne = true;
     this.tempTwo = true;
     this.tempThree = true;
@@ -27,6 +28,7 @@ class eyeGame extends Game {
     this.displayNumberFour;
     this.displayNumberFive;
     this.playerNumber;
+    this.tempDisplay = true;
     this.tempPlayer = true;
     this.endStartTime;
     this.endPlayer = false;
@@ -34,76 +36,90 @@ class eyeGame extends Game {
     
     for (let i = 0; i < 3; i++) {
       this.randChar[i][0] = this.chars[i];
-      this.randChar[i][1] = Math.floor(random(100, 1500) / 100) * 100; //this.randChar[i][1]: callInterval
+      this.randChar[i][1] = Math.floor(random(200, 1500) / 100) * 100; //this.randChar[i][1]: callInterval
       this.randChar[i][2] = false; //this.randChar[i][2]: called
       this.randChar[i][3] = i;
     }
 
     for (let i = 4; i < 6; i++) {
       this.randChar[i-1][0] = this.chars[i]
-      this.randChar[i-1][1] = Math.floor(random(100, 1500) / 100) * 100;
+      this.randChar[i-1][1] = Math.floor(random(200, 1500) / 100) * 100;
       this.randChar[i-1][2] = false;
       this.randChar[i-1][3] = i
     }
 
     this.randChar.sort(() => random() - 0.5);
-    this.randChar[0][1] = 700;
-    this.randChar[1][1] = Math.floor(random(500, 1200) / 100) * 100
+    this.randChar[0][1] = 1000;
+    this.randChar[1][1] = Math.floor(random(1000, 1500) / 100) * 100
     
     for (let i = 0; i < 5; i++){
-      console.log(this.randChar[i][1], this.randChar[i][3]);
+      console.log(this.randChar[i][1], this.randChar[i][2], this.randChar[i][3]);
     }
 
-    this.lastCalledTime = millis();
+    this.lastCalledTime = millis() + 4000;
     this.gameStartTime = millis();
   }
 
   interrupt() {
+    this.idx = 3;
     this.playerCalledTime = millis();
     if(!this.gameOver && this.currentNumber < 5){
       if(this.currentNumber == 1){
-        this.showNums(3, 1);
-        this.playerNumber = 1;
         console.log(this.currentNumber); //should be displayed later
         this.currentNumber++;
         this.lastCalledTime = millis();
         this.playerTurnPassed = true;
       }else{
         if(this.playerCalledTime - this.lastCalledTime < this.failureInterval){
-          if(this.tempPlayer){
-            this.playerNumber = this.currentNumber;
-            this.tempPlayer = false;
-          }
-          this.showNums(3, this.playerNumber);
           console.log(this.currentNumber); //should be displayed later
           this.lastCalledTime = millis();
           this.currentNumber++;
-          this.playerLose();
           this.endPlayer = true;
+          this.endStartTime = millis();
           this.playerTurnPassed = true;
         }else if(millis() - this.lastCalledTime > this.failureInterval){
-          console.log(this.currentNumber); //should be displayed later
-          if(this.tempPlayer){
-            this.playerNumber = this.currentNumber;
-            this.tempPlayer = false;
-          }
-          this.showNums(3, this.playerNumber);
           this.lastCalledTime = millis();
           this.currentNumber++;
           this.playerTurnPassed = true;
         }
       }
     }else{
-      this.playerLose();
       this.endPlayer = true;
+      this.endStartTime = millis();
+    }
+  }
+
+  intro() {
+    if(millis() - this.gameStartTime < 2000) {
+      fill(255);
+      rectMode(CENTER);
+      rect(w / 2, h / 2, w / 2, h / 2);
+      fill(0);
+      textAlign(CENTER);
+      textSize(50);
+      text("READY", w / 2, h / 2);
+    }else if(millis() - this.gameStartTime < 4000){
+      fill(255);
+      rectMode(CENTER);
+      rect(w / 2, h / 2, w / 2, h / 2);
+      fill(0);
+      textAlign(CENTER);
+      textSize(50);
+      text("START!!!", w / 2, h / 2);
     }
   }
 
   gamePlay() {
-    this.playerPlay();
-    this.npcPlay();
-    this.displayOverhead();
-    this.endGame();
+    this.intro();
+    if(millis() - this.gameStartTime > 4000) {
+      this.playerPlay();
+      this.npcPlay();
+      this.displayOverhead();
+      this.endGame();
+      for (let i = 0; i < 5; i++){
+        console.log(this.randChar[i][1], this.randChar[i][2], this.randChar[i][3]);
+      }
+    }
   }
 
   playerPlay() {
@@ -118,9 +134,13 @@ class eyeGame extends Game {
       text('Enter를 눌러 번호를 말하세요!', 0, 0);
       pop();
     }else if(this.interruption && !this.playerTurnPassed){
+      if(this.tempDisplay){
+        this.playerDisplay = true;
+        this.tempDisplay = false;
+      }
       this.interrupt();
     }else if(this.playerTurnPassed){
-      this.showNums(3, this.playerNumber);
+
     }
   }
 
@@ -165,6 +185,17 @@ class eyeGame extends Game {
       }
       this.showNums(displayIdx, this.displayNumberFive);
     }
+    if(this.playerDisplay){
+      if(this.tempPlayer){
+        this.playerNumber = this.currentNumber - 1;
+        this.tempPlayer = false;
+      }
+      if(this.playerNumber == 1){
+        this.showNums(3, 1);
+      }else{
+        this.showNums(3, this.playerNumber);
+      }
+    }
   }
 
   showNums(npcIdx, numberCalled) {
@@ -189,7 +220,8 @@ class eyeGame extends Game {
 
   npcPlay() {
     //npcs' play
-      if(!this.gameOver && this.randChar[0][0].die == false && this.randChar[0][2] == false && (millis()) - this.lastCalledTime > this.randChar[0][1]){
+    if(!this.endNPC || !this.endPlayer){
+      if(!this.gameOver && this.randChar[0][0].die == false && this.randChar[0][2] == false && millis() - this.lastCalledTime > this.randChar[0][1]){
         this.idx = this.randChar[0][3];
         this.npcOneDisplay = true;
         console.log(this.currentNumber); // should be changed with display
@@ -203,14 +235,15 @@ class eyeGame extends Game {
         this.lastCalledTime = millis();
         this.randChar[0][2] = true;
         this.currentNumber++;
-        this.npcLose();
         this.endNPC = true;
+        this.endStartTime = millis();
         this.randChar[1][2] = true;
         this.randChar[2][2] = true;
         this.randChar[3][2] = true;
         this.randChar[4][2] = true;
       }
-
+    }
+    if(!this.endNPC || !this.endPlayer){
       if(!this.gameOver && this.randChar[1][0].die == false && this.randChar[1][2] == false && millis() - this.lastCalledTime > this.randChar[1][1] && this.randChar[1][1] > this.failureInterval && this.randChar[0][2] == true){
         this.idx = this.randChar[1][3];
         this.npcTwoDisplay = true;
@@ -218,20 +251,21 @@ class eyeGame extends Game {
         this.lastCalledTime = millis();
         this.randChar[1][2] = true;
         this.currentNumber++;
-      }else if(this.randChar[1][0].die == false && this.randChar[1][2] == false && this.randChar[1][1] < this.failureInterval && this.randChar[0][2] == true){
+      }else if(this.randChar[1][0].die == false && this.randChar[1][2] == false && this.randChar[1][1] < this.failureInterval && this.randChar[0][2] == true && millis() - this.lastCalledTime > this.randChar[1][1]){
         this.idx = this.randChar[1][3];
         this.npcTwoDisplay = true;
         console.log(this.currentNumber);
         this.lastCalledTime = millis();
         this.randChar[1][2] = true;
         this.currentNumber++;
-        this.npcLose();
         this.endNPC = true;
+        this.endStartTime = millis();
         this.randChar[2][2] = true;
         this.randChar[3][2] = true;
         this.randChar[4][2] = true;
       }
-  
+    }
+    if(!this.endNPC || !this.endPlayer){
       if(!this.gameOver && this.randChar[2][0].die == false && this.randChar[2][2] == false && millis() - this.lastCalledTime > this.randChar[2][1] && this.randChar[2][1] > this.failureInterval && this.randChar[1][2] == true){
         this.idx = this.randChar[2][3];
         this.npcThreeDisplay = true;
@@ -239,19 +273,20 @@ class eyeGame extends Game {
         this.lastCalledTime = millis();
         this.randChar[2][2] = true;
         this.currentNumber++;
-      }else if(this.randChar[2][0].die == false && this.randChar[2][2] == false && this.randChar[2][1] < this.failureInterval && this.randChar[1][2] == true){
+      }else if(this.randChar[2][0].die == false && this.randChar[2][2] == false && this.randChar[2][1] < this.failureInterval && this.randChar[1][2] == true && millis() - this.lastCalledTime > this.randChar[2][1]){
         this.idx = this.randChar[2][3];
         this.npcThreeDisplay = true;
         console.log(this.currentNumber);
         this.lastCalledTime = millis();
         this.randChar[2][2] = true;
         this.currentNumber++;
-        this.npcLose();
         this.endNPC = true;
+        this.endStartTime = millis();
         this.randChar[3][2] = true;
         this.randChar[4][2] = true;
       }
-    
+    }
+    if(!this.endNPC || !this.endPlayer){
       if(!this.gameOver && this.randChar[3][0].die == false && this.randChar[3][2] == false && millis() - this.lastCalledTime > this.randChar[3][1] && this.randChar[3][1] > this.failureInterval && this.randChar[2][2] == true){
         this.idx = this.randChar[3][3];
         this.npcFourDisplay = true;
@@ -259,84 +294,89 @@ class eyeGame extends Game {
         this.lastCalledTime = millis();
         this.randChar[3][2] = true;
         this.currentNumber++;
-      }else if(this.randChar[3][0].die == false && this.randChar[3][2] == false && this.randChar[3][1] < this.failureInterval && this.randChar[2][2] == true){
+      }else if(this.randChar[3][0].die == false && this.randChar[3][2] == false && this.randChar[3][1] < this.failureInterval && this.randChar[2][2] == true && millis() - this.lastCalledTime > this.randChar[3][1]){
         this.idx = this.randChar[3][3];
         this.npcFourDisplay = true;
         console.log(this.currentNumber);
         this.lastCalledTime = millis();
         this.randChar[3][2] = true;
         this.currentNumber++;
-        this.npcLose();
         this.endNPC = true;
+        this.endStartTime = millis();
         this.randChar[4][2] = true;
       }
+    }
     
-    
+    if(!this.endNPC || !this.endPlayer){
       if(!this.gameOver && this.randChar[4][0].die == false && this.randChar[4][2] == false && millis() - this.lastCalledTime > this.randChar[4][1] && this.randChar[4][1] > this.failureInterval && this.randChar[3][2] == true){
         this.idx = this.randChar[4][3];
         this.npcFiveDisplay = true;
         console.log(this.currentNumber); // should be changed with display
         this.lastCalledTime = millis();
         this.randChar[4][2] = true;
-        if(this.currentNumber == 6){
-          this.npcLose();
+        this.currentNumber++;
+        if(this.currentNumber == 7){
           this.endNPC = true;
-        }else if(this.currentNumber == 5){
-          this.playerLose();
+          this.endStartTime = millis();
+        }else if(this.currentNumber == 6){
           this.endPlayer = true;
+          this.endStartTime = millis();
         }
-      }else if(this.randChar[4][0].die == false && this.randChar[4][2] == false && this.randChar[4][1] < this.failureInterval && this.randChar[3][2] == true){
+      }else if(this.randChar[4][0].die == false && this.randChar[4][2] == false && this.randChar[4][1] < this.failureInterval && this.randChar[3][2] == true && millis() - this.lastCalledTime > this.randChar[4][1]){
         this.idx = this.randChar[4][3];
         this.npcFiveDisplay = true;
         console.log(this.currentNumber);
         this.lastCalledTime = millis();
         this.randChar[4][2] = true;
         this.currentNumber++;
-        this.npcLose();
         this.endNPC = true;
+        this.endStartTime = millis();
       }
-  }
-
-  npcLose() {
-    this.endStartTime = millis();
-    console.log("YOU WIN!"); // should be changed with display
-    this.npcOneDisplay = false;
-    this.npcTwoDisplay = false;
-    this.npcThreeDisplay = false;
-    this.npcFourDisplay = false;
-    this.npcFiveDisplay = false;
-    // npc 별 alcholblood++ 하는 기능 추가해야 함 & 틀린 NPC의 index를 지정.
-  }
-
-  playerLose() {
-    this.endStartTime = millis();
-    console.log("GAME OVER!"); // should be changed with display
-    this.idx = 3;
-    this.npcOneDisplay = false;
-    this.npcTwoDisplay = false;
-    this.npcThreeDisplay = false;
-    this.npcFourDisplay = false;
-    this.npcFiveDisplay = false;
+    }
   }
   
   endGame() {
     if(this.endPlayer){
-      if(millis() - this.endStartTime < 2000){
+      this.idx = 3;
+      if(millis()- this.endStartTime < 2000){
+
+      } else if(millis() - this.endStartTime < 4000){
+        this.npcOneDisplay = false;
+        this.npcTwoDisplay = false;
+        this.npcThreeDisplay = false;
+        this.npcFourDisplay = false;
+        this.npcFiveDisplay = false;
+        this.playerDisplay = false;
         fill(255);
         rectMode(CENTER);
         rect(w/2, h/2, w/2, h/3);
         fill(0);
         textAlign(CENTER);
         textSize(32);
-        text('눈치는 생명! 생명!', w / 2, h * 0.45);
-        text('생명! 생명! 생명! 생명! 생명!', w / 2, h * 0.55);
-      }else if(millis() - this.endStartTime > 2000){
+        text('눈치는 생명! 생명!', w / 2, h * 0.5);
+      } else if(millis() - this.endStartTime < 6000){
+        fill(255);
+        rectMode(CENTER);
+        rect(w/2, h/2, w/2, h/3);
+        fill(0);
+        textAlign(CENTER);
+        textSize(32);
+        text('생명! 생명! 생명! 생명! 생명!', w / 2, h * 0.5);
+      }else if(millis() - this.endStartTime > 6000){
         this.gameOver = true;
         this.everyone[this.idx].lose();
         this.gameList.gameNum++;
       }
     }else if(this.endNPC){
       if(millis() - this.endStartTime < 2000){
+
+      } else if(millis() - this.endStartTime < 4000){
+        this.npcOneDisplay = false;
+        this.npcTwoDisplay = false;
+        this.npcThreeDisplay = false;
+        this.npcFourDisplay = false;
+        this.npcFiveDisplay = false;
+        this.playerDisplay = false;
         fill(255);
         rectMode(CENTER);
         rect(w/2, h/2, w/3, h/3);
@@ -344,7 +384,7 @@ class eyeGame extends Game {
         textAlign(CENTER);
         textSize(32);
         text('휴~ 살았다', w / 2, h / 2);
-      }else if(millis() - this.endStartTime > 2000){
+      }else if(millis() - this.endStartTime > 4000){
         this.gameOver = true;
         this.everyone[this.idx].lose();
         this.gameList.gameNum++;

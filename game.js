@@ -23,10 +23,10 @@ class Game {
     fill(0, 64, 0);
     textAlign(LEFT, CENTER);
     textSize(50);
-    let temptext = "게임" + this.gameNum;
+    let temptext = "게임" + this.gameNum + " / 6";
     text(temptext, 0.15 * w, 0.05 * h);
     fill(255);
-    text(this.gameName, 0.25 * w, 0.05 * h);
+    text(this.gameName, 0.28 * w, 0.05 * h);
 
     //혈중알콜농도
     textAlign(CENTER);
