@@ -3,6 +3,7 @@ class Player {
     this.alcholblood = 0;
     this.die = false;
     this.image = [];
+    this.image_y = [];
     this.set(_name, _soju, _gen);
   }
 
@@ -16,8 +17,9 @@ class Player {
     } else if (this.gen == "girl") {
       gKey = "f";
     }
-    for (let i = 1; i <= 5; i++) {
-      this.image[i] = imgs_player[`${gKey}_${i}`];
+    for (let i = 0; i < 5; i++) {
+      this.image[i] = imgs_player[`${gKey}_${i + 1}`];
+      this.image_y[i] = imgs_player[`${gKey}_${i + 1}_y`];
     }
   }
 
@@ -26,12 +28,7 @@ class Player {
   }
   display(x, y) {
     let a = this.alcholblood - 2;
-    let img;
-    if(this.alcholblood < 8){
-      img = this.image[a];
-    } else {
-      img = this.image[5];
-    }
+    let img = this.image_y[a];
     imageMode(CENTER);
     image(img, x, y, h * 0.3, h * 0.3);
   }
@@ -65,4 +62,3 @@ class Player {
     }
   }
 }
-
