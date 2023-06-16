@@ -36,6 +36,9 @@ let subwayButton;
 let startButton;
 
 let infoButton = [];
+let tutorial = [];
+let xButton;
+let infoNum = 0;
 
 function preload() {
   carrot = loadImage("Assets/button_carrot.png");
@@ -86,6 +89,9 @@ function preload() {
   bubble_r = loadImage("Assets/bubble_right.png");
   bg = loadImage("Assets/background.png");
   table = loadImage("Assets/table.png");
+  for (let i = 1; i <= 6; i++) {
+    tutorial[i - 1] = loadImage(`Assets/tutorial_${i}.jpg`);
+  }
 }
 
 function setup() {
@@ -112,12 +118,17 @@ function setup() {
     infoButton[j] = createButton("i");
     infoButton[j].class("info");
     infoButton[j].hide();
+    infoButton[j].mousePressed(showGameInfo);
+    infoButton[j].mousePressed((infoNum = j));
   }
+  xButton = createButton("X");
+  xButton.class("info");
+  xButton.hide();
 }
 
 function draw() {
   background(0, 64, 0);
-  console.log(mode);
+  console.log("mode", mode);
   textFont(retroFont);
   textAlign(CENTER, CENTER);
 
@@ -213,44 +224,47 @@ function draw() {
 }
 
 function mousePressed() {
-  if (mode == 4 && nowGame.gameName == "딸기당근수박참외메론") {
-    if (mouseY > 0.7 * h && mouseY < 0.9 * h) {
-      if (mouseX > 0.02 * w && mouseX < 0.18 * w) {
-        nowGame.whatBerry = 0;
-      } else if (mouseX > 0.17 * w && mouseX < 0.33 * w) {
-        nowGame.whatBerry = 1;
-      } else if (mouseX > 0.32 * w && mouseX < 0.48 * w) {
-        nowGame.whatBerry = 2;
-      } else if (mouseX > 0.47 * w && mouseX < 0.63 * w) {
-        nowGame.whatBerry = 3;
-      } else if (mouseX > 0.62 * w && mouseX < 0.78 * w) {
-        nowGame.whatBerry = 4;
-      }
-    }
-  }
   //game select
   if (mode == 3) {
-    if (mouseY > 0.2 * h && mouseY < 0.5 * h) {
+    if (mouseY > 0.3 * h && mouseY < 0.5 * h) {
       if (mouseX > 0.13 * w && mouseX < 0.37 * w) {
         nowGame = new berryGame(idx, gameSelect);
+        for (let i = 0; i < 6; i++) {
+          infoButton[i].hide();
+        }
         mode = 4;
       } else if (mouseX > 0.38 * w && mouseX < 0.62 * w) {
         nowGame = new eyeGame(idx, gameSelect);
         mode = 4;
+        for (let i = 0; i < 6; i++) {
+          infoButton[i].hide();
+        }
       } else if (mouseX > 0.63 * w && mouseX < 0.87 * w) {
         nowGame = new brGame(idx, gameSelect);
         mode = 4;
+        for (let i = 0; i < 6; i++) {
+          infoButton[i].hide();
+        }
       }
-    } else if (mouseY > 0.52 * h && mouseY < 0.82 * h) {
+    } else if (mouseY > 0.62 * h && mouseY < 0.82 * h) {
       if (mouseX > 0.13 * w && mouseX < 0.37 * w) {
         nowGame = new subwayGame(idx, gameSelect);
         mode = 4;
+        for (let i = 0; i < 6; i++) {
+          infoButton[i].hide();
+        }
       } else if (mouseX > 0.38 * w && mouseX < 0.62 * w) {
         nowGame = new doobooGame(idx, gameSelect);
         mode = 4;
+        for (let i = 0; i < 6; i++) {
+          infoButton[i].hide();
+        }
       } else if (mouseX > 0.63 * w && mouseX < 0.87 * w) {
         nowGame = new baboGame(idx, gameSelect);
         mode = 4;
+        for (let i = 0; i < 6; i++) {
+          infoButton[i].hide();
+        }
       }
     }
   }
@@ -395,16 +409,27 @@ function setPlayer() {
   //console.log(name, soju, gender);
   nameInput.value("");
   sojuInput.value("");
-  nameInput.position(-0.25 * w, -0.4 * h);
-  sojuInput.position(-0.25 * w, -0.5 * h);
-  button.position(-0.68 * w, -0.65 * h);
+  nameInput.hide();
+  sojuInput.hide();
+  button.hide();
   mode = 2;
+  bSelecting = false;
+  gSelecting = false;
 }
+
+function showGameInfo() {
+  imageMode(CENTER);
+  image(tutorial[infoNum], w / 2, h / 2, 0.2 * w, 0.2 * h);
+  xButton.show();
+  xButton.position(w / 2, h / 2);
+  xButton.mousePressed(infoX);
+}
+function infoX() {}
 
 function keyPressed() {
   if (mode == 4 && nowGame.gameName == "배스킨 라빈스 31") {
-    console.log("key pressed");
-    console.log(keyCode);
+    //console.log("key pressed");
+    //console.log(keyCode);
     if (keyCode === 49 || keyCode === 97) {
       nowGame.temp = 1;
     } else if (keyCode === 50 || keyCode === 98) {
@@ -423,7 +448,7 @@ function keyPressed() {
     nowGame.gameName == "지하철게임" &&
     nowGame.lineSelected == false
   ) {
-    console.log(keyCode);
+    //console.log(keyCode);
     if (keyCode === 50 || keyCode === 98) {
       nowGame.lineSelection = 2;
     } else if (keyCode === 51 || keyCode === 99) {
@@ -435,8 +460,8 @@ function keyPressed() {
     }
   }
   if (mode == 4 && nowGame.gameName == "두부게임") {
-    console.log("key pressed");
-    console.log(keyCode);
+    //console.log("key pressed");
+    //console.log(keyCode);
     if (keyCode === 48 || keyCode === 96) {
       nowGame.temp = 0;
     } else if (keyCode === 49 || keyCode === 97) {
