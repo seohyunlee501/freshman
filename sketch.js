@@ -271,7 +271,7 @@ function draw() {
   }
 
   // reset button
-  if (mode != 0 && mode != 1 && mode != 6) {
+  if (mode != 0 && mode != 1 && mode != 6 && mode != 2 && mode != 5) {
     fill(0);
     imageMode(CORNER);
     image(reset, 0.05 * w, 0.05 * h, 0.1 * h, 0.1 * h);
@@ -402,7 +402,7 @@ function mouseClicked() {
     }
   }
   //reset button
-  else if (mode != 1 && mode != 6) {
+  else if (mode != 1 && mode != 6 && mode != 2 && mode != 5) {
     if (
       mouseX > 0.05 * w &&
       mouseX < 0.05 * w + 0.1 * h &&
