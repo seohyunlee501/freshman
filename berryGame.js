@@ -21,20 +21,18 @@ class berryGame extends Game {
     this.shuffleDone = false;
 
 
-    this.step1 = false
-    this.step2 = false
-    this.step3 = false
-    this.step4 = false
-    this.step5 = false
-    this.step6 = false
-    this.step7 = false
-    this.step8 = false
+    this.step1 = false;
+    this.step2 = false;
+    this.step3 = false;
+    this.step4 = false;
+    this.step5 = false;
+    this.step6 = false;
+    this.step7 = false;
+    this.step8 = false;
     
 
     this.step1time = millis();
-    
     this.step2time = millis();
-    
     this.step3time = millis();
     this.step4time = millis();
     this.step5time = millis();
@@ -139,15 +137,6 @@ class berryGame extends Game {
               this.turn++;
               this.idx = 4;
               this.whatBerryCheck = 5;
-
-              this.step1 = false
-              this.step2 = false
-              this.step3 = false
-              this.step4 = false
-              this.step5 = false
-              this.step6 = false
-              this.step7 = false
-              this.step8 = false
             } else {
               
               this.whatBerryCheck = 5;
@@ -198,14 +187,6 @@ class berryGame extends Game {
                 this.idx = 4;
                 this.whatBerryCheck = 5;
 
-                this.step1 = false
-              this.step2 = false
-              this.step3 = false
-              this.step4 = false
-              this.step5 = false
-              this.step6 = false
-              this.step7 = false
-              this.step8 = false
               } else {
                 
                 this.whatBerryCheck = 5;
@@ -256,14 +237,6 @@ class berryGame extends Game {
                   this.idx = 4;
                   this.whatBerryCheck = 5;
 
-                  this.step1 = false
-                  this.step2 = false
-                  this.step3 = false
-                  this.step4 = false
-                  this.step5 = false
-                  this.step6 = false
-                  this.step7 = false
-                  this.step8 = false
                 } else {
                   
                   this.whatBerryCheck = 5;
@@ -315,14 +288,6 @@ class berryGame extends Game {
                     this.idx = 4;
                     this.whatBerryCheck = 5;
 
-                    this.step1 = false
-                    this.step2 = false
-                    this.step3 = false
-                    this.step4 = false
-                    this.step5 = false
-                    this.step6 = false
-                    this.step7 = false
-                    this.step8 = false
                   } else {
                     
                     this.whatBerryCheck = 5;
@@ -374,14 +339,6 @@ class berryGame extends Game {
                       this.idx = 4;
                       this.whatBerryCheck = 5;
 
-                      this.step1 = false
-                      this.step2 = false
-                      this.step3 = false
-                      this.step4 = false
-                      this.step5 = false
-                      this.step6 = false
-                      this.step7 = false
-                      this.step8 = false
                     } else {
                       
                       this.whatBerryCheck = 5;
@@ -433,14 +390,6 @@ class berryGame extends Game {
                         this.idx = 4;
                         this.whatBerryCheck = 5;
 
-                        this.step1 = false
-                        this.step2 = false
-                        this.step3 = false
-                        this.step4 = false
-                        this.step5 = false
-                        this.step6 = false
-                        this.step7 = false
-                        this.step8 = false
                       } else {
                         
                         this.whatBerryCheck = 5;
@@ -492,14 +441,6 @@ class berryGame extends Game {
                           this.idx = 4;
                           this.whatBerryCheck = 5;
 
-                          this.step1 = false
-                          this.step2 = false
-                          this.step3 = false
-                          this.step4 = false
-                          this.step5 = false
-                          this.step6 = false
-                          this.step7 = false
-                          this.step8 = false
                         } else {
                           
                           this.whatBerryCheck = 5;
@@ -564,74 +505,6 @@ class berryGame extends Game {
       }
     }
 
-
-    /*
-    if (millis() - this.currentTime < 1200) {
-      text(this.buttons[this.whatBerry]+'!', 0.2 * w + 0.51 * h, 0.3 * h);
-    } else {
-      if (this.whatBerry == 5) {
-        this.loseIssue = 2;
-        this.gameend();
-      } else if (
-        this.buttons[this.whatBerry] != strawberry
-      ) {
-        this.loseIssue = 1;
-        this.gameend();
-      } else {
-        if (this.turn % 14 == 1){
-          this.turnStarted = false;
-          this.turn++;
-          this.idx = 4;
-        } else if (this.turn % 14 == 2 ||
-          (this.turn % 14 == 0 && this.turn != 0)){
-          this.turnStarted = false;
-          this.turn++;
-          this.idx = 4;
-        }
-      }*/
-
-
-  
-
-  /*
-
-  if (!this.userPlayed) {
-    this.infoStarted = true;
-    this.infoTime = millis();
-    this.whatBerry = 5;
-    this.userPlayed = true;
-  } else if (!this.turnStarted) {
-    
-
-
-
-
-
-
-
-
-
-
-
-
-    let temp = 0;
-    if (this.turn % 14 <= 8) temp = this.turn % 14;
-    else if (this.turn % 14 > 8) temp = 16 - (this.turn % 14);
-    if (this.whatBerry.length == temp) {
-      this.turnStarted = true;
-      this.currentTime = millis();
-    }
-  } else if (this.turnStarted) {
-    if (millis() - this.startTime < 400) {
-      text(fruit[this.whatBerry[-1] - 1], 0.2 * w + 0.51 * h, 0.3 * h);
-    } else {
-      this.turn++;
-      this.idx++;
-      this.idx = this.idx % 6;
-      this.whatBerry = [];
-      this.shuffleDone = false;
-    }
-  }*/
 
   }
   npcTurn() {
