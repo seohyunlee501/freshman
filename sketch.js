@@ -89,6 +89,8 @@ function preload() {
   for (let i = 1; i <= 5; i++) {
     imgs_player[`m_${i}`] = loadImage(`Assets/player_m_${i}.png`);
     imgs_player[`f_${i}`] = loadImage(`Assets/player_f_${i}.png`);
+    imgs_player[`m_${i}_y`] = loadImage(`Assets/player_m_${i}_y.png`);
+    imgs_player[`f_${i}_y`] = loadImage(`Assets/player_f_${i}_y.png`);
   }
   arrow = loadImage("Assets/arrow.png");
   bubble_l = loadImage("Assets/bubble_left.png");
