@@ -35,10 +35,16 @@ let subwayInput;
 let subwayButton;
 let startButton;
 
-let infoButton = [];
+let infoButton1,
+  infoButton2,
+  infoButton3,
+  infoButton4,
+  infoButton5,
+  infoButton6;
 let tutorial = [];
 let xButton;
 let infoNum = 0;
+let showingGameInfo = false;
 
 function preload() {
   carrot = loadImage("Assets/button_carrot.png");
@@ -114,13 +120,32 @@ function setup() {
   subwayButton = createButton("확인");
   subwayButton.position(w * 0.47, h * 0.63);
   subwayButton.hide();
-  for (let j = 0; j < 6; j++) {
-    infoButton[j] = createButton("i");
-    infoButton[j].class("info");
-    infoButton[j].hide();
-    infoButton[j].mousePressed(showGameInfo);
-    infoButton[j].mousePressed((infoNum = j));
-  }
+
+  //game info button
+  infoButton1 = createButton("i");
+  infoButton1.class("info");
+  infoButton1.hide();
+  infoButton1.mousePressed(showGameInfo1);
+  infoButton2 = createButton("i");
+  infoButton2.class("info");
+  infoButton2.hide();
+  infoButton2.mousePressed(showGameInfo2);
+  infoButton3 = createButton("i");
+  infoButton3.class("info");
+  infoButton3.hide();
+  infoButton3.mousePressed(showGameInfo3);
+  infoButton4 = createButton("i");
+  infoButton4.class("info");
+  infoButton4.hide();
+  infoButton4.mousePressed(showGameInfo4);
+  infoButton5 = createButton("i");
+  infoButton5.class("info");
+  infoButton5.hide();
+  infoButton5.mousePressed(showGameInfo5);
+  infoButton6 = createButton("i");
+  infoButton6.class("info");
+  infoButton6.hide();
+  infoButton6.mousePressed(showGameInfo6);
   xButton = createButton("X");
   xButton.class("info");
   xButton.hide();
@@ -175,6 +200,14 @@ function draw() {
     case 3:
       imageMode(CENTER);
       gameSelect.display();
+      if (showingGameInfo) {
+        imageMode(CENTER);
+        image(tutorial[infoNum - 1], w / 2, h / 2, 0.2 * w, 0.2 * h);
+        xButton.show();
+        xButton.position(w / 2, h / 2);
+        xButton.mousePressed(infoX);
+      }
+
       //temp = gameSelect.gameNum;
       break;
     case 4:
@@ -229,42 +262,60 @@ function mousePressed() {
     if (mouseY > 0.3 * h && mouseY < 0.5 * h) {
       if (mouseX > 0.13 * w && mouseX < 0.37 * w) {
         nowGame = new berryGame(idx, gameSelect);
-        for (let i = 0; i < 6; i++) {
-          infoButton[i].hide();
-        }
+        infoButton1.hide();
+        infoButton2.hide();
+        infoButton3.hide();
+        infoButton4.hide();
+        infoButton5.hide();
+        infoButton6.hide();
         mode = 4;
       } else if (mouseX > 0.38 * w && mouseX < 0.62 * w) {
         nowGame = new eyeGame(idx, gameSelect);
         mode = 4;
-        for (let i = 0; i < 6; i++) {
-          infoButton[i].hide();
-        }
+        infoButton1.hide();
+        infoButton2.hide();
+        infoButton3.hide();
+        infoButton4.hide();
+        infoButton5.hide();
+        infoButton6.hide();
       } else if (mouseX > 0.63 * w && mouseX < 0.87 * w) {
         nowGame = new brGame(idx, gameSelect);
         mode = 4;
-        for (let i = 0; i < 6; i++) {
-          infoButton[i].hide();
-        }
+        infoButton1.hide();
+        infoButton2.hide();
+        infoButton3.hide();
+        infoButton4.hide();
+        infoButton5.hide();
+        infoButton6.hide();
       }
     } else if (mouseY > 0.62 * h && mouseY < 0.82 * h) {
       if (mouseX > 0.13 * w && mouseX < 0.37 * w) {
         nowGame = new subwayGame(idx, gameSelect);
         mode = 4;
-        for (let i = 0; i < 6; i++) {
-          infoButton[i].hide();
-        }
+        infoButton1.hide();
+        infoButton2.hide();
+        infoButton3.hide();
+        infoButton4.hide();
+        infoButton5.hide();
+        infoButton6.hide();
       } else if (mouseX > 0.38 * w && mouseX < 0.62 * w) {
         nowGame = new doobooGame(idx, gameSelect);
         mode = 4;
-        for (let i = 0; i < 6; i++) {
-          infoButton[i].hide();
-        }
+        infoButton1.hide();
+        infoButton2.hide();
+        infoButton3.hide();
+        infoButton4.hide();
+        infoButton5.hide();
+        infoButton6.hide();
       } else if (mouseX > 0.63 * w && mouseX < 0.87 * w) {
         nowGame = new baboGame(idx, gameSelect);
         mode = 4;
-        for (let i = 0; i < 6; i++) {
-          infoButton[i].hide();
-        }
+        infoButton1.hide();
+        infoButton2.hide();
+        infoButton3.hide();
+        infoButton4.hide();
+        infoButton5.hide();
+        infoButton6.hide();
       }
     }
   }
@@ -417,14 +468,34 @@ function setPlayer() {
   gSelecting = false;
 }
 
-function showGameInfo() {
-  imageMode(CENTER);
-  image(tutorial[infoNum], w / 2, h / 2, 0.2 * w, 0.2 * h);
-  xButton.show();
-  xButton.position(w / 2, h / 2);
-  xButton.mousePressed(infoX);
+function showGameInfo1() {
+  showingGameInfo = true;
+  infoNum = 1;
 }
-function infoX() {}
+function showGameInfo2() {
+  showingGameInfo = true;
+  infoNum = 2;
+}
+function showGameInfo3() {
+  showingGameInfo = true;
+  infoNum = 3;
+}
+function showGameInfo4() {
+  showingGameInfo = true;
+  infoNum = 4;
+}
+function showGameInfo5() {
+  showingGameInfo = true;
+  infoNum = 5;
+}
+function showGameInfo6() {
+  showingGameInfo = true;
+  infoNum = 6;
+}
+function infoX() {
+  showingGameInfo = false;
+  xButton.hide();
+}
 
 function keyPressed() {
   if (mode == 4 && nowGame.gameName == "배스킨 라빈스 31") {
