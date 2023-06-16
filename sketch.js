@@ -375,6 +375,12 @@ function mouseClicked() {
     ) {
       if (mode == 3) {
         mode = 0;
+        infoButton1.hide();
+        infoButton2.hide();
+        infoButton3.hide();
+        infoButton4.hide();
+        infoButton5.hide();
+        infoButton6.hide();
       } else {
         mode = 3;
       }
