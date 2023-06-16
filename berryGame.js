@@ -20,29 +20,23 @@ class berryGame extends Game {
     this.turnStarted = false;
     this.shuffleDone = false;
 
-
-    this.step1 = false
-    this.step2 = false
-    this.step3 = false
-    this.step4 = false
-    this.step5 = false
-    this.step6 = false
-    this.step7 = false
-    this.step8 = false
-    
+    this.step1 = false;
+    this.step2 = false;
+    this.step3 = false;
+    this.step4 = false;
+    this.step5 = false;
+    this.step6 = false;
+    this.step7 = false;
+    this.step8 = false;
 
     this.step1time = millis();
-    
     this.step2time = millis();
-    
     this.step3time = millis();
     this.step4time = millis();
     this.step5time = millis();
     this.step6time = millis();
     this.step7time = millis();
     this.step8time = millis();
-
-
   }
 
   berryBgm() {
@@ -71,7 +65,6 @@ class berryGame extends Game {
     }
     this.displayButtons();
 
-
     if (!this.userPlayed) {
       this.infoStarted = true;
       this.infoTime = millis();
@@ -79,7 +72,7 @@ class berryGame extends Game {
     } else if (this.infoStarted) {
       if (millis() - this.infoTime < 2000) {
         // instructions:
-        console.log('info');
+        console.log("info");
         textSize(32);
         fill(255);
         textAlign(CENTER);
@@ -100,33 +93,31 @@ class berryGame extends Game {
         this.step1time = millis();
         this.whatBerry = 5;
       }
-
     } else if (this.turnStarted) {
-
       if (!this.step1) {
         if (millis() - this.step1time < 1500) {
           let berryCheck;
           if (this.buttons[this.whatBerryCheck] == strawberry) {
-            berryCheck = '딸기!'
+            berryCheck = "딸기!";
           } else if (this.buttons[this.whatBerryCheck] == carrot) {
-            berryCheck = '당근!'
+            berryCheck = "당근!";
           } else if (this.buttons[this.whatBerryCheck] == watermelon) {
-            berryCheck = '수박!'
+            berryCheck = "수박!";
           } else if (this.buttons[this.whatBerryCheck] == k_melon) {
-            berryCheck = '참외!'
+            berryCheck = "참외!";
           } else if (this.buttons[this.whatBerryCheck] == melon) {
-            berryCheck = '메론!'
+            berryCheck = "메론!";
           }
 
           text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
-
         } else {
           if (this.buttons[this.whatBerryCheck] != strawberry) {
-            if (this.buttons[this.whatBerryCheck] == carrot
-              || this.buttons[this.whatBerryCheck] == watermelon
-              || this.buttons[this.whatBerryCheck] == k_melon
-              ||this.buttons[this.whatBerryCheck] == melon
-              ) {
+            if (
+              this.buttons[this.whatBerryCheck] == carrot ||
+              this.buttons[this.whatBerryCheck] == watermelon ||
+              this.buttons[this.whatBerryCheck] == k_melon ||
+              this.buttons[this.whatBerryCheck] == melon
+            ) {
               this.loseIssue = 1;
               this.gameend();
             } else {
@@ -140,16 +131,15 @@ class berryGame extends Game {
               this.idx = 4;
               this.whatBerryCheck = 5;
 
-              this.step1 = false
-              this.step2 = false
-              this.step3 = false
-              this.step4 = false
-              this.step5 = false
-              this.step6 = false
-              this.step7 = false
-              this.step8 = false
+              this.step1 = false;
+              this.step2 = false;
+              this.step3 = false;
+              this.step4 = false;
+              this.step5 = false;
+              this.step6 = false;
+              this.step7 = false;
+              this.step8 = false;
             } else {
-              
               this.whatBerryCheck = 5;
               this.whatBerryCheck = this.whatBerry;
               if (this.whatBerryCheck != 5) {
@@ -165,25 +155,26 @@ class berryGame extends Game {
           if (millis() - this.step2time < 1400) {
             let berryCheck;
             if (this.buttons[this.whatBerryCheck] == strawberry) {
-              berryCheck = '딸기!'
+              berryCheck = "딸기!";
             } else if (this.buttons[this.whatBerryCheck] == carrot) {
-              berryCheck = '당근!'
+              berryCheck = "당근!";
             } else if (this.buttons[this.whatBerryCheck] == watermelon) {
-              berryCheck = '수박!'
+              berryCheck = "수박!";
             } else if (this.buttons[this.whatBerryCheck] == k_melon) {
-              berryCheck = '참외!'
+              berryCheck = "참외!";
             } else if (this.buttons[this.whatBerryCheck] == melon) {
-              berryCheck = '메론!'
+              berryCheck = "메론!";
             }
 
             text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
           } else {
             if (this.buttons[this.whatBerryCheck] != carrot) {
-              if (this.buttons[this.whatBerryCheck] == strawberry
-                || this.buttons[this.whatBerryCheck] == watermelon
-                || this.buttons[this.whatBerryCheck] == k_melon
-                ||this.buttons[this.whatBerryCheck] == melon
-                ) {
+              if (
+                this.buttons[this.whatBerryCheck] == strawberry ||
+                this.buttons[this.whatBerryCheck] == watermelon ||
+                this.buttons[this.whatBerryCheck] == k_melon ||
+                this.buttons[this.whatBerryCheck] == melon
+              ) {
                 this.loseIssue = 1;
                 this.gameend();
               } else {
@@ -191,23 +182,24 @@ class berryGame extends Game {
                 this.gameend();
               }
             } else {
-              if (this.turn % 14 == 2 ||
-                (this.turn % 14 == 0 && this.turn != 0)) {
+              if (
+                this.turn % 14 == 2 ||
+                (this.turn % 14 == 0 && this.turn != 0)
+              ) {
                 this.turnStarted = false;
                 this.turn++;
                 this.idx = 4;
                 this.whatBerryCheck = 5;
 
-                this.step1 = false
-              this.step2 = false
-              this.step3 = false
-              this.step4 = false
-              this.step5 = false
-              this.step6 = false
-              this.step7 = false
-              this.step8 = false
+                this.step1 = false;
+                this.step2 = false;
+                this.step3 = false;
+                this.step4 = false;
+                this.step5 = false;
+                this.step6 = false;
+                this.step7 = false;
+                this.step8 = false;
               } else {
-                
                 this.whatBerryCheck = 5;
                 this.whatBerryCheck = this.whatBerry;
                 if (this.whatBerryCheck != 5) {
@@ -224,25 +216,26 @@ class berryGame extends Game {
               let berryCheck;
 
               if (this.buttons[this.whatBerryCheck] == strawberry) {
-                berryCheck = '딸기!'
+                berryCheck = "딸기!";
               } else if (this.buttons[this.whatBerryCheck] == carrot) {
-                berryCheck = '당근!'
+                berryCheck = "당근!";
               } else if (this.buttons[this.whatBerryCheck] == watermelon) {
-                berryCheck = '수박!'
+                berryCheck = "수박!";
               } else if (this.buttons[this.whatBerryCheck] == k_melon) {
-                berryCheck = '참외!'
+                berryCheck = "참외!";
               } else if (this.buttons[this.whatBerryCheck] == melon) {
-                berryCheck = '메론!'
+                berryCheck = "메론!";
               }
 
               text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
             } else {
               if (this.buttons[this.whatBerryCheck] != watermelon) {
-                if (this.buttons[this.whatBerryCheck] == carrot
-                  || this.buttons[this.whatBerryCheck] == strawberry
-                  || this.buttons[this.whatBerryCheck] == k_melon
-                  ||this.buttons[this.whatBerryCheck] == melon
-                  ) {
+                if (
+                  this.buttons[this.whatBerryCheck] == carrot ||
+                  this.buttons[this.whatBerryCheck] == strawberry ||
+                  this.buttons[this.whatBerryCheck] == k_melon ||
+                  this.buttons[this.whatBerryCheck] == melon
+                ) {
                   this.loseIssue = 1;
                   this.gameend();
                 } else {
@@ -256,16 +249,15 @@ class berryGame extends Game {
                   this.idx = 4;
                   this.whatBerryCheck = 5;
 
-                  this.step1 = false
-                  this.step2 = false
-                  this.step3 = false
-                  this.step4 = false
-                  this.step5 = false
-                  this.step6 = false
-                  this.step7 = false
-                  this.step8 = false
+                  this.step1 = false;
+                  this.step2 = false;
+                  this.step3 = false;
+                  this.step4 = false;
+                  this.step5 = false;
+                  this.step6 = false;
+                  this.step7 = false;
+                  this.step8 = false;
                 } else {
-                  
                   this.whatBerryCheck = 5;
                   this.whatBerryCheck = this.whatBerry;
                   if (this.whatBerryCheck != 5) {
@@ -282,26 +274,26 @@ class berryGame extends Game {
                 let berryCheck;
 
                 if (this.buttons[this.whatBerryCheck] == strawberry) {
-                  berryCheck = '딸기!'
+                  berryCheck = "딸기!";
                 } else if (this.buttons[this.whatBerryCheck] == carrot) {
-                  berryCheck = '당근!'
+                  berryCheck = "당근!";
                 } else if (this.buttons[this.whatBerryCheck] == watermelon) {
-                  berryCheck = '수박!'
+                  berryCheck = "수박!";
                 } else if (this.buttons[this.whatBerryCheck] == k_melon) {
-                  berryCheck = '참외!'
+                  berryCheck = "참외!";
                 } else if (this.buttons[this.whatBerryCheck] == melon) {
-                  berryCheck = '메론!'
+                  berryCheck = "메론!";
                 }
-
 
                 text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
               } else {
                 if (this.buttons[this.whatBerryCheck] != k_melon) {
-                  if (this.buttons[this.whatBerryCheck] == carrot
-                    || this.buttons[this.whatBerryCheck] == watermelon
-                    || this.buttons[this.whatBerryCheck] == strawberry
-                    ||this.buttons[this.whatBerryCheck] == melon
-                    ) {
+                  if (
+                    this.buttons[this.whatBerryCheck] == carrot ||
+                    this.buttons[this.whatBerryCheck] == watermelon ||
+                    this.buttons[this.whatBerryCheck] == strawberry ||
+                    this.buttons[this.whatBerryCheck] == melon
+                  ) {
                     this.loseIssue = 1;
                     this.gameend();
                   } else {
@@ -315,16 +307,15 @@ class berryGame extends Game {
                     this.idx = 4;
                     this.whatBerryCheck = 5;
 
-                    this.step1 = false
-                    this.step2 = false
-                    this.step3 = false
-                    this.step4 = false
-                    this.step5 = false
-                    this.step6 = false
-                    this.step7 = false
-                    this.step8 = false
+                    this.step1 = false;
+                    this.step2 = false;
+                    this.step3 = false;
+                    this.step4 = false;
+                    this.step5 = false;
+                    this.step6 = false;
+                    this.step7 = false;
+                    this.step8 = false;
                   } else {
-                    
                     this.whatBerryCheck = 5;
                     this.whatBerryCheck = this.whatBerry;
                     if (this.whatBerryCheck != 5) {
@@ -341,26 +332,26 @@ class berryGame extends Game {
                   let berryCheck;
 
                   if (this.buttons[this.whatBerryCheck] == strawberry) {
-                    berryCheck = '딸기!'
+                    berryCheck = "딸기!";
                   } else if (this.buttons[this.whatBerryCheck] == carrot) {
-                    berryCheck = '당근!'
+                    berryCheck = "당근!";
                   } else if (this.buttons[this.whatBerryCheck] == watermelon) {
-                    berryCheck = '수박!'
+                    berryCheck = "수박!";
                   } else if (this.buttons[this.whatBerryCheck] == k_melon) {
-                    berryCheck = '참외!'
+                    berryCheck = "참외!";
                   } else if (this.buttons[this.whatBerryCheck] == melon) {
-                    berryCheck = '메론!'
+                    berryCheck = "메론!";
                   }
-
 
                   text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
                 } else {
                   if (this.buttons[this.whatBerryCheck] != melon) {
-                    if (this.buttons[this.whatBerryCheck] == carrot
-                      || this.buttons[this.whatBerryCheck] == watermelon
-                      || this.buttons[this.whatBerryCheck] == k_melon
-                      ||this.buttons[this.whatBerryCheck] == strawberry
-                      ) {
+                    if (
+                      this.buttons[this.whatBerryCheck] == carrot ||
+                      this.buttons[this.whatBerryCheck] == watermelon ||
+                      this.buttons[this.whatBerryCheck] == k_melon ||
+                      this.buttons[this.whatBerryCheck] == strawberry
+                    ) {
                       this.loseIssue = 1;
                       this.gameend();
                     } else {
@@ -374,16 +365,15 @@ class berryGame extends Game {
                       this.idx = 4;
                       this.whatBerryCheck = 5;
 
-                      this.step1 = false
-                      this.step2 = false
-                      this.step3 = false
-                      this.step4 = false
-                      this.step5 = false
-                      this.step6 = false
-                      this.step7 = false
-                      this.step8 = false
+                      this.step1 = false;
+                      this.step2 = false;
+                      this.step3 = false;
+                      this.step4 = false;
+                      this.step5 = false;
+                      this.step6 = false;
+                      this.step7 = false;
+                      this.step8 = false;
                     } else {
-                      
                       this.whatBerryCheck = 5;
                       this.whatBerryCheck = this.whatBerry;
                       if (this.whatBerryCheck != 5) {
@@ -400,26 +390,28 @@ class berryGame extends Game {
                     let berryCheck;
 
                     if (this.buttons[this.whatBerryCheck] == strawberry) {
-                      berryCheck = '딸기!'
+                      berryCheck = "딸기!";
                     } else if (this.buttons[this.whatBerryCheck] == carrot) {
-                      berryCheck = '당근!'
-                    } else if (this.buttons[this.whatBerryCheck] == watermelon) {
-                      berryCheck = '수박!'
+                      berryCheck = "당근!";
+                    } else if (
+                      this.buttons[this.whatBerryCheck] == watermelon
+                    ) {
+                      berryCheck = "수박!";
                     } else if (this.buttons[this.whatBerryCheck] == k_melon) {
-                      berryCheck = '참외!'
+                      berryCheck = "참외!";
                     } else if (this.buttons[this.whatBerryCheck] == melon) {
-                      berryCheck = '메론!'
+                      berryCheck = "메론!";
                     }
-
 
                     text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
                   } else {
                     if (this.buttons[this.whatBerryCheck] != strawberry) {
-                      if (this.buttons[this.whatBerryCheck] == carrot
-                        || this.buttons[this.whatBerryCheck] == watermelon
-                        || this.buttons[this.whatBerryCheck] == k_melon
-                        ||this.buttons[this.whatBerryCheck] == melon
-                        ) {
+                      if (
+                        this.buttons[this.whatBerryCheck] == carrot ||
+                        this.buttons[this.whatBerryCheck] == watermelon ||
+                        this.buttons[this.whatBerryCheck] == k_melon ||
+                        this.buttons[this.whatBerryCheck] == melon
+                      ) {
                         this.loseIssue = 1;
                         this.gameend();
                       } else {
@@ -433,16 +425,15 @@ class berryGame extends Game {
                         this.idx = 4;
                         this.whatBerryCheck = 5;
 
-                        this.step1 = false
-                        this.step2 = false
-                        this.step3 = false
-                        this.step4 = false
-                        this.step5 = false
-                        this.step6 = false
-                        this.step7 = false
-                        this.step8 = false
+                        this.step1 = false;
+                        this.step2 = false;
+                        this.step3 = false;
+                        this.step4 = false;
+                        this.step5 = false;
+                        this.step6 = false;
+                        this.step7 = false;
+                        this.step8 = false;
                       } else {
-                        
                         this.whatBerryCheck = 5;
                         this.whatBerryCheck = this.whatBerry;
                         if (this.whatBerryCheck != 5) {
@@ -459,26 +450,28 @@ class berryGame extends Game {
                       let berryCheck;
 
                       if (this.buttons[this.whatBerryCheck] == strawberry) {
-                        berryCheck = '딸기!'
+                        berryCheck = "딸기!";
                       } else if (this.buttons[this.whatBerryCheck] == carrot) {
-                        berryCheck = '당근!'
-                      } else if (this.buttons[this.whatBerryCheck] == watermelon) {
-                        berryCheck = '수박!'
+                        berryCheck = "당근!";
+                      } else if (
+                        this.buttons[this.whatBerryCheck] == watermelon
+                      ) {
+                        berryCheck = "수박!";
                       } else if (this.buttons[this.whatBerryCheck] == k_melon) {
-                        berryCheck = '참외!'
+                        berryCheck = "참외!";
                       } else if (this.buttons[this.whatBerryCheck] == melon) {
-                        berryCheck = '메론!'
+                        berryCheck = "메론!";
                       }
-
 
                       text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
                     } else {
                       if (this.buttons[this.whatBerryCheck] != carrot) {
-                        if (this.buttons[this.whatBerryCheck] == strawberry
-                          || this.buttons[this.whatBerryCheck] == watermelon
-                          || this.buttons[this.whatBerryCheck] == k_melon
-                          ||this.buttons[this.whatBerryCheck] == melon
-                          ) {
+                        if (
+                          this.buttons[this.whatBerryCheck] == strawberry ||
+                          this.buttons[this.whatBerryCheck] == watermelon ||
+                          this.buttons[this.whatBerryCheck] == k_melon ||
+                          this.buttons[this.whatBerryCheck] == melon
+                        ) {
                           this.loseIssue = 1;
                           this.gameend();
                         } else {
@@ -492,16 +485,15 @@ class berryGame extends Game {
                           this.idx = 4;
                           this.whatBerryCheck = 5;
 
-                          this.step1 = false
-                          this.step2 = false
-                          this.step3 = false
-                          this.step4 = false
-                          this.step5 = false
-                          this.step6 = false
-                          this.step7 = false
-                          this.step8 = false
+                          this.step1 = false;
+                          this.step2 = false;
+                          this.step3 = false;
+                          this.step4 = false;
+                          this.step5 = false;
+                          this.step6 = false;
+                          this.step7 = false;
+                          this.step8 = false;
                         } else {
-                          
                           this.whatBerryCheck = 5;
                           this.whatBerryCheck = this.whatBerry;
                           if (this.whatBerryCheck != 5) {
@@ -518,26 +510,32 @@ class berryGame extends Game {
                         let berryCheck;
 
                         if (this.buttons[this.whatBerryCheck] == strawberry) {
-                          berryCheck = '딸기!'
-                        } else if (this.buttons[this.whatBerryCheck] == carrot) {
-                          berryCheck = '당근!'
-                        } else if (this.buttons[this.whatBerryCheck] == watermelon) {
-                          berryCheck = '수박!'
-                        } else if (this.buttons[this.whatBerryCheck] == k_melon) {
-                          berryCheck = '참외!'
+                          berryCheck = "딸기!";
+                        } else if (
+                          this.buttons[this.whatBerryCheck] == carrot
+                        ) {
+                          berryCheck = "당근!";
+                        } else if (
+                          this.buttons[this.whatBerryCheck] == watermelon
+                        ) {
+                          berryCheck = "수박!";
+                        } else if (
+                          this.buttons[this.whatBerryCheck] == k_melon
+                        ) {
+                          berryCheck = "참외!";
                         } else if (this.buttons[this.whatBerryCheck] == melon) {
-                          berryCheck = '메론!'
+                          berryCheck = "메론!";
                         }
-
 
                         text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
                       } else {
                         if (this.buttons[this.whatBerryCheck] != watermelon) {
-                          if (this.buttons[this.whatBerryCheck] == carrot
-                            || this.buttons[this.whatBerryCheck] == strawberry
-                            || this.buttons[this.whatBerryCheck] == k_melon
-                            ||this.buttons[this.whatBerryCheck] == melon
-                            ) {
+                          if (
+                            this.buttons[this.whatBerryCheck] == carrot ||
+                            this.buttons[this.whatBerryCheck] == strawberry ||
+                            this.buttons[this.whatBerryCheck] == k_melon ||
+                            this.buttons[this.whatBerryCheck] == melon
+                          ) {
                             this.loseIssue = 1;
                             this.gameend();
                           } else {
@@ -564,7 +562,6 @@ class berryGame extends Game {
       }
     }
 
-
     /*
     if (millis() - this.currentTime < 1200) {
       text(this.buttons[this.whatBerry]+'!', 0.2 * w + 0.51 * h, 0.3 * h);
@@ -590,10 +587,7 @@ class berryGame extends Game {
         }
       }*/
 
-
-  
-
-  /*
+    /*
 
   if (!this.userPlayed) {
     this.infoStarted = true;
@@ -632,7 +626,6 @@ class berryGame extends Game {
       this.shuffleDone = false;
     }
   }*/
-
   }
   npcTurn() {
     fill(0);
@@ -811,8 +804,6 @@ class berryGame extends Game {
   displayButtons() {
     //buttons[] 순서대로 이미지 가져와서 배치
 
-
-
     imageMode(CENTER);
     image(this.buttons[0], w * 0.1, h * 0.8, w * 0.16, h * 0.2);
     image(this.buttons[1], w * 0.25, h * 0.8, w * 0.16, h * 0.2);
@@ -827,8 +818,6 @@ class berryGame extends Game {
       [this.buttons[i], this.buttons[j]] = [this.buttons[j], this.buttons[i]]; // 배열의 두 원소를 랜덤하게 교환
     }
   }
-
-
 
   rhythmIsLife() {
     console.log("rhythmislife");
@@ -920,4 +909,3 @@ class berryGame extends Game {
     }
   }
 }
-
