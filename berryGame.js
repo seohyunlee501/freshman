@@ -19,23 +19,26 @@ class berryGame extends Game {
     this.turnStarted = false;
     this.shuffleDone = false;
 
-    this.step1 = false;
-    this.step2 = false;
-    this.step3 = false;
-    this.step4 = false;
-    this.step5 = false;
-    this.step6 = false;
-    this.step7 = false;
-    this.step8 = false;
+    this.step = 0;
+    this.stepTime = 0;
 
-    this.step1time = millis();
-    this.step2time = millis();
-    this.step3time = millis();
-    this.step4time = millis();
-    this.step5time = millis();
-    this.step6time = millis();
-    this.step7time = millis();
-    this.step8time = millis();
+    // this.step1 = false;
+    // this.step2 = false;
+    // this.step3 = false;
+    // this.step4 = false;
+    // this.step5 = false;
+    // this.step6 = false;
+    // this.step7 = false;
+    // this.step8 = false;
+
+    // this.step1time = millis();
+    // this.step2time = millis();
+    // this.step3time = millis();
+    // this.step4time = millis();
+    // this.step5time = millis();
+    // this.step6time = millis();
+    // this.step7time = millis();
+    // this.step8time = millis();
   }
 
   berryBgm() {
@@ -56,18 +59,27 @@ class berryGame extends Game {
   }
 
   playerTurn() {
+    //make answer array
     let fruit = ["딸기!", "당근!", "수박!", "참외!", "메론!"];
+    let fruitNum = [0, 1, 2, 3, 4];
     let answer = [];
-    for (let i = 0; i < this.turn; i++) {
-      answer[i] = fruit[i % 5];
+    let temp = this.turn;
+    temp = temp % 14;
+    if (this.turn > 8) {
+      temp = 16 - this.turn;
+    }
+    for (let i = 0; i < temp; i++) {
+      answer[i] = fruitNum[i % 5];
     }
 
+    //shuffle button
     if (!this.shuffleDone) {
       this.shuffleArray();
       this.shuffleDone = true;
     }
     this.displayButtons();
 
+    //info
     if (!this.userPlayed) {
       this.infoStarted = true;
       this.infoTime = millis();
@@ -114,7 +126,9 @@ class berryGame extends Game {
 
           text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
         } else {
-          if (this.buttons[this.whatBerryCheck] != strawberry) {
+          if (
+            this.buttons[this.whatBerryCheck] != this.buttons[answer[this.step]]
+          ) {
             if (
               this.buttons[this.whatBerryCheck] == carrot ||
               this.buttons[this.whatBerryCheck] == watermelon ||
@@ -158,7 +172,7 @@ class berryGame extends Game {
           if (millis() - this.step2time < 1400) {
             let berryCheck;
             if (this.buttons[this.whatBerryCheck] == strawberry) {
-              berryCheck = "딸기!";
+              berryCheck = fruit[answer[this.step]];
             } else if (this.buttons[this.whatBerryCheck] == carrot) {
               berryCheck = "당근!";
             } else if (this.buttons[this.whatBerryCheck] == watermelon) {
@@ -564,59 +578,6 @@ class berryGame extends Game {
         }
       }
     }
-
-    /*
-    if (millis() - this.currentTime < 1200) {
-      text(this.buttons[this.whatBerry]+'!', 0.2 * w + 0.51 * h, 0.3 * h);
-    } else {
-      if (this.whatBerry == 5) {
-        this.loseIssue = 2;
-        this.gameend();
-      } else if (
-        this.buttons[this.whatBerry] != strawberry
-      ) {
-        this.loseIssue = 1;
-        this.gameend();
-      } else {
-        if (this.turn % 14 == 1){
-          this.turnStarted = false;
-          this.turn++;
-          this.idx = 4;
-        } else if (this.turn % 14 == 2 ||
-          (this.turn % 14 == 0 && this.turn != 0)){
-          this.turnStarted = false;
-          this.turn++;
-          this.idx = 4;
-        }
-      }*/
-
-    /*
-
-  if (!this.userPlayed) {
-    this.infoStarted = true;
-    this.infoTime = millis();
-    this.whatBerry = 5;
-    this.userPlayed = true;
-  } else if (!this.turnStarted) {
-    
-    let temp = 0;
-    if (this.turn % 14 <= 8) temp = this.turn % 14;
-    else if (this.turn % 14 > 8) temp = 16 - (this.turn % 14);
-    if (this.whatBerry.length == temp) {
-      this.turnStarted = true;
-      this.currentTime = millis();
-    }
-  } else if (this.turnStarted) {
-    if (millis() - this.startTime < 400) {
-      text(fruit[this.whatBerry[-1] - 1], 0.2 * w + 0.51 * h, 0.3 * h);
-    } else {
-      this.turn++;
-      this.idx++;
-      this.idx = this.idx % 6;
-      this.whatBerry = [];
-      this.shuffleDone = false;
-    }
-  }*/
   }
   npcTurn() {
     fill(0);
