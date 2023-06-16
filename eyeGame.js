@@ -54,7 +54,7 @@ class eyeGame extends Game {
       console.log(this.randChar[i][1], this.randChar[i][3]);
     }
 
-    this.lastCalledTime = millis();
+    this.lastCalledTime = millis() + 4000;
     this.gameStartTime = millis();
   }
 
@@ -99,11 +99,34 @@ class eyeGame extends Game {
     }
   }
 
+  intro() {
+    if(millis() - this.gameStartTime < 2000) {
+      fill(255);
+      rectMode(CENTER);
+      rect(w / 2, h / 2, w / 2, h / 2);
+      fill(0);
+      textAlign(CENTER);
+      textSize(50);
+      text("READY", w / 2, h / 2);
+    }else if(millis() - this.gameStartTime < 4000){
+      fill(255);
+      rectMode(CENTER);
+      rect(w / 2, h / 2, w / 2, h / 2);
+      fill(0);
+      textAlign(CENTER);
+      textSize(50);
+      text("START!!!", w / 2, h / 2);
+    }
+  }
+
   gamePlay() {
-    this.playerPlay();
-    this.npcPlay();
-    this.displayOverhead();
-    this.endGame();
+    this.intro();
+    if(millis() - this.gameStartTime > 4000) {
+      this.playerPlay();
+      this.npcPlay();
+      this.displayOverhead();
+      this.endGame();
+    }
   }
 
   playerPlay() {
