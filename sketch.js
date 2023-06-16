@@ -409,6 +409,8 @@ function mouseClicked() {
       mouseY > 0.05 * h &&
       mouseY < 0.15 * h
     ) {
+      subwayInput.hide();
+      subwayButton.hide();
       if (mode == 3) {
         mode = 0;
       } else {
@@ -476,7 +478,7 @@ function introdisplay(_x, _y, _gen) {
     textAlign(LEFT, TOP);
     textSize(30);
     text("이름:", x - w * 0.13, 0.4 * h);
-    text("주량(잔):", x - w * 0.13, 0.5 * h);
+    text("주량(병):", x - w * 0.13, 0.5 * h);
     pop();
   }
 }

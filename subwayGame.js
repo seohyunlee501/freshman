@@ -137,7 +137,7 @@ class subwayGame extends Game {
       this.idx = this.idx % 6;
     } else {
       if (!this.turnStarted) {
-        if(this.falseProbability[0] < 0.66){
+        if(this.falseProbability[0] < 0.5){
           let lineIdx = Math.floor(random(0, this.stationList[this.currentLine].length));
           this.npcStationName = this.stationList[this.currentLine][lineIdx];
           this.stationList[this.currentLine].splice(lineIdx, 1);

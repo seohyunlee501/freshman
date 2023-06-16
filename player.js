@@ -27,18 +27,23 @@ class Player {
     this.alcholblood++;
   }
   display(x, y) {
-    let a = this.alcholblood - 2;
-    let img = this.image_y[a];
-    imageMode(CENTER);
-    image(img, x, y, h * 0.3, h * 0.3);
-  }
-  displaybig(x, y) {
-    let a = this.alcholblood - 2;
+    let a = this.alcholblood - 3;
     let img;
     if(this.alcholblood < 8){
       img = this.image[a];
     } else {
-      img = this.image[5];
+      img = this.image[4];
+    }
+    imageMode(CENTER);
+    image(img, x, y, h * 0.3, h * 0.3);
+  }
+  displaybig(x, y) {
+    let a = this.alcholblood - 3;
+    let img;
+    if(this.alcholblood < 8){
+      img = this.image[a];
+    } else {
+      img = this.image[4];
     }
     imageMode(CENTER);
     image(img, x, y, w * 0.3, w * 0.3);
@@ -49,14 +54,14 @@ class Player {
       image(gameLostImage, w / 2, h / 2, w, h);
       imageMode(CENTER);
       push();
-      scale(3, -3);
-      image(this.image[5], w * 0.8 / 3, -h * 0.2 / 3);
+      scale(6, -6);
+      image(this.image[4], w * 0.8 / 6, -h * 0.2 / 6);
       pop();
     } else {
       imageMode(CENTER);
       image(gameWinImage, w / 2, h / 2, w, h);
       imageMode(CENTER);
-      let a = this.alcholblood - 2;
+      let a = this.alcholblood - 3;
       let img = this.image[a];
       image(img, w * 0.73, h * 0.75, w * 0.8 , w * 0.8);
     }

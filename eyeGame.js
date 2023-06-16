@@ -242,7 +242,8 @@ class eyeGame extends Game {
         this.randChar[3][2] = true;
         this.randChar[4][2] = true;
       }
-
+    }
+    if(!this.endNPC || !this.endPlayer){
       if(!this.gameOver && this.randChar[1][0].die == false && this.randChar[1][2] == false && millis() - this.lastCalledTime > this.randChar[1][1] && this.randChar[1][1] > this.failureInterval && this.randChar[0][2] == true){
         this.idx = this.randChar[1][3];
         this.npcTwoDisplay = true;
@@ -263,7 +264,8 @@ class eyeGame extends Game {
         this.randChar[3][2] = true;
         this.randChar[4][2] = true;
       }
-  
+    }
+    if(!this.endNPC || !this.endPlayer){
       if(!this.gameOver && this.randChar[2][0].die == false && this.randChar[2][2] == false && millis() - this.lastCalledTime > this.randChar[2][1] && this.randChar[2][1] > this.failureInterval && this.randChar[1][2] == true){
         this.idx = this.randChar[2][3];
         this.npcThreeDisplay = true;
@@ -283,7 +285,8 @@ class eyeGame extends Game {
         this.randChar[3][2] = true;
         this.randChar[4][2] = true;
       }
-    
+    }
+    if(!this.endNPC || !this.endPlayer){
       if(!this.gameOver && this.randChar[3][0].die == false && this.randChar[3][2] == false && millis() - this.lastCalledTime > this.randChar[3][1] && this.randChar[3][1] > this.failureInterval && this.randChar[2][2] == true){
         this.idx = this.randChar[3][3];
         this.npcFourDisplay = true;
@@ -302,8 +305,9 @@ class eyeGame extends Game {
         this.endStartTime = millis();
         this.randChar[4][2] = true;
       }
+    }
     
-    
+    if(!this.endNPC || !this.endPlayer){
       if(!this.gameOver && this.randChar[4][0].die == false && this.randChar[4][2] == false && millis() - this.lastCalledTime > this.randChar[4][1] && this.randChar[4][1] > this.failureInterval && this.randChar[3][2] == true){
         this.idx = this.randChar[4][3];
         this.npcFiveDisplay = true;
