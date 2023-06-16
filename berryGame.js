@@ -2,7 +2,6 @@ class berryGame extends Game {
   constructor(_idx, _gameList) {
     super(_idx, _gameList);
     this.gameName = "딸기당근수박참외메론";
-    this.turn = 0;
     this.buttons = [strawberry, carrot, watermelon, k_melon, melon];
     this.startTime = millis();
     this.bgmOn = true;
@@ -58,6 +57,10 @@ class berryGame extends Game {
 
   playerTurn() {
     let fruit = ["딸기!", "당근!", "수박!", "참외!", "메론!"];
+    let answer = [];
+    for (let i = 0; i < this.turn; i++) {
+      answer[i] = fruit[i % 5];
+    }
 
     if (!this.shuffleDone) {
       this.shuffleArray();
@@ -596,18 +599,6 @@ class berryGame extends Game {
     this.userPlayed = true;
   } else if (!this.turnStarted) {
     
-
-
-
-
-
-
-
-
-
-
-
-
     let temp = 0;
     if (this.turn % 14 <= 8) temp = this.turn % 14;
     else if (this.turn % 14 > 8) temp = 16 - (this.turn % 14);
@@ -904,8 +895,6 @@ class berryGame extends Game {
       } else {
         this.npcTurn();
       }
-
-      //this.displayButtons();
     }
   }
 }
