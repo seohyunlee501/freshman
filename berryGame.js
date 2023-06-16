@@ -20,12 +20,6 @@ class berryGame extends Game {
     this.turnStarted = false;
     this.shuffleDone = false;
 
-    this.strawberry = 5;
-    this.carrot = 5;
-    this.watermelon = 5;
-    this.k_melon = 5;
-    this.melon = 5;
-
 
     this.step1 = false
     this.step1time = millis();
@@ -140,6 +134,7 @@ class berryGame extends Game {
               this.turnStarted = false;
               this.turn++;
               this.idx = 4;
+              this.whatBerryCheck = 5;
             } else {
               
               this.whatBerryCheck = 5;
@@ -188,6 +183,7 @@ class berryGame extends Game {
                 this.turnStarted = false;
                 this.turn++;
                 this.idx = 4;
+                this.whatBerryCheck = 5;
               } else {
                 
                 this.whatBerryCheck = 5;
@@ -236,6 +232,7 @@ class berryGame extends Game {
                   this.turnStarted = false;
                   this.turn++;
                   this.idx = 4;
+                  this.whatBerryCheck = 5;
                 } else {
                   
                   this.whatBerryCheck = 5;
@@ -285,6 +282,7 @@ class berryGame extends Game {
                     this.turnStarted = false;
                     this.turn++;
                     this.idx = 4;
+                    this.whatBerryCheck = 5;
                   } else {
                     
                     this.whatBerryCheck = 5;
@@ -334,6 +332,7 @@ class berryGame extends Game {
                       this.turnStarted = false;
                       this.turn++;
                       this.idx = 4;
+                      this.whatBerryCheck = 5;
                     } else {
                       
                       this.whatBerryCheck = 5;
@@ -383,6 +382,7 @@ class berryGame extends Game {
                         this.turnStarted = false;
                         this.turn++;
                         this.idx = 4;
+                        this.whatBerryCheck = 5;
                       } else {
                         
                         this.whatBerryCheck = 5;
@@ -397,7 +397,7 @@ class berryGame extends Game {
                   }
                 } else if (this.step6) {
                   if (!this.step7) {
-                    if (millis() - this.step6time < 1400) {
+                    if (millis() - this.step7time < 1400) {
                       let berryCheck;
 
                       if (this.buttons[this.whatBerryCheck] == strawberry) {
@@ -432,6 +432,7 @@ class berryGame extends Game {
                           this.turnStarted = false;
                           this.turn++;
                           this.idx = 4;
+                          this.whatBerryCheck = 5;
                         } else {
                           
                           this.whatBerryCheck = 5;
@@ -446,7 +447,7 @@ class berryGame extends Game {
                     }
                   } else if (this.step7) {
                     if (!this.step8) {
-                      if (millis() - this.step6time < 1400) {
+                      if (millis() - this.step8time < 1400) {
                         let berryCheck;
 
                         if (this.buttons[this.whatBerryCheck] == strawberry) {
@@ -481,6 +482,7 @@ class berryGame extends Game {
                             this.turnStarted = false;
                             this.turn++;
                             this.idx = 4;
+                            this.whatBerryCheck = 5;
                             this.step8 = true;
                           }
                         }
@@ -756,24 +758,6 @@ class berryGame extends Game {
     for (let i = 4; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [this.buttons[i], this.buttons[j]] = [this.buttons[j], this.buttons[i]]; // 배열의 두 원소를 랜덤하게 교환
-    }
-
-    for (let j = 0; j < 5; j++) {
-      if (this.buttons[j] == strawberry) {
-        this.strawberry = j;
-      }
-      if (this.buttons[j] == carrot) {
-        this.carrot = j;
-      }
-      if (this.buttons[j] == watermelon) {
-        this.watermelon = j;
-      }
-      if (this.buttons[j] == k_melon) {
-        this.k_melon = j;
-      }
-      if (this.buttons[j] == melon) {
-        this.melon = j;
-      }
     }
   }
 
