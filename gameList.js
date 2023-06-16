@@ -24,7 +24,6 @@ class gameList {
     fill(255);
 
     //게임 선택창
-    //info button
     for (let j = 0; j < 6; j++) {
       image(
         gameButton[j],
@@ -33,13 +32,38 @@ class gameList {
         w * 0.24,
         h * 0.3
       );
-      infoButton[j].show();
-      infoButton[j].position(
-        this.x[j % 3] + h * 0.15,
-        this.y[int(j / 3)] - h * 0.12
-      );
     }
-
+    //info button
+    infoButton1.show();
+    infoButton1.position(
+      this.x[0 % 3] + h * 0.135,
+      this.y[int(0 / 3)] - h * 0.135
+    );
+    infoButton2.show();
+    infoButton2.position(
+      this.x[1 % 3] + h * 0.135,
+      this.y[int(1 / 3)] - h * 0.135
+    );
+    infoButton3.show();
+    infoButton3.position(
+      this.x[2 % 3] + h * 0.135,
+      this.y[int(2 / 3)] - h * 0.135
+    );
+    infoButton4.show();
+    infoButton4.position(
+      this.x[3 % 3] + h * 0.135,
+      this.y[int(3 / 3)] - h * 0.135
+    );
+    infoButton5.show();
+    infoButton5.position(
+      this.x[4 % 3] + h * 0.135,
+      this.y[int(4 / 3)] - h * 0.135
+    );
+    infoButton6.show();
+    infoButton6.position(
+      this.x[5 % 3] + h * 0.135,
+      this.y[int(5 / 3)] - h * 0.135
+    );
     //혈중알콜농도
     textAlign(LEFT, CENTER);
     textSize(30);
