@@ -220,6 +220,7 @@ class eyeGame extends Game {
 
   npcPlay() {
     //npcs' play
+    if(!this.endNPC || !this.endPlayer){
       if(!this.gameOver && this.randChar[0][0].die == false && this.randChar[0][2] == false && millis() - this.lastCalledTime > this.randChar[0][1]){
         this.idx = this.randChar[0][3];
         this.npcOneDisplay = true;
@@ -327,6 +328,7 @@ class eyeGame extends Game {
         this.endNPC = true;
         this.endStartTime = millis();
       }
+    }
   }
   
   endGame() {
