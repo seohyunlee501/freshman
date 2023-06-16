@@ -122,7 +122,7 @@ function setup() {
 
 function draw() {
   background(0, 64, 0);
-  console.log(mode);
+  // console.log(mode);
    
   //game lost condition
   if(mode >= 3){
@@ -135,13 +135,13 @@ function draw() {
   }
   
   // game end display test
-  //
-  // if(mode == 3 && player.name === 'mode6win'){
-  //   mode = 6;
-  // }else if(mode == 3 && player.name === 'mode6lose'){
-  //   player.die = true;
-  //   mode = 6;
-  // }
+  
+  if(mode == 3 && player.name === 'mode6win'){
+    mode = 6;
+  }else if(mode == 3 && player.name === 'mode6lose'){
+    player.die = true;
+    mode = 6;
+  }
   
   textFont(retroFont);
   textAlign(CENTER, CENTER);
@@ -211,7 +211,15 @@ function draw() {
       story.drawScene();
       break;
     case 6:
+      // reset button
       player.gameover();
+      imageMode(CENTER);
+      image(startButton, 0.5 * w, 0.9 * h, 0.1 * w, 0.1 * w);
+      fill(252, 212, 0);
+      textSize(50);
+      textAlign(CENTER, CENTER);
+      textFont(movieFont);
+      text("▶", 0.5 * w, 0.895 * h);
       break;
   }
 
@@ -360,6 +368,17 @@ function mouseClicked() {
       bSelecting = false;
       gSelecting = true;
       selectPlayer("girl");
+    }
+  }
+  // reset when game ended
+  if (mode == 6) {
+    if (
+      mouseX > 0.5 * w - 0.1 * w &&
+      mouseX < 0.5 * w + 0.1 * w &&
+      mouseY > 0.9 * h - 0.1 * w &&
+      mouseY < 0.9 * h + 0.1 * w
+    ) {
+      mode = 0;
     }
   }
 }
