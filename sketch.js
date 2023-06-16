@@ -35,6 +35,8 @@ let subwayInput;
 let subwayButton;
 let startButton;
 
+let gameLostImage, gameWinImage;
+
 let infoButton = [];
 
 function preload() {
@@ -86,6 +88,9 @@ function preload() {
   bubble_r = loadImage("Assets/bubble_right.png");
   bg = loadImage("Assets/background.png");
   table = loadImage("Assets/table.png");
+
+  gameLostImage = loadImage("Assets/gameover_lose.png");
+  gameWinImage = loadImage("Assets/gameover_win.png")
 }
 
 function setup() {
@@ -118,6 +123,26 @@ function setup() {
 function draw() {
   background(0, 64, 0);
   console.log(mode);
+   
+  //game lost condition
+  if(mode >= 3){
+    if(player.alcholblood >= 8) {
+      player.die = true;
+    }
+    if(player.die === true){
+      mode = 6;
+    }
+  }
+  
+  // game end display test
+  //
+  // if(mode == 3 && player.name === 'mode6win'){
+  //   mode = 6;
+  // }else if(mode == 3 && player.name === 'mode6lose'){
+  //   player.die = true;
+  //   mode = 6;
+  // }
+  
   textFont(retroFont);
   textAlign(CENTER, CENTER);
 
@@ -171,8 +196,10 @@ function draw() {
       nowGame.round();
       if (nowGame.gameOver) {
         idx = nowGame.idx;
-        if (gameSelect.gameNum == 5) {
+        if (gameSelect.gameNum == 4) {
           mode = 5;
+        } else if(gameSelect.gameNum == 7) {
+          mode = 6;
         } else {
           mode = 3;
         }
@@ -421,7 +448,8 @@ function keyPressed() {
   if (
     mode == 4 &&
     nowGame.gameName == "지하철게임" &&
-    nowGame.lineSelected == false
+    nowGame.lineSelected == false &&
+    nowGame.gameStarted == false
   ) {
     console.log(keyCode);
     if (keyCode === 50 || keyCode === 98) {

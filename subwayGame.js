@@ -33,6 +33,11 @@ class subwayGame extends Game {
     this.endStarted = false;
     this.gamefinishedByWrongInput = false;
     this.gamefinishedByWrongStation = false;
+    this.falseProbability = [0, 0, 0, 0, 0];
+
+    for(let i = 0; i < 45; i++){
+      this.falseProbability[i+5] = random(0, 1);
+    }
   }
   
   intro() {
@@ -94,6 +99,7 @@ class subwayGame extends Game {
 
   playerturn() {
     if(!this.pturnStarted) {
+      console.log('started');
       if(this.stationIdx == -1){
         this.gamefinishedByWrongStation = true;
         this.gameend();
@@ -115,7 +121,7 @@ class subwayGame extends Game {
         console.log(this.stationIdx + '999');
       } else {
         this.playerEnd = true;
-        this.pturnstarted = false;
+        this.pturnStarted = false;
         this.turn++;
         this.idx++;
         this.idx = this.idx % 6;
@@ -131,18 +137,19 @@ class subwayGame extends Game {
       this.idx = this.idx % 6;
     } else {
       if (!this.turnStarted) {
-        let temp = random();
-        if(temp < 0.88){
+        if(this.falseProbability[0] < 0.66){
           let lineIdx = Math.floor(random(0, this.stationList[this.currentLine].length));
           this.npcStationName = this.stationList[this.currentLine][lineIdx];
           this.stationList[this.currentLine].splice(lineIdx, 1);
           this.npcSuccess = true;
           this.npcFailure = false;
+          this.falseProbability.splice(0, 1);
         }else{
           let falseIdx = Math.floor(random(0, this.failStationList.length));
           this.npcSuccess = false;
           this.npcFailure = true;
           this.npcStationName = this.failStationList[falseIdx];
+          this.falseProbability.splice(0, 1);
         }
         this.turnStarted = true;
         this.currentTime = millis();
@@ -158,6 +165,7 @@ class subwayGame extends Game {
           pop();
         } else {
           if (this.npcFailure == true) {
+            this.loseIssue = 'NPC';
             this.gameend();
           } else {
             this.turnStarted = false;
@@ -175,24 +183,46 @@ class subwayGame extends Game {
       this.endStarted = true;
       this.endTime = millis();
     } else {
-      if (millis() - this.endTime < 2000) {
-        fill(255);
-        rectMode(CENTER);
-        rect(w / 2, h / 2, w / 3, h / 3);
-        fill(0);
-        if (this.loseIssue == '호선') {
-          text("겐세이! 겐세이!", w / 2, h / 2);
-        } else if(this.loseIssue == '입력') {
-          text('집중은~ 생명! 생명! 생명! 생명!', w / 2, h / 2);
+      if(this.loseIssue == '입력'){
+        if(millis() - this.endTime <  2000){
+          this.gameFinishedText("집중은 생명!")
+        } else if(millis() - this.endTime < 3200){
+          this.gameFinishedText("생명! 생명!")
+        } else if(millis() - this.endTime < 4400){
+          this.gameFinishedText("생명! 생명! 생명!")
         } else {
-          text("휴 살았다!", w / 2, h / 2);
+          this.gameOver = true;
+          this.everyone[this.idx].lose();
+          this.gameList.gameNum++;
         }
-      } else {
-        this.gameOver = true;
-        this.everyone[this.idx].lose();
-        this.gameList.gameNum++;
+      } else if(this.loseIssue == '호선'){
+        if(millis() - this.endTime <  2000){
+          this.gameFinishedText("겐세이! 겐세이!")
+        } else {
+          this.gameOver = true;
+          this.idx = 3;
+          this.everyone[3].lose();
+          this.gameList.gameNum++;
+        }
+      } else if(this.loseIssue == 'NPC') {
+        if(millis() - this.endTime <  2000){
+          this.gameFinishedText("휴~ 살았다!")
+        } else {
+          this.gameOver = true;
+          this.everyone[this.idx].lose();
+          this.gameList.gameNum++;
+        }
       }
     }
+  }
+
+  gameFinishedText(texts) {
+    fill(255);
+    rectMode(CENTER);
+    rect(w / 2, h / 2, w / 2.5 , h / 3);
+    textAlign(CENTER);
+    fill(0);
+    text(texts, w / 2, h / 2);
   }
 
   round() {
