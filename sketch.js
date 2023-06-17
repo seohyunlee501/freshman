@@ -160,8 +160,6 @@ function setup() {
 
 function draw() {
   background(0, 64, 0);
-  // console.log(mode);
-
   //game lost condition: need revise
   if (mode >= 3) {
     if (player.alcholblood >= 8) {
@@ -181,7 +179,6 @@ function draw() {
     mode = 6;
   }
 
-  console.log("mode", mode);
   textFont(retroFont);
   textAlign(CENTER, CENTER);
 
