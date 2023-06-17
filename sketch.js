@@ -105,7 +105,7 @@ function setup() {
 
 function draw() {
   background(0, 64, 0);
-  console.log(mode);
+  //console.log(mode);
   textFont(retroFont);
   textAlign(CENTER, CENTER);
 
@@ -357,8 +357,6 @@ function setPlayer() {
   let name = nameInput.value();
   let soju = sojuInput.value();
   player = new Player(name, soju, gender);
-  //player.set(name, soju, gender);
-  //console.log(name, soju, gender);
   nameInput.value("");
   sojuInput.value("");
   nameInput.hide();
@@ -369,8 +367,6 @@ function setPlayer() {
 
 function keyPressed() {
   if (mode == 4 && nowGame.gameName == "배스킨 라빈스 31") {
-    console.log("key pressed");
-    console.log(keyCode);
     if (keyCode === 49 || keyCode === 97) {
       nowGame.temp = 1;
     } else if (keyCode === 50 || keyCode === 98) {
@@ -389,7 +385,6 @@ function keyPressed() {
     nowGame.gameName == "지하철게임" &&
     nowGame.lineSelected == false
   ) {
-    console.log(keyCode);
     if (keyCode === 50 || keyCode === 98) {
       nowGame.lineSelection = 2;
     } else if (keyCode === 51 || keyCode === 99) {
@@ -401,8 +396,6 @@ function keyPressed() {
     }
   }
   if (mode == 4 && nowGame.gameName == "두부게임") {
-    console.log("key pressed");
-    console.log(keyCode);
     if (keyCode === 48 || keyCode === 96) {
       nowGame.temp = 0;
     } else if (keyCode === 49 || keyCode === 97) {
