@@ -79,7 +79,7 @@ class doobooGame extends Game {
         this.temp = 10;
       }
     } else if (this.turnStarted) {
-      if (millis() - this.currentTime < 1200) {
+      if (millis() - this.currentTime < 2500) {
         this.dbCall();
       } else {
         if (this.dbCount === undefined) {

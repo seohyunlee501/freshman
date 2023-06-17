@@ -87,7 +87,7 @@ class Story {
         this.drawObject("soju_green");
         this.drawTextbox();
         this.drawSceneText(`- ... 내가 그렇게 늙어보여...?`);
-        if(!this.alcholbloodPlus){
+        if (!this.alcholbloodPlus) {
           player.alcholblood += 2;
           this.alcholbloodPlus = true;
         }
@@ -201,7 +201,7 @@ class Story {
         let number = parseInt(this.numberInput.value());
         if (number === 19) {
           this.scene = "5-3";
-          player.alcholblood -= 2;
+          player.alcholblood -= 1;
         } else if (number < 19) {
           this.scene = "5-4";
         } else if (number > 19) {

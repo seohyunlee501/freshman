@@ -63,8 +63,8 @@ class brGame extends Game {
           this.brNum++;
           this.threeNum[i] = this.brNum;
         }
-        nowGame.turnStarted = true;
-        nowGame.currentTime = millis();
+        this.turnStarted = true;
+        this.currentTime = millis();
         this.temp = 0;
         temp = 0;
       }

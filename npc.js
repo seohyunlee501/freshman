@@ -45,3 +45,4 @@ class PlayerNPC {
     image(img, x, y, h * 0.3, h * 0.3);
   }
 }
+

@@ -35,6 +35,19 @@ let subwayInput;
 let subwayButton;
 let startButton;
 
+let gameLostImage, gameWinImage;
+
+let infoButton1,
+  infoButton2,
+  infoButton3,
+  infoButton4,
+  infoButton5,
+  infoButton6;
+let tutorial = [];
+let xButton;
+let infoNum = 0;
+let showingGameInfo = false;
+
 function preload() {
   carrot = loadImage("Assets/button_carrot.png");
   k_melon = loadImage("Assets/button_k-melon.png");
@@ -78,10 +91,20 @@ function preload() {
   for (let i = 1; i <= 5; i++) {
     imgs_player[`m_${i}`] = loadImage(`Assets/player_m_${i}.png`);
     imgs_player[`f_${i}`] = loadImage(`Assets/player_f_${i}.png`);
+    imgs_player[`m_${i}_y`] = loadImage(`Assets/player_m_${i}_y.png`);
+    imgs_player[`f_${i}_y`] = loadImage(`Assets/player_f_${i}_y.png`);
   }
   arrow = loadImage("Assets/arrow.png");
   bubble_l = loadImage("Assets/bubble_left.png");
   bubble_r = loadImage("Assets/bubble_right.png");
+  bg = loadImage("Assets/background.png");
+  table = loadImage("Assets/table.png");
+
+  gameLostImage = loadImage("Assets/gameover_lose.png");
+  gameWinImage = loadImage("Assets/gameover_win.png");
+  for (let i = 1; i <= 6; i++) {
+    tutorial[i - 1] = loadImage(`Assets/tutorial_${i}.jpg`);
+  }
 }
 
 function setup() {
@@ -91,6 +114,9 @@ function setup() {
   nameInput = createInput();
   sojuInput = createInput();
   button = createButton("submit");
+  nameInput.hide();
+  sojuInput.hide();
+  button.hide();
   //noCursor();
   story = new Story();
 
@@ -101,11 +127,61 @@ function setup() {
   subwayButton = createButton("확인");
   subwayButton.position(w * 0.47, h * 0.63);
   subwayButton.hide();
+
+  //game info button
+  infoButton1 = createButton("i");
+  infoButton1.class("info");
+  infoButton1.hide();
+  infoButton1.mousePressed(showGameInfo1);
+  infoButton2 = createButton("i");
+  infoButton2.class("info");
+  infoButton2.hide();
+  infoButton2.mousePressed(showGameInfo2);
+  infoButton3 = createButton("i");
+  infoButton3.class("info");
+  infoButton3.hide();
+  infoButton3.mousePressed(showGameInfo3);
+  infoButton4 = createButton("i");
+  infoButton4.class("info");
+  infoButton4.hide();
+  infoButton4.mousePressed(showGameInfo4);
+  infoButton5 = createButton("i");
+  infoButton5.class("info");
+  infoButton5.hide();
+  infoButton5.mousePressed(showGameInfo5);
+  infoButton6 = createButton("i");
+  infoButton6.class("info");
+  infoButton6.hide();
+  infoButton6.mousePressed(showGameInfo6);
+  xButton = createButton("X");
+  xButton.class("info");
+  xButton.hide();
 }
 
 function draw() {
   background(0, 64, 0);
-  //console.log(mode);
+  // console.log(mode);
+
+  //game lost condition: need revise
+  if (mode >= 3) {
+    if (player.alcholblood >= 8) {
+      player.die = true;
+    }
+    if (player.die === true) {
+      mode = 6;
+    }
+  }
+
+  // game end display test
+
+  if (mode == 3 && player.name === "mode6win") {
+    mode = 6;
+  } else if (mode == 3 && player.name === "mode6lose") {
+    player.die = true;
+    mode = 6;
+  }
+
+  console.log("mode", mode);
   textFont(retroFont);
   textAlign(CENTER, CENTER);
 
@@ -119,9 +195,15 @@ function draw() {
       textAlign(CENTER, CENTER);
       textFont(movieFont);
       text("▶", 0.5 * w, 0.805 * h);
+      textSize(30);
+      text("서문19 신민정", 0.1 * w, 0.9 * h);
+      text("전기19 이서현", 0.3 * w, 0.9 * h);
+      text("경영19 김재현", 0.7 * w, 0.9 * h);
+      text("자전19 나정현", 0.9 * w, 0.9 * h);
       fill(255);
+      textSize(50);
       textFont(retroFont);
-      text("PRESS HERE TO START", 0.5 * w, 0.7 * h);
+      text("PRESS TO START", 0.5 * w, 0.9 * h);
       //title image
       push();
       translate(w * 0.5, h * 0.4);
@@ -138,14 +220,22 @@ function draw() {
       introdisplay(w * 0.7, h * 0.5, "girl");
       break;
     case 2:
-      bSelecting = false;
-      gSelecting = false;
+      // bSelecting = false;
+      // gSelecting = false;
       textFont(movieFont);
       story.drawScene();
       break;
     case 3:
       imageMode(CENTER);
       gameSelect.display();
+      if (showingGameInfo) {
+        imageMode(CENTER);
+        image(tutorial[infoNum - 1], w / 2, h / 2, 0.2 * w, 0.2 * h);
+        xButton.show();
+        xButton.position(w / 2, h / 2);
+        xButton.mousePressed(infoX);
+      }
+
       //temp = gameSelect.gameNum;
       break;
     case 4:
@@ -153,8 +243,10 @@ function draw() {
       nowGame.round();
       if (nowGame.gameOver) {
         idx = nowGame.idx;
-        if (gameSelect.gameNum == 5) {
+        if (gameSelect.gameNum == 4) {
           mode = 5;
+        } else if (gameSelect.gameNum == 7) {
+          mode = 6;
         } else {
           mode = 3;
         }
@@ -166,15 +258,23 @@ function draw() {
       story.drawScene();
       break;
     case 6:
+      // reset button
       player.gameover();
+      imageMode(CENTER);
+      image(startButton, 0.5 * w, 0.9 * h, 0.1 * w, 0.1 * w);
+      fill(252, 212, 0);
+      textSize(50);
+      textAlign(CENTER, CENTER);
+      textFont(movieFont);
+      text("▶", 0.5 * w, 0.895 * h);
       break;
   }
 
   // reset button
-  if (mode != 0 && mode != 1 && mode != 6) {
+  if (mode != 0 && mode != 1 && mode != 6 && mode != 2 && mode != 5) {
     fill(0);
     imageMode(CORNER);
-    image(reset, 0.05 * w, 0.05 * h, 0.05 * w, 0.1 * h);
+    image(reset, 0.05 * w, 0.05 * h, 0.1 * h, 0.1 * h);
   }
 
   // subwayGame setup
@@ -195,44 +295,81 @@ function draw() {
 }
 
 function mousePressed() {
-  if (mode == 4 && nowGame.gameName == "딸기당근수박참외메론") {
-    if (mouseY > 0.7 * h && mouseY < 0.9 * h) {
-      if (mouseX > 0.02 * w && mouseX < 0.18 * w) {
-        nowGame.whatBerry = 1;
-      } else if (mouseX > 0.17 * w && mouseX < 0.33 * w) {
-        nowGame.whatBerry = 2;
-      } else if (mouseX > 0.32 * w && mouseX < 0.48 * w) {
-        nowGame.whatBerry = 3;
-      } else if (mouseX > 0.47 * w && mouseX < 0.63 * w) {
-        nowGame.whatBerry = 4;
-      } else if (mouseX > 0.62 * w && mouseX < 0.78 * w) {
-        nowGame.whatBerry = 5;
-      }
-    }
-  }
   //game select
   if (mode == 3) {
-    if (mouseY > 0.2 * h && mouseY < 0.5 * h) {
+    if (mouseY > 0.3 * h && mouseY < 0.5 * h) {
       if (mouseX > 0.13 * w && mouseX < 0.37 * w) {
         nowGame = new berryGame(idx, gameSelect);
+        infoButton1.hide();
+        infoButton2.hide();
+        infoButton3.hide();
+        infoButton4.hide();
+        infoButton5.hide();
+        infoButton6.hide();
         mode = 4;
       } else if (mouseX > 0.38 * w && mouseX < 0.62 * w) {
         nowGame = new eyeGame(idx, gameSelect);
         mode = 4;
+        infoButton1.hide();
+        infoButton2.hide();
+        infoButton3.hide();
+        infoButton4.hide();
+        infoButton5.hide();
+        infoButton6.hide();
       } else if (mouseX > 0.63 * w && mouseX < 0.87 * w) {
         nowGame = new brGame(idx, gameSelect);
         mode = 4;
+        infoButton1.hide();
+        infoButton2.hide();
+        infoButton3.hide();
+        infoButton4.hide();
+        infoButton5.hide();
+        infoButton6.hide();
       }
-    } else if (mouseY > 0.52 * h && mouseY < 0.82 * h) {
+    } else if (mouseY > 0.62 * h && mouseY < 0.82 * h) {
       if (mouseX > 0.13 * w && mouseX < 0.37 * w) {
         nowGame = new subwayGame(idx, gameSelect);
         mode = 4;
+        infoButton1.hide();
+        infoButton2.hide();
+        infoButton3.hide();
+        infoButton4.hide();
+        infoButton5.hide();
+        infoButton6.hide();
       } else if (mouseX > 0.38 * w && mouseX < 0.62 * w) {
         nowGame = new doobooGame(idx, gameSelect);
         mode = 4;
+        infoButton1.hide();
+        infoButton2.hide();
+        infoButton3.hide();
+        infoButton4.hide();
+        infoButton5.hide();
+        infoButton6.hide();
       } else if (mouseX > 0.63 * w && mouseX < 0.87 * w) {
         nowGame = new baboGame(idx, gameSelect);
         mode = 4;
+        infoButton1.hide();
+        infoButton2.hide();
+        infoButton3.hide();
+        infoButton4.hide();
+        infoButton5.hide();
+        infoButton6.hide();
+      }
+    }
+  }
+
+  if (mode == 4 && nowGame.gameName == "딸기당근수박참외메론") {
+    if (mouseY > 0.7 * h && mouseY < 0.9 * h) {
+      if (mouseX > 0.02 * w && mouseX < 0.18 * w) {
+        nowGame.whatBerry = 0;
+      } else if (mouseX > 0.17 * w && mouseX < 0.33 * w) {
+        nowGame.whatBerry = 1;
+      } else if (mouseX > 0.32 * w && mouseX < 0.48 * w) {
+        nowGame.whatBerry = 2;
+      } else if (mouseX > 0.47 * w && mouseX < 0.63 * w) {
+        nowGame.whatBerry = 3;
+      } else if (mouseX > 0.62 * w && mouseX < 0.78 * w) {
+        nowGame.whatBerry = 4;
       }
     }
   }
@@ -265,13 +402,15 @@ function mouseClicked() {
     }
   }
   //reset button
-  else if (mode != 1 && mode != 6) {
+  else if (mode != 1 && mode != 6 && mode != 2 && mode != 5) {
     if (
       mouseX > 0.05 * w &&
-      mouseX < 0.1 * w &&
+      mouseX < 0.05 * w + 0.1 * h &&
       mouseY > 0.05 * h &&
       mouseY < 0.15 * h
     ) {
+      subwayInput.hide();
+      subwayButton.hide();
       if (mode == 3) {
         mode = 0;
       } else {
@@ -301,6 +440,17 @@ function mouseClicked() {
       selectPlayer("girl");
     }
   }
+  // reset when game ended
+  if (mode == 6) {
+    if (
+      mouseX > 0.5 * w - 0.1 * w &&
+      mouseX < 0.5 * w + 0.1 * w &&
+      mouseY > 0.9 * h - 0.1 * w &&
+      mouseY < 0.9 * h + 0.1 * w
+    ) {
+      mode = 0;
+    }
+  }
 }
 
 //mode 1
@@ -328,7 +478,7 @@ function introdisplay(_x, _y, _gen) {
     textAlign(LEFT, TOP);
     textSize(30);
     text("이름:", x - w * 0.13, 0.4 * h);
-    text("주량(잔):", x - w * 0.13, 0.5 * h);
+    text("주량(병):", x - w * 0.13, 0.5 * h);
     pop();
   }
 }
@@ -363,6 +513,37 @@ function setPlayer() {
   sojuInput.hide();
   button.hide();
   mode = 2;
+  bSelecting = false;
+  gSelecting = false;
+}
+
+function showGameInfo1() {
+  showingGameInfo = true;
+  infoNum = 1;
+}
+function showGameInfo2() {
+  showingGameInfo = true;
+  infoNum = 2;
+}
+function showGameInfo3() {
+  showingGameInfo = true;
+  infoNum = 3;
+}
+function showGameInfo4() {
+  showingGameInfo = true;
+  infoNum = 4;
+}
+function showGameInfo5() {
+  showingGameInfo = true;
+  infoNum = 5;
+}
+function showGameInfo6() {
+  showingGameInfo = true;
+  infoNum = 6;
+}
+function infoX() {
+  showingGameInfo = false;
+  xButton.hide();
 }
 
 function keyPressed() {
@@ -383,7 +564,8 @@ function keyPressed() {
   if (
     mode == 4 &&
     nowGame.gameName == "지하철게임" &&
-    nowGame.lineSelected == false
+    nowGame.lineSelected == false &&
+    nowGame.gameStarted == false
   ) {
     if (keyCode === 50 || keyCode === 98) {
       nowGame.lineSelection = 2;
@@ -425,7 +607,6 @@ function saveStations() {
   nowGame.stationIdx = nowGame.stationList[nowGame.currentLine].indexOf(
     nowGame.stationName
   );
-  subwayInput.value("");
   subwayInput.hide();
   subwayButton.hide();
   nowGame.playerCurrentTime = millis();
