@@ -3,6 +3,7 @@ class berryGame extends Game {
     super(_idx, _gameList);
     this.gameName = "딸기당근수박참외메론";
     this.buttons = [strawberry, carrot, watermelon, k_melon, melon];
+    this.buttons2 = [strawberry, carrot, watermelon, k_melon, melon];
     this.startTime = millis();
     this.bgmOn = true;
     this.userPlayed = false;
@@ -21,24 +22,8 @@ class berryGame extends Game {
 
     this.step = 0;
     this.stepTime = 0;
-
-    // this.step1 = false;
-    // this.step2 = false;
-    // this.step3 = false;
-    // this.step4 = false;
-    // this.step5 = false;
-    // this.step6 = false;
-    // this.step7 = false;
-    // this.step8 = false;
-
-    // this.step1time = millis();
-    // this.step2time = millis();
-    // this.step3time = millis();
-    // this.step4time = millis();
-    // this.step5time = millis();
-    // this.step6time = millis();
-    // this.step7time = millis();
-    // this.step8time = millis();
+    this.stepStarted = false;
+    this.stepO = false;
   }
 
   berryBgm() {
@@ -102,99 +87,37 @@ class berryGame extends Game {
       }
     } else if (!this.turnStarted) {
       this.whatBerryCheck = 5;
-      this.whatBerryCheck = this.whatBerry;
-      if (this.whatBerryCheck != 5) {
-        this.turnStarted = true;
-        this.stepTime = millis();
-        this.whatBerry = 5;
-      }
+      this.turnStarted = true;
     } else if (this.turnStarted) {
-      
-        if (millis() - this.step1time < 1500) {
-          let berryCheck;
-          if (this.buttons[this.whatBerryCheck] == strawberry) {
-            berryCheck = "딸기!";
-          } else if (this.buttons[this.whatBerryCheck] == carrot) {
-            berryCheck = "당근!";
-          } else if (this.buttons[this.whatBerryCheck] == watermelon) {
-            berryCheck = "수박!";
-          } else if (this.buttons[this.whatBerryCheck] == k_melon) {
-            berryCheck = "참외!";
-          } else if (this.buttons[this.whatBerryCheck] == melon) {
-            berryCheck = "메론!";
-          }
-
+      if (!this.stepStarted) {
+        this.whatBerryCheck = this.whatBerry;
+        if (this.whatBerryCheck != 5) {
+          this.stepStarted = true;
+          this.stepTime = millis();
+          this.whatBerry = 5;
+        }
+      } else if (this.stepStarted) {
+        if (
+          this.buttons[this.whatBerryCheck] == this.buttons2[answer[this.step]]
+        ) {
+          this.stepO = true;
+        } else {
+          this.stepO = false;
+          this.loseIssue = 1;
+          this.gameend();
+        }
+      }
+      if (this.stepO) {
+        if (millis() - this.stepTime < 1500) {
+          let berryCheck = fruit[this.whatBerryCheck];
           text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
         } else {
-          if (
-            this.buttons[this.whatBerryCheck] != this.buttons[answer[this.step]]
-          ) {
-            if (
-              this.buttons[this.whatBerryCheck] == carrot ||
-              this.buttons[this.whatBerryCheck] == watermelon ||
-              this.buttons[this.whatBerryCheck] == k_melon ||
-              this.buttons[this.whatBerryCheck] == melon
-            ) {
-              this.loseIssue = 1;
-              this.gameend();
-            } else {
-              this.loseIssue = 2;
-              this.gameend();
-            }
-          } else {
-            if (this.turn % 14 == 1) {
-              this.turnStarted = false;
-              this.turn++;
-              this.idx = 4;
-              this.whatBerryCheck = 5;
-
-              this.step1 = false;
-              this.step2 = false;
-              this.step3 = false;
-              this.step4 = false;
-              this.step5 = false;
-              this.step6 = false;
-              this.step7 = false;
-              this.step8 = false;
-            } else {
-              this.whatBerryCheck = 5;
-              this.whatBerryCheck = this.whatBerry;
-              if (this.whatBerryCheck != 5) {
-                this.step2time = millis();
-                this.whatBerry = 5;
-                this.step1 = true;
-              }
-            }
-          }
+          stepO = false;
+          stepStarted = false;
         }
-      }  else {
-                        if (this.buttons[this.whatBerryCheck] != watermelon) {
-                          if (
-                            this.buttons[this.whatBerryCheck] == carrot ||
-                            this.buttons[this.whatBerryCheck] == strawberry ||
-                            this.buttons[this.whatBerryCheck] == k_melon ||
-                            this.buttons[this.whatBerryCheck] == melon
-                          ) {
-                            this.loseIssue = 1;
-                            this.gameend();
-                          } else {
-                            this.loseIssue = 2;
-                            this.gameend();
-                          }
-                        } else {
-                          if (this.turn % 14 == 8) {
-                            this.turnStarted = false;
-                            this.turn++;
-                            this.idx = 4;
-                            this.whatBerryCheck = 5;
-                            this.step8 = true;
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-  
+      }
+    }
+  }
   npcTurn() {
     fill(0);
     let x = 0.2 * w + 0.17 * h * this.idx;
