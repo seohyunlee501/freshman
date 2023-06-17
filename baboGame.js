@@ -8,12 +8,9 @@ class baboGame extends Game {
     //hand
     this.video = createCapture(VIDEO);
     this.video.size(0.3 * w, 0.5 * h);
-    //this.myHand = ml5.handpose(this.video, this.modelLoaded);
-    //this.curHandPose = null;
-    // Call onNewPrediction every time a new handPose is predicted
-    //this.myHand.on("predict", this.onNewPrediction);
     // Hide the video element, and just show the canvas
     this.video.hide();
+    this.myHand;
     this.handposeReady = false;
     this.handposeOn = false;
     this.videoOn = false;
@@ -35,102 +32,7 @@ class baboGame extends Game {
     this.loseIssue = "";
     this.predictions;
   }
-  /*
-  drawSkeleton(handPose) {
-    if (!handPose) {
-      return;
-    }
 
-    stroke(skeletonColor);
-    noFill();
-
-    // Loop through all the skeletons detected
-    const a = handPose.annotations;
-
-    // For every skeleton, loop through all body connections
-    for (let i = 0; i < a.thumb.length - 1; i++) {
-      line(a.thumb[i][0], a.thumb[i][1], a.thumb[i + 1][0], a.thumb[i + 1][1]);
-    }
-    for (let i = 0; i < a.indexFinger.length - 1; i++) {
-      line(
-        a.indexFinger[i][0],
-        a.indexFinger[i][1],
-        a.indexFinger[i + 1][0],
-        a.indexFinger[i + 1][1]
-      );
-    }
-    for (let i = 0; i < a.middleFinger.length - 1; i++) {
-      line(
-        a.middleFinger[i][0],
-        a.middleFinger[i][1],
-        a.middleFinger[i + 1][0],
-        a.middleFinger[i + 1][1]
-      );
-    }
-    for (let i = 0; i < a.ringFinger.length - 1; i++) {
-      line(
-        a.ringFinger[i][0],
-        a.ringFinger[i][1],
-        a.ringFinger[i + 1][0],
-        a.ringFinger[i + 1][1]
-      );
-    }
-    for (let i = 0; i < a.pinky.length - 1; i++) {
-      line(a.pinky[i][0], a.pinky[i][1], a.pinky[i + 1][0], a.pinky[i + 1][1]);
-    }
-
-    line(a.palmBase[0][0], a.palmBase[0][1], a.thumb[0][0], a.thumb[0][1]);
-    line(
-      a.palmBase[0][0],
-      a.palmBase[0][1],
-      a.indexFinger[0][0],
-      a.indexFinger[0][1]
-    );
-    line(
-      a.palmBase[0][0],
-      a.palmBase[0][1],
-      a.middleFinger[0][0],
-      a.middleFinger[0][1]
-    );
-    line(
-      a.palmBase[0][0],
-      a.palmBase[0][1],
-      a.ringFinger[0][0],
-      a.ringFinger[0][1]
-    );
-    line(a.palmBase[0][0], a.palmBase[0][1], a.pinky[0][0], a.pinky[0][1]);
-
-    noStroke();
-    fill(skeletonColor);
-    const xTextMargin = kpCircleDiameter / 2 + 3;
-    text(
-      "Thumb",
-      a.thumb[a.thumb.length - 1][0] + xTextMargin,
-      a.thumb[a.thumb.length - 1][1]
-    );
-    text(
-      "Index Finger",
-      a.indexFinger[a.indexFinger.length - 1][0] + xTextMargin,
-      a.indexFinger[a.indexFinger.length - 1][1]
-    );
-    text(
-      "Middle Finger",
-      a.middleFinger[a.middleFinger.length - 1][0] + xTextMargin,
-      a.middleFinger[a.middleFinger.length - 1][1]
-    );
-    text(
-      "Ring Finger",
-      a.ringFinger[a.ringFinger.length - 1][0] + xTextMargin,
-      a.ringFinger[a.ringFinger.length - 1][1]
-    );
-    text(
-      "Pinky",
-      a.pinky[a.pinky.length - 1][0] + xTextMargin,
-      a.pinky[a.pinky.length - 1][1]
-    );
-    text("Palm Base", a.palmBase[0][0] + xTextMargin, a.palmBase[0][1]);
-  }
-  */
   intro() {
     textSize(32);
     textAlign(CENTER);
@@ -153,53 +55,62 @@ class baboGame extends Game {
       }
     }
   }
+  modelReady() {
+    this.handposeOn = true;
+    console.log("***turnOnHandPose called");
+    console.log("Model ready!");
+  }
 
   readingHand() {
-    /*
-    console.log("handReady:", this.handReady);
-    if (!this.handReady) {
-      // if hand model not yet initialized, show "model loading" text
-      push();
-      translate(w * 0.7, h * 0.3);
-      fill(100);
-      rectMode(CENTER);
-      rect(0, 0, 0.4 * w, 0.5 * h);
-      textSize(32);
-      textAlign(CENTER);
-      fill(255);
-      noStroke();
-      text("Waiting for HandPose model to load...", 0, 0);
-      pop();
-    } */
+    fill(255);
+    rectMode(CENTER);
+    rect(w / 2, h / 2, 0.5 * w, 0.5 * h);
     if (this.videoOn) {
-      image(video, 0, 0, 0.4 * w, 0.5 * h);
+      image(this.video, w / 2, h / 2, 0.5 * w, 0.5 * h);
+      console.log("videoOn,", this.handposeOn);
     }
     if (this.handposeOn) {
-      this.drawHand();
+      console.log(this.handposeOn);
+      this.drawKeypoints();
     }
   }
 
-  modelLoaded() {
-    console.log("HandPose model ready!");
-    this.handReady = true;
-    this.handposeOn = true;
-  }
-
-  onNewPrediction() {
-    if (this.predictionsHand && this.predictionsHand.length > 0) {
-      this.curHandPose = this.predictionsHand[0];
-      console.log(this.curHandPose);
-      this.handReady = true;
-      //this.guessHand();
-      this.modelLoaded = true;
-    } else {
-      this.curHandPose = null;
+  drawKeypoints() {
+    for (let i = 0; i < this.predictionsHand.length; i += 1) {
+      const prediction = this.predictionsHand[i];
+      for (let j = 0; j < prediction.landmarks.length; j += 1) {
+        const keypoint = prediction.landmarks[j];
+        fill(0, 255, 0);
+        noStroke();
+        ellipse(keypoint[0], keypoint[1], 10, 10);
+      }
     }
   }
 
   guessHand() {
     const a = this.myHand.annotations;
+    let openFinger = 0;
+    let openlength = 0;
+    let closelength = 0;
+
+    openlength = dist(
+      a.thumb[0][0],
+      a.thumb[0][1],
+      a.thumb[1][0],
+      a.thumb[1][1]
+    );
+    closelength = dist(
+      a.thumb[0][0],
+      a.thumb[0][1],
+      a.thumb[3][0],
+      a.thumb[3][1]
+    );
+
+    if (openlength > closelength) {
+      openFinger++;
+    }
   }
+
   turnOnCapture() {
     console.log("video on");
     this.videoOn = true;
@@ -211,7 +122,8 @@ class baboGame extends Game {
   }
 
   turnOnHandpose() {
-    if (!handposeReady) {
+    if (!this.handposeReady) {
+      console.log("***turnOnHandPose called");
       this.handposeReady = true;
       this.myHand = ml5.handpose(this.video, this.modelReady);
       this.myHand.on("predict", (results) => {
@@ -221,116 +133,12 @@ class baboGame extends Game {
   }
 
   turnOffHandpose() {
-    if (handposeOn) {
+    if (this.handposeOn) {
       this.myHand.video = undefined;
       this.handposeReady = false;
       this.handposeOn = false;
     }
   }
-  drawHand(handPose) {
-    // Draw keypoints. While each keypoints supplies a 3D point (x,y,z), we only draw the x, y point.
-    for (let j = 0; j < handPose.landmarks.length; j += 1) {
-      const landmark = handPose.landmarks[j];
-      fill(0, 255, 0, 200); // green with some opacity
-      noStroke();
-      circle(landmark[0], landmark[1], 10); // landmark[0] is x pos, landmark[1] is y pos
-    }
-  }
-
-  drawBoundingBox(handPose) {
-    // Draw hand pose bounding box
-    const bb = handPose.boundingBox;
-    const bbWidth = bb.bottomRight[0] - bb.topLeft[0];
-    const bbHeight = bb.bottomRight[1] - bb.topLeft[1];
-    noFill();
-    stroke("red");
-    rect(bb.topLeft[0], bb.topLeft[1], bbWidth, bbHeight);
-
-    // Draw confidence
-    fill("red");
-    noStroke();
-    textAlign(LEFT, BOTTOM);
-    textSize(20);
-    text(nfc(handPose.handInViewConfidence, 2), bb.topLeft[0], bb.topLeft[1]);
-  }
-
-  /*
-  drawHand(handPose) {
-    // Draw landmarks
-    // Find tight bounding box
-    const tightBoundingBox = drawKeypoints(handPose);
-    drawSkeleton(handPose);
-
-    // Draw tight bounding box
-    noFill();
-    stroke(boundingBoxColor);
-    const tightBoundingBoxWidth =
-      tightBoundingBox.right - tightBoundingBox.left;
-    const tightBoundingBoxHeight =
-      tightBoundingBox.bottom - tightBoundingBox.top;
-    rect(
-      tightBoundingBox.left,
-      tightBoundingBox.top,
-      tightBoundingBoxWidth,
-      tightBoundingBoxHeight
-    );
-
-    // Draw hand pose bounding box
-    const bb = handPose.boundingBox;
-    const bbWidth = bb.bottomRight[0] - bb.topLeft[0];
-    const bbHeight = bb.bottomRight[1] - bb.topLeft[1];
-    rect(bb.topLeft[0], bb.topLeft[1], bbWidth, bbHeight);
-
-    // Draw confidence
-    fill(boundingBoxColor);
-    noStroke();
-    text(
-      nfc(this.handPose.handInViewConfidence, 2),
-      tightBoundingBox.left,
-      tightBoundingBox.top - 15
-    );
-  }
-
-  drawKeypoints(handPose) {
-    if (!handPose) {
-      return;
-    }
-
-    let boundingBoxLeft = handPose.landmarks[0][0];
-    let boundingBoxTop = handPose.landmarks[0][1];
-    let boundingBoxRight = boundingBoxLeft;
-    let boundingBoxBottom = boundingBoxTop;
-
-    // draw keypoints
-    // While each keypoints supplies a 3D point (x,y,z), we only draw
-    // the x, y point.
-    for (let j = 0; j < handPose.landmarks.length; j += 1) {
-      const landmark = handPose.landmarks[j];
-      fill(kpColor);
-      noStroke();
-      circle(landmark[0], landmark[1], kpCircleDiameter);
-      if (landmark[0] < boundingBoxLeft) {
-        boundingBoxLeft = landmark[0];
-      } else if (landmark[0] > boundingBoxRight) {
-        boundingBoxRight = landmark[0];
-      }
-
-      if (landmark[1] < boundingBoxTop) {
-        boundingBoxTop = landmark[1];
-      } else if (landmark[1] > boundingBoxBottom) {
-        boundingBoxBottom = landmark[1];
-      }
-    }
-
-    // return the bounding box
-    return {
-      left: boundingBoxLeft,
-      right: boundingBoxRight,
-      top: boundingBoxTop,
-      bottom: boundingBoxBottom,
-    };
-  }
-  */
 
   showResult() {
     if (!this.turnStarted && this.myRec.resultValue == true) {
@@ -360,8 +168,9 @@ class baboGame extends Game {
       } else {
         this.loseIssue = "pronounce";
         this.gameend();
-        this.video.stop();
       }
+      this.turnOffCapture();
+      this.turnOffHandpose();
       //this.inputHand = int(random(1, 6));
     }
 
@@ -399,27 +208,18 @@ class baboGame extends Game {
       this.infoStarted = true;
       this.infoTime = millis();
       this.myRec.start();
-      //this.myHand.on("hand", (results) => {
-      //this.predictions = results;
-      //});
+      this.turnOnCapture();
+      this.turnOnHandpose();
       this.userPlayed = true;
+      console.log("userPlayed:", this.userPlayed);
     } else {
-      if (millis() - this.infoTime < 2000) {
-        // instructions:
-        // textSize(32);
-        // textAlign(CENTER);
-        // rectMode(CENTER);
-        // fill(255);
-        // rect(w / 2, h / 2, w / 3, h / 3);
-        // fill(0);
-        // text("아라비아 숫자로 말해 주세요.", w / 2, h / 2);
-      }
+      console.log("userPlayed:", this.userPlayed);
+      this.readingHand();
+      this.myRec.onResult = this.showResult;
+      this.myRec.continuous = true;
+      this.myRec.interimResults = true;
+      this.showResult();
     }
-    this.readingHand();
-    this.myRec.onResult = this.showResult;
-    this.myRec.continuous = true;
-    this.myRec.interimResults = true;
-    this.showResult();
   }
 
   npcturn() {
@@ -495,9 +295,6 @@ class baboGame extends Game {
   }
 
   round() {
-    // if (this.curHandPose) {
-    //   drawHand(this.curHandPose);
-    // }
     if (this.turn == 0) {
       this.intro();
     } else {
