@@ -54,6 +54,34 @@ class Story {
         this.drawTextbox();
         this.drawSceneText(`- 어허 새내기가 늦으면 어떡하나! 한 잔 마셔~!`);
         break;
+      case "2-5":
+        this.drawSceneBackground("2-4");
+        this.drawNPC("2-4");
+        this.drawObject("soju");
+        this.drawTextbox();
+        this.drawSceneText(`- 어허 새내기가 늦으면 어떡하나! 한 잔 마셔~!`);
+        break;
+      case "2-6":
+        this.drawSceneBackground("2-4");
+        this.drawNPC("2-4");
+        this.drawObject("soju");
+        this.drawTextbox();
+        this.drawSceneText(`- 어허 새내기가 늦으면 어떡하나! 한 잔 마셔~!`);
+        break;
+      case "2-7":
+        this.drawSceneBackground("2-4");
+        this.drawNPC("2-4");
+        this.drawObject("soju");
+        this.drawTextbox();
+        this.drawSceneText(`- 어허 새내기가 늦으면 어떡하나! 한 잔 마셔~!`);
+        break;
+      case "2-8":
+        this.drawSceneBackground("2-4");
+        this.drawNPC("2-4");
+        this.drawObject("soju");
+        this.drawTextbox();
+        this.drawSceneText(`- 어허 새내기가 늦으면 어떡하나! 한 잔 마셔~!`);
+        break;
       case "5-1":
         this.drawSceneBackground("5-1");
         this.drawNPC("5-1");
@@ -175,11 +203,17 @@ class Story {
     } else if (this.scene === "5-1") {
       this.scene = "5-2";
       this.kkk = false;
-    } else if ((this.scene === "5-3" || this.scene === "5-4" || this.scene === "5-5") && millis() - this.buttonPressTime > 2000) {
-      if(this.expectedID === 19 && this.kkk == false){
+    } else if (
+      (this.scene === "5-3" || this.scene === "5-4" || this.scene === "5-5") &&
+      millis() - this.buttonPressTime > 2000
+    ) {
+      if (this.expectedID === 19 && this.kkk == false) {
         player.alcholblood--;
         this.kkk = true;
-      }else if(this.kkk == false && (this.expectedID > 19 || this.expectedID < 19)){
+      } else if (
+        this.kkk == false &&
+        (this.expectedID > 19 || this.expectedID < 19)
+      ) {
         player.alcholblood++;
         this.kkk = true;
       }
