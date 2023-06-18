@@ -57,7 +57,6 @@ class baboGame extends Game {
   }
   modelReady() {
     this.handposeOn = true;
-    console.log("***turnOnHandPose called");
     console.log("Model ready!");
   }
 
