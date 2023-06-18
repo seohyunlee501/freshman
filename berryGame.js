@@ -29,6 +29,7 @@ class berryGame extends Game {
 
     this.npcOut = false;
     this.a = 0;
+    this.falseOn = false;
   }
 
   tutorial() {
@@ -150,18 +151,14 @@ class berryGame extends Game {
     fill(0);
     let x = 0.2 * w + 0.17 * h * this.idx;
     fill(255);
+
     if (!this.turnStarted) {
-      this.turnStarted = true;
       this.berryCallTime = millis();
       this.a = int(random(1,10));
-
-      if(this.a>5){
-        this.npcFalse();
-      } else {
-        this.turnStarted = true;
-      }
+      this.turnStarted = true;
 
     } else if (this.turnStarted) {
+      if(this.a<6){
       if (this.turn % 14 == 1) {
         if (millis() - this.berryCallTime < 500) {
           text("(쿵)", x, 0.3 * h);
@@ -326,7 +323,11 @@ class berryGame extends Game {
           this.idx = this.idx % 6;
         }
       }
+    } else{
+      this.npcFalse();
     }
+  }
+  
   }
 
   npcFalse() {
@@ -472,11 +473,11 @@ class berryGame extends Game {
           text("참외!", x, 0.3 * h);
         } else if (millis() - this.berryCallTime < 2500) {
           text("메론!", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 3000) {
+        } else if (millis() - this.berryCallTime < 3200) {
           text("메롱!", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 3500) {
+        } else if (millis() - this.berryCallTime < 4000) {
           text("레몬?", x, 0.3 * h);
-        } else if (millis() - this.berryCallTime < 4300) {
+        } else if (millis() - this.berryCallTime < 4800) {
           text("아ㅠ", x, 0.3 * h);
         } else {
           this.loseIssue = 1;
