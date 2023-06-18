@@ -49,10 +49,9 @@ class berryGame extends Game {
     let fruitNum = [0, 1, 2, 3, 4];
     let answer = [];
     let temp = this.turn;
-    temp = temp % 14;
-    if (temp == 0) temp = 14;
-    if (this.turn > 8) {
-      temp = 16 - this.turn;
+    temp = ((temp - 1) % 14) + 1;
+    if (temp > 8) {
+      temp = 16 - temp;
     }
     for (let i = 0; i < temp; i++) {
       answer[i] = fruitNum[i % 5];
@@ -70,6 +69,7 @@ class berryGame extends Game {
       if (this.turn < 6) this.infoStarted = true;
       this.infoTime = millis();
       this.userPlayed = true;
+      this.step = 0;
     } else if (this.infoStarted) {
       if (millis() - this.infoTime < 2000) {
         // instructions:
@@ -100,7 +100,7 @@ class berryGame extends Game {
         }
       } else if (this.stepStarted) {
         if (millis() - this.stepTime < 400) {
-          let berryCheck = fruit[answer[this.step - 1]];
+          let berryCheck = this.buttons2[this.whatBerryCheck];
           text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
         } else {
           this.shuffleDone = false;
