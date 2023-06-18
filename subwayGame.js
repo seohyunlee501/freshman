@@ -7,7 +7,7 @@ class subwayGame extends Game {
     this.turnStarted = false;
     this.pturnStarted = false;
     this.lineSelected = false;
-    this.startTime = millis();
+    this.gameStartTime = millis();
     this.currentTime = 0;
     this.playerStarted = false;
     this.playerEnd = false;
@@ -33,19 +33,33 @@ class subwayGame extends Game {
     this.endStarted = false;
     this.gamefinishedByWrongInput = false;
     this.gamefinishedByWrongStation = false;
+    this.falseProbability = [0, 0, 0, 0, 0];
+
+    for(let i = 0; i < 45; i++){
+      this.falseProbability[i+5] = random(0, 1);
+    }
+    this.koongTime = 0;
+    this.tutorialStart = true;
   }
   
+  tutorial() {
+    if(this.tutorialStart == true){
+      imageMode(CENTER);
+      image(tutorial[5], w / 2, h / 2, w, h);
+    }
+  }
+
   intro() {
     textSize(32);
     textAlign(CENTER);
     rectMode(CENTER);
     if (this.gameStarted) {
-      if (millis() - this.startTime < 1500) {
+      if (millis() - this.gameStartTime < 1500) {
         fill(255);
         rect(w / 2, h / 2, w / 3, h / 3);
         fill(0);
         text("지~하철! 지~하철!", w / 2, h / 2);
-      } else if (millis() - this.startTime < 3000) {
+      } else if (millis() - this.gameStartTime < 3000) {
         fill(255);
         rect(w / 2, h / 2, w / 3, h / 3);
         fill(0);
@@ -54,6 +68,30 @@ class subwayGame extends Game {
         this.gameStarted = false;
         this.turn++;
       }
+    }
+  }
+
+  koong() {
+    for(let i = 0; i < 6; i++){
+      push();
+      translate(0.2 * w + 0.17 * h * i, 0.3 * h);
+      textAlign(CENTER, CENTER);
+      fill(255);
+      textSize(50);
+      text('쿵!', 0, 0);
+      pop();
+    }
+  }
+
+  jjack() {
+    for(let i = 0; i < 6; i++){
+      push();
+      translate(0.2 * w + 0.17 * h * i, 0.3 * h);
+      textAlign(CENTER, CENTER);
+      fill(255);
+      textSize(50);
+      text('짝!', 0, 0);
+      pop();
     }
   }
 
@@ -75,12 +113,15 @@ class subwayGame extends Game {
     if(this.lineSelection == 2){
       this.currentLine = 2;
       this.lineSelected = true;
+      this.koongTime = millis();
     }else if(this.lineSelection == 3){
       this.currentLine = 3;
       this.lineSelected = true;
+      this.koongTime = millis();
     }else if(this.lineSelection == 4){
       this.currentLine = 4;
       this.lineSelected = true;
+      this.koongTime = millis();
     }else if(this.lineSelection == 0){
       //do nothing
     }else{
@@ -94,6 +135,7 @@ class subwayGame extends Game {
 
   playerturn() {
     if(!this.pturnStarted) {
+      console.log('started');
       if(this.stationIdx == -1){
         this.gamefinishedByWrongStation = true;
         this.gameend();
@@ -115,7 +157,7 @@ class subwayGame extends Game {
         console.log(this.stationIdx + '999');
       } else {
         this.playerEnd = true;
-        this.pturnstarted = false;
+        this.pturnStarted = false;
         this.turn++;
         this.idx++;
         this.idx = this.idx % 6;
@@ -131,23 +173,28 @@ class subwayGame extends Game {
       this.idx = this.idx % 6;
     } else {
       if (!this.turnStarted) {
-        let temp = random();
-        if(temp < 0.88){
+        if(this.falseProbability[0] < 0.5){
           let lineIdx = Math.floor(random(0, this.stationList[this.currentLine].length));
           this.npcStationName = this.stationList[this.currentLine][lineIdx];
           this.stationList[this.currentLine].splice(lineIdx, 1);
           this.npcSuccess = true;
           this.npcFailure = false;
+          this.falseProbability.splice(0, 1);
         }else{
           let falseIdx = Math.floor(random(0, this.failStationList.length));
           this.npcSuccess = false;
           this.npcFailure = true;
           this.npcStationName = this.failStationList[falseIdx];
+          this.falseProbability.splice(0, 1);
         }
         this.turnStarted = true;
         this.currentTime = millis();
       } else if (this.turnStarted) {
-        if (millis() - this.currentTime < 1500) {
+        if(millis()- this.currentTime < 500){
+          this.koong();
+        } else if(millis() - this.currentTime < 1000){
+          this.jjack();
+        } else if (millis() - this.currentTime < 1500) {
           //show each
           push();
           translate(0.2 * w + 0.17 * h * this.idx, 0.3 * h);
@@ -158,12 +205,16 @@ class subwayGame extends Game {
           pop();
         } else {
           if (this.npcFailure == true) {
+            this.loseIssue = 'NPC';
             this.gameend();
           } else {
             this.turnStarted = false;
             this.turn++;
             this.idx++;
             this.idx = this.idx % 6;
+            if(this.idx == 3){
+              this.koongTime = millis();
+            }
           }
         }
       }
@@ -175,47 +226,79 @@ class subwayGame extends Game {
       this.endStarted = true;
       this.endTime = millis();
     } else {
-      if (millis() - this.endTime < 2000) {
-        fill(255);
-        rectMode(CENTER);
-        rect(w / 2, h / 2, w / 3, h / 3);
-        fill(0);
-        if (this.loseIssue == '호선') {
-          text("겐세이! 겐세이!", w / 2, h / 2);
-        } else if(this.loseIssue == '입력') {
-          text('집중은~ 생명! 생명! 생명! 생명!', w / 2, h / 2);
+      if(this.loseIssue == '입력'){
+        if(millis() - this.endTime <  2000){
+          this.gameFinishedText("집중은 생명!")
+        } else if(millis() - this.endTime < 3200){
+          this.gameFinishedText("생명! 생명!")
+        } else if(millis() - this.endTime < 4400){
+          this.gameFinishedText("생명! 생명! 생명!")
         } else {
-          text("휴 살았다!", w / 2, h / 2);
+          this.gameOver = true;
+          this.everyone[this.idx].lose();
+          this.gameList.gameNum++;
         }
-      } else {
-        this.gameOver = true;
-        this.everyone[this.idx].lose();
-        this.gameList.gameNum++;
+      } else if(this.loseIssue == '호선'){
+        if(millis() - this.endTime <  2000){
+          this.gameFinishedText("겐세이! 겐세이!")
+        } else {
+          this.gameOver = true;
+          this.idx = 3;
+          this.everyone[3].lose();
+          this.gameList.gameNum++;
+        }
+      } else if(this.loseIssue == 'NPC') {
+        if(millis() - this.endTime <  2000){
+          this.gameFinishedText("휴~ 살았다!")
+        } else {
+          this.gameOver = true;
+          this.everyone[this.idx].lose();
+          this.gameList.gameNum++;
+        }
       }
     }
   }
 
+  gameFinishedText(texts) {
+    fill(255);
+    rectMode(CENTER);
+    rect(w / 2, h / 2, w / 2.5 , h / 3);
+    textAlign(CENTER);
+    fill(0);
+    text(texts, w / 2, h / 2);
+  }
+
   round() {
-    if(this.gamefinishedByWrongInput){
-      this.loseIssue = '호선';
-      this.gameend();
-    }else if(this.gamefinishedByWrongStation){
-      this.loseIssue = '입력';
-      this.gameend();
-    }else{
-      if(this.turn == 0) {
-        this.intro();
-      } else if(!this.lineSelected){
-        this.lineSelect();
-      } else {
-        if(this.idx == 3) {
-          if(this.playerInput == false && this.playerStarted == false){
-            this.stationInput();
-          } else if(this.playerStarted == true && this.playerEnd == false) {
-            this.playerturn();
-          }
+    if(this.tutorialStart == true){
+      this.tutorial();
+    }
+    
+    if(this.tutorialStart == false) {
+      if(this.gamefinishedByWrongInput){
+        this.loseIssue = '호선';
+        this.gameend();
+      }else if(this.gamefinishedByWrongStation){
+        this.loseIssue = '입력';
+        this.gameend();
+      }else{
+        if(this.turn == 0) {
+          this.intro();
+        } else if(!this.lineSelected){
+          this.lineSelect();
         } else {
-          this.npcturn();
+          if(this.idx == 3) {
+            if(millis() - this.koongTime < 500) {
+              this.koong();
+            } else if(millis() - this.koongTime < 1000) {
+              this.jjack();
+            } else if(this.playerInput == false && this.playerStarted == false){
+              this.stationInput();
+            } else if(this.playerStarted == true && this.playerEnd == false) {
+              this.playerturn();
+            }
+          } else {
+            this.npcturn();
+          }
         }
       }
     }

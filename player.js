@@ -25,35 +25,45 @@ class Player {
 
   lose() {
     this.alcholblood++;
-    if (this.alcholblood >= 8) {
-      this.die = true;
-      this.gameover();
-    }
   }
   display(x, y) {
-    let a = this.alcholblood - 2;
-    let img = this.image_y[a];
+    let a = this.alcholblood - 3;
+    let img;
+    if(this.alcholblood < 8){
+      img = this.image[a];
+    } else {
+      img = this.image[4];
+    }
     imageMode(CENTER);
     image(img, x, y, h * 0.3, h * 0.3);
   }
   displaybig(x, y) {
-    let a = this.alcholblood - 2;
-    let img = this.image[a];
+    let a = this.alcholblood - 3;
+    let img;
+    if(this.alcholblood < 8){
+      img = this.image[a];
+    } else {
+      img = this.image[4];
+    }
     imageMode(CENTER);
     image(img, x, y, w * 0.3, w * 0.3);
   }
   gameover() {
     if (this.die) {
       imageMode(CENTER);
-      image(gameLost, w / 2, h / 2, w, h);
+      image(gameLostImage, w / 2, h / 2, w, h);
       imageMode(CENTER);
       push();
-      scale(1, -1);
-      translate(0, height);
-      image(this.image[5], w * 0.8, -h * 0.8);
+      scale(6, -6);
+      image(this.image[4], w * 0.8 / 6, -h * 0.2 / 6);
       pop();
-      mode = 6;
     } else {
+      imageMode(CENTER);
+      image(gameWinImage, w / 2, h / 2, w, h);
+      imageMode(CENTER);
+      let a = this.alcholblood - 3;
+      let img = this.image[a];
+      image(img, w * 0.73, h * 0.75, w * 0.8 , w * 0.8);
     }
   }
 }
