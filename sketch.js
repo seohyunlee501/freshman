@@ -36,6 +36,7 @@ let subwayButton;
 let startButton;
 
 let gameLostImage, gameWinImage;
+let subwayImage = [];
 
 let infoButton1,
   infoButton2,
@@ -47,6 +48,8 @@ let tutorial = [];
 let xButton;
 let infoNum = 0;
 let showingGameInfo = false;
+let playDes = [];
+let gameDes = [];
 
 function preload() {
   carrot = loadImage("Assets/button_carrot.png");
@@ -108,6 +111,11 @@ function preload() {
   gameWinImage = loadImage("Assets/gameover_win.png")
   for (let i = 1; i <= 6; i++) {
     tutorial[i - 1] = loadImage(`Assets/tutorial_${i}.jpg`);
+    gameDes[i - 1] = loadImage(`Assets/gameDes_${i}.png`);
+    playDes[i - 1] = loadImage(`Assets/playDes_${i}.png`);
+  }
+  for (let i = 0; i < 3; i++){
+    subwayImage[i] = loadImage(`Assets/subway_${i + 2}.png`);
   }
 }
 
@@ -165,7 +173,6 @@ function setup() {
 function draw() {
   background(0, 64, 0);
   // console.log(mode);
-   
   //game lost condition: need revise
   if(mode >= 3){
     if(player.alcholblood >= 8) {
@@ -175,15 +182,7 @@ function draw() {
       mode = 6;
     }
   }
-  
-  // game end display test
-  
-  if(mode == 3 && player.name === 'mode6win'){
-    mode = 6;
-  }else if(mode == 3 && player.name === 'mode6lose'){
-    player.die = true;
-    mode = 6;
-  }
+
   
   console.log("mode", mode);
   textFont(retroFont);
@@ -191,6 +190,12 @@ function draw() {
 
   switch (mode) {
     case 0:
+      infoButton1.hide();
+      infoButton2.hide();
+      infoButton3.hide();
+      infoButton4.hide();
+      infoButton5.hide();
+      infoButton6.hide();
       //start button
       imageMode(CENTER);
       image(startButton, 0.5 * w, 0.81 * h, 0.1 * w, 0.1 * w);
@@ -234,10 +239,16 @@ function draw() {
       gameSelect.display();
       if (showingGameInfo) {
         imageMode(CENTER);
-        image(tutorial[infoNum - 1], w / 2, h / 2, 0.2 * w, 0.2 * h);
+        image(gameDes[infoNum - 1], w / 2, h / 2, h , h);
         xButton.show();
-        xButton.position(w / 2, h / 2);
+        xButton.position(w * 0.48, h * 0.9);
         xButton.mousePressed(infoX);
+        infoButton1.hide();
+        infoButton2.hide();
+        infoButton3.hide();
+        infoButton4.hide();
+        infoButton5.hide();
+        infoButton6.hide();
       }
 
       //temp = gameSelect.gameNum;
@@ -554,6 +565,12 @@ function infoX() {
 
 function keyPressed() {
   if (mode == 4 && nowGame.gameName == "배스킨 라빈스 31") {
+    if(nowGame.tutorialStart == true){
+      if (keyCode === 13 || keyCode === 32){
+        nowGame.tutorialStart = false;
+        nowGame.startTime = millis();
+      }
+    }
     //console.log("key pressed");
     //console.log(keyCode);
     if (keyCode === 49 || keyCode === 97) {
@@ -573,7 +590,6 @@ function keyPressed() {
     }
     if(nowGame.tutorialStart == true){
       if (keyCode === 13 || keyCode === 32){
-        console.log("tutorialend")
         nowGame.tutorialStart = false;
         nowGame.gameStartTime = millis();
         nowGame.lastCalledTime = millis() + 4000;
@@ -606,6 +622,12 @@ function keyPressed() {
     }
   }
   if (mode == 4 && nowGame.gameName == "두부게임") {
+    if(nowGame.tutorialStart == true){
+      if(keyCode === 13 || keyCode === 32){
+        nowGame.tutorialStart = false;
+        nowGame.startTime = millis();
+      }
+    }
     //console.log("key pressed");
     //console.log(keyCode);
     if (keyCode === 48 || keyCode === 96) {

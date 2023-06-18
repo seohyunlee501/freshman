@@ -43,10 +43,8 @@ class subwayGame extends Game {
   }
   
   tutorial() {
-    if(this.tutorialStart == true){
-      imageMode(CENTER);
-      image(tutorial[5], w / 2, h / 2, w, h);
-    }
+    imageMode(CENTER);
+    image(playDes[3], w / 2, h / 2, w, h);
   }
 
   intro() {
@@ -92,6 +90,19 @@ class subwayGame extends Game {
       textSize(50);
       text('짝!', 0, 0);
       pop();
+    }
+  }
+
+  linedisplay(){
+    if(this.lineSelection == 2){
+      imageMode(CENTER);
+      image(subwayImage[0], w * 0.18, h * 0.21, h * 0.3, h * 0.3);
+    } else if(this.lineSelection == 3){
+      imageMode(CENTER);
+      image(subwayImage[1], w * 0.18, h * 0.21, h * 0.3, h * 0.3);
+    } else if(this.lineSelection == 4){
+      imageMode(CENTER);
+      image(subwayImage[2], w * 0.18, h * 0.21, h * 0.3, h * 0.3);
     }
   }
 
@@ -278,7 +289,6 @@ class subwayGame extends Game {
     if(this.tutorialStart == true){
       this.tutorial();
     }
-    
     if(this.tutorialStart == false) {
       if(this.gamefinishedByWrongInput){
         this.loseIssue = '호선';
@@ -292,6 +302,7 @@ class subwayGame extends Game {
         } else if(!this.lineSelected){
           this.lineSelect();
         } else {
+          this.linedisplay();
           if(this.idx == 3) {
             if(millis() - this.koongTime < 500) {
               this.koong();

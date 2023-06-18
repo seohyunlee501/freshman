@@ -5,6 +5,8 @@ class Story {
     this.submitButton = null;
     this.kkk = false;
     this.expectedID;
+    this.caseinput = false;
+    this.buttonPressTime = 0;
   }
   checkScene() {
     if (!this.ready) {
@@ -66,11 +68,14 @@ class Story {
         this.drawTextbox();
         this.drawSceneText(`- 혹시 내가 몇 학번인지 아니?`);
         this.drawNumberInput();
+        this.numberInput.show();
+        this.submitButton.show();
+        this.submitButton.value("");
         break;
       case "5-3":
         console.log("5-3");
-        this.numberInput.remove();
-        this.submitButton.remove();
+        this.numberInput.hide();
+        this.submitButton.hide();
         this.drawSceneBackground("5-1");
         this.drawNPC("5-1");
         this.drawObject("item");
@@ -79,8 +84,8 @@ class Story {
         break;
       case "5-4":
         console.log("5-4");
-        this.numberInput.remove();
-        this.submitButton.remove();
+        this.numberInput.hide();
+        this.submitButton.hide();
         this.drawSceneBackground("5-1");
         this.drawNPC("5-1");
         this.drawObject("soju_green");
@@ -89,8 +94,8 @@ class Story {
         break;
       case "5-5":
         console.log("5-5");
-        this.numberInput.remove();
-        this.submitButton.remove();
+        this.numberInput.hide();
+        this.submitButton.hide();
         this.drawSceneBackground("5-1");
         this.drawNPC("5-1");
         this.drawObject("soju_green");
@@ -169,14 +174,12 @@ class Story {
       this.ready = false;
     } else if (this.scene === "5-1") {
       this.scene = "5-2";
-    } else if (
-      (this.scene === "5-3" || this.scene === "5-4" || this.scene === "5-5") &&
-      !this.kkk
-    ) {
-      if(this.expectedID === 19){
+      this.kkk = false;
+    } else if ((this.scene === "5-3" || this.scene === "5-4" || this.scene === "5-5") && millis() - this.buttonPressTime > 2000) {
+      if(this.expectedID === 19 && this.kkk == false){
         player.alcholblood--;
         this.kkk = true;
-      }else if(this.expectedID > 19 || this.expectedID < 19){
+      }else if(this.kkk == false && (this.expectedID > 19 || this.expectedID < 19)){
         player.alcholblood++;
         this.kkk = true;
       }
@@ -203,10 +206,13 @@ class Story {
         this.expectedID = parseInt(this.numberInput.value());
         if (this.expectedID === 19) {
           this.scene = "5-3";
+          this.buttonPressTime = millis();
         } else if (this.expectedID < 19) {
           this.scene = "5-4";
+          this.buttonPressTime = millis();
         } else if (this.expectedID > 19) {
           this.scene = "5-5";
+          this.buttonPressTime = millis();
         }
       });
     }
