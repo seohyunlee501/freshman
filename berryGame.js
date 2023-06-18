@@ -69,7 +69,7 @@ class berryGame extends Game {
         console.log("suffled 1");
       }
     } else if (this.infoStarted) {
-      if (millis() - this.infoTime < 2000) {
+      if (millis() - this.infoTime < 1200) {
         // instructions:
         console.log("info");
         textSize(32);
@@ -336,23 +336,28 @@ class berryGame extends Game {
     textSize(32);
     textAlign(CENTER);
     rectMode(CENTER);
-    //if (this.rhythmIsLifeOn) {
-    if (millis() - this.endTime < 1200) {
+    if (millis() - this.endTime < 2000) {
+      if (this.idx == 3) {
+        super.playerDrinkDisplay();
+      } else {
+        super.npcDrinkDisplay();
+      }
+    } else if (millis() - this.endTime < 3200) {
       fill(255);
       rect(w / 2, h / 2, w / 3, h / 3);
       fill(0);
       text("박자는 생명!", w / 2, h / 2);
-    } else if (millis() - this.endTime < 2400) {
+    } else if (millis() - this.endTime < 4400) {
       fill(255);
       rect(w / 2, h / 2, w / 3, h / 3);
       fill(0);
       text("박자는 생명!", w / 2, h / 2);
-    } else if (millis() - this.endTime < 3600) {
+    } else if (millis() - this.endTime < 5600) {
       fill(255);
       rect(w / 2, h / 2, w / 3, h / 3);
       fill(0);
       text("생명! 생명!!", w / 2, h / 2);
-    } else if (millis() - this.endTime < 4800) {
+    } else if (millis() - this.endTime < 6800) {
       fill(255);
       rect(w / 2, h / 2, w / 3, h / 3);
       fill(0);
@@ -398,33 +403,13 @@ class berryGame extends Game {
     }
   }
 
-  // gameend() {
-  //   if (!this.endStarted) {
-  //     console.log("endstart now");
-  //     this.endStarted = true;
-  //     this.endTime = millis();
-  //   } else {
-  //     if (millis() - this.endTime < 4800) {
-  //       if (this.loseIssue == 1) {
-  //         this.focusIsLife();
-  //       } else if (this.loseIssue == 2) {
-  //         this.rhythmIsLife();
-  //       }
-  //     } else {
-  //       this.gameOver = true;
-  //       this.everyone[this.idx].lose();
-  //       this.gameList.gameNum++;
-  //     }
-  //   }
-  // }
-
   gameend() {
     if (!this.endStarted) {
       this.endStarted = true;
       this.endTime = millis();
       console.log("end started");
     } else {
-      if (millis() - this.endTime < 4800) {
+      if (millis() - this.endTime < 6800) {
         if (this.loseIssue == 1) {
           this.focusIsLife();
         } else if (this.loseIssue == 2) {
