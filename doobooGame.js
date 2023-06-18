@@ -28,12 +28,6 @@ class doobooGame extends Game {
     textAlign(CENTER);
     rectMode(CENTER);
     if (this.bgmOn) {
-        let x1 = 0.2 * w;
-        let x2 = 0.2 * w + 0.17 * h;
-        let x3 = 0.2 * w + 0.17 * h * 2;
-        let x4 = 0.2 * w + 0.17 * h * 3;
-        let x5 = 0.2 * w + 0.17 * h * 4;
-        let x6 = 0.2 * w + 0.17 * h * 5;
       if (millis() - this.startTime < 1200) {
         fill(255);
         rect(w / 2, h / 2, w / 3, h / 3);
@@ -54,20 +48,6 @@ class doobooGame extends Game {
         rect(w / 2, h / 2, w / 3, h / 3);
         fill(0);
         text("으쌰!으쌰!으쌰!으쌰!", w / 2, h / 2);
-      } else if (millis() - this.startTime < 5300) {
-        text("(쿵)", x1, 0.3 * h);
-        text("(쿵)", x2, 0.3 * h);
-        text("(쿵)", x3, 0.3 * h);
-        text("(쿵)", x4, 0.3 * h);
-        text("(쿵)", x5, 0.3 * h);
-        text("(쿵)", x6, 0.3 * h);
-      } else if (millis() - this.startTime < 5800) {
-        text("(짝)", x1, 0.3 * h);
-        text("(짝)", x2, 0.3 * h);
-        text("(짝)", x3, 0.3 * h);
-        text("(짝)", x4, 0.3 * h);
-        text("(짝)", x5, 0.3 * h);
-        text("(짝)", x6, 0.3 * h);
       } else {
         this.bgmOn = false;
         this.turn++;
@@ -164,29 +144,8 @@ class doobooGame extends Game {
         this.turnStarted = true;
         this.currentTime = millis();
       } else if (this.turnStarted) {
-        let x1 = 0.2 * w;
-        let x2 = 0.2 * w + 0.17 * h;
-        let x3 = 0.2 * w + 0.17 * h * 2;
-        let x4 = 0.2 * w + 0.17 * h * 3;
-        let x5 = 0.2 * w + 0.17 * h * 4;
-        let x6 = 0.2 * w + 0.17 * h * 5;
-
-        if (millis() - this.currentTime < 1000) {
+        if (millis() - this.currentTime < 1600) {
           this.dbCall();
-        } else if (millis() - this.currentTime < 1500) {
-          text("(쿵)", x1, 0.3 * h);
-          text("(쿵)", x2, 0.3 * h);
-          text("(쿵)", x3, 0.3 * h);
-          text("(쿵)", x4, 0.3 * h);
-          text("(쿵)", x5, 0.3 * h);
-          text("(쿵)", x6, 0.3 * h);
-        }else if (millis() - this.currentTime < 2000) {
-          text("(짝)", x1, 0.3 * h);
-          text("(짝)", x2, 0.3 * h);
-          text("(짝)", x3, 0.3 * h);
-          text("(짝)", x4, 0.3 * h);
-          text("(짝)", x5, 0.3 * h);
-          text("(짝)", x6, 0.3 * h);
         } else {
           if (
             this.dbCount != 1 &&
