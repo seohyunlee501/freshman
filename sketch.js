@@ -48,6 +48,13 @@ let xButton;
 let infoNum = 0;
 let showingGameInfo = false;
 
+//babo
+let handposeOn = false;
+let video;
+let myHand;
+let predictionsHand = [];
+let modelReadyComplete = false;
+
 function preload() {
   carrot = loadImage("Assets/button_carrot.png");
   k_melon = loadImage("Assets/button_k-melon.png");
@@ -156,137 +163,155 @@ function setup() {
   xButton = createButton("X");
   xButton.class("info");
   xButton.hide();
+
+  //babo
+  video = createCapture(VIDEO);
+  video.size(0.3 * w, 0.5 * h);
+  // Hide the video element, and just show the canvas
+  video.hide();
+  function modelReady() {
+    console.log("Model ready!");
+    modelReadyComplete = true;
+  }
+
+  myHand = ml5.handpose(video, modelReady);
+  myHand.on("predict", (results) => {
+    predictionsHand = results;
+  });
+  text("LOADING...", width / 2, height / 2);
 }
 
 function draw() {
-  background(0, 64, 0);
-  //game lost condition: need revise
-  if (mode >= 3) {
-    if (player.alcholblood >= 8) {
-      player.die = true;
+  if (modelReadyComplete) {
+    background(0, 64, 0);
+    //game lost condition: need revise
+    if (mode >= 3) {
+      if (player.alcholblood >= 8) {
+        player.die = true;
+      }
+      if (player.die === true) {
+        mode = 6;
+      }
     }
-    if (player.die === true) {
+
+    // game end display test
+
+    if (mode == 3 && player.name === "mode6win") {
+      mode = 6;
+    } else if (mode == 3 && player.name === "mode6lose") {
+      player.die = true;
       mode = 6;
     }
-  }
 
-  // game end display test
+    textFont(retroFont);
+    textAlign(CENTER, CENTER);
 
-  if (mode == 3 && player.name === "mode6win") {
-    mode = 6;
-  } else if (mode == 3 && player.name === "mode6lose") {
-    player.die = true;
-    mode = 6;
-  }
-
-  textFont(retroFont);
-  textAlign(CENTER, CENTER);
-
-  switch (mode) {
-    case 0:
-      //start button
-      imageMode(CENTER);
-      image(startButton, 0.5 * w, 0.81 * h, 0.1 * w, 0.1 * w);
-      fill(252, 212, 0);
-      textSize(50);
-      textAlign(CENTER, CENTER);
-      textFont(movieFont);
-      text("▶", 0.5 * w, 0.805 * h);
-      textSize(30);
-      text("서문19 신민정", 0.1 * w, 0.9 * h);
-      text("전기19 이서현", 0.3 * w, 0.9 * h);
-      text("경영19 김재현", 0.7 * w, 0.9 * h);
-      text("자전19 나정현", 0.9 * w, 0.9 * h);
-      fill(255);
-      textSize(50);
-      textFont(retroFont);
-      text("PRESS TO START", 0.5 * w, 0.9 * h);
-      //title image
-      push();
-      translate(w * 0.5, h * 0.4);
-      imageMode(CENTER);
-      image(title, 0, 0, 0.916 * w * 0.5, 0.491 * w * 0.5);
-      pop();
-      break;
-    case 1:
-      textAlign(CENTER);
-      textSize(50);
-      fill(255);
-      text("select your character.", w * 0.5, h * 0.15);
-      introdisplay(w * 0.3, h * 0.5, "boy");
-      introdisplay(w * 0.7, h * 0.5, "girl");
-      break;
-    case 2:
-      // bSelecting = false;
-      // gSelecting = false;
-      textFont(movieFont);
-      story.drawScene();
-      break;
-    case 3:
-      imageMode(CENTER);
-      gameSelect.display();
-      if (showingGameInfo) {
+    switch (mode) {
+      case 0:
+        //start button
         imageMode(CENTER);
-        image(tutorial[infoNum - 1], w / 2, h / 2, 0.2 * w, 0.2 * h);
-        xButton.show();
-        xButton.position(w / 2, h / 2);
-        xButton.mousePressed(infoX);
-      }
-
-      //temp = gameSelect.gameNum;
-      break;
-    case 4:
-      nowGame.display();
-      nowGame.round();
-      if (nowGame.gameOver) {
-        idx = nowGame.idx;
-        if (gameSelect.gameNum == 4) {
-          mode = 5;
-        } else if (gameSelect.gameNum == 7) {
-          mode = 6;
-        } else {
-          mode = 3;
+        image(startButton, 0.5 * w, 0.81 * h, 0.1 * w, 0.1 * w);
+        fill(252, 212, 0);
+        textSize(50);
+        textAlign(CENTER, CENTER);
+        textFont(movieFont);
+        text("▶", 0.5 * w, 0.805 * h);
+        textSize(30);
+        text("서문19 신민정", 0.1 * w, 0.9 * h);
+        text("전기19 이서현", 0.3 * w, 0.9 * h);
+        text("경영19 김재현", 0.7 * w, 0.9 * h);
+        text("자전19 나정현", 0.9 * w, 0.9 * h);
+        fill(255);
+        textSize(50);
+        textFont(retroFont);
+        text("PRESS TO START", 0.5 * w, 0.9 * h);
+        //title image
+        push();
+        translate(w * 0.5, h * 0.4);
+        imageMode(CENTER);
+        image(title, 0, 0, 0.916 * w * 0.5, 0.491 * w * 0.5);
+        pop();
+        break;
+      case 1:
+        textAlign(CENTER);
+        textSize(50);
+        fill(255);
+        text("select your character.", w * 0.5, h * 0.15);
+        introdisplay(w * 0.3, h * 0.5, "boy");
+        introdisplay(w * 0.7, h * 0.5, "girl");
+        break;
+      case 2:
+        // bSelecting = false;
+        // gSelecting = false;
+        textFont(movieFont);
+        story.drawScene();
+        break;
+      case 3:
+        imageMode(CENTER);
+        gameSelect.display();
+        if (showingGameInfo) {
+          imageMode(CENTER);
+          image(tutorial[infoNum - 1], w / 2, h / 2, 0.2 * w, 0.2 * h);
+          xButton.show();
+          xButton.position(w / 2, h / 2);
+          xButton.mousePressed(infoX);
         }
-      }
-      break;
-    case 5:
-      textFont(movieFont);
-      // eventStory = new Story(5, player);
-      story.drawScene();
-      break;
-    case 6:
-      // reset button
-      player.gameover();
-      imageMode(CENTER);
-      image(startButton, 0.5 * w, 0.9 * h, 0.1 * w, 0.1 * w);
-      fill(252, 212, 0);
-      textSize(50);
-      textAlign(CENTER, CENTER);
-      textFont(movieFont);
-      text("▶", 0.5 * w, 0.895 * h);
-      break;
-  }
 
-  // reset button
-  if (mode != 0 && mode != 1 && mode != 6 && mode != 2 && mode != 5) {
-    fill(0);
-    imageMode(CORNER);
-    image(reset, 0.05 * w, 0.05 * h, 0.1 * h, 0.1 * h);
-  }
+        //temp = gameSelect.gameNum;
+        break;
+      case 4:
+        nowGame.display();
+        nowGame.round();
+        if (nowGame.gameOver) {
+          idx = nowGame.idx;
+          if (gameSelect.gameNum == 4) {
+            mode = 5;
+          } else if (gameSelect.gameNum == 7) {
+            mode = 6;
+          } else {
+            mode = 3;
+          }
+        }
+        break;
+      case 5:
+        textFont(movieFont);
+        // eventStory = new Story(5, player);
+        story.drawScene();
+        break;
+      case 6:
+        // reset button
+        player.gameover();
+        imageMode(CENTER);
+        image(startButton, 0.5 * w, 0.9 * h, 0.1 * w, 0.1 * w);
+        fill(252, 212, 0);
+        textSize(50);
+        textAlign(CENTER, CENTER);
+        textFont(movieFont);
+        text("▶", 0.5 * w, 0.895 * h);
+        break;
+    }
 
-  // subwayGame setup
-  if (mode == 4 && nowGame.gameName == "지하철게임") {
-    if (nowGame.playerInput == true) {
-      fill(255);
-      rectMode(CENTER);
-      rect(w / 2, h / 2, w / 2, h / 2);
+    // reset button
+    if (mode != 0 && mode != 1 && mode != 6 && mode != 2 && mode != 5) {
       fill(0);
-      textAlign(CENTER);
-      textSize(32);
-      text("역 이름을 입력하세요!", w * 0.5, h * 0.45);
-      subwayInput.show();
-      subwayButton.show();
-      subwayButton.mousePressed(saveStations);
+      imageMode(CORNER);
+      image(reset, 0.05 * w, 0.05 * h, 0.1 * h, 0.1 * h);
+    }
+
+    // subwayGame setup
+    if (mode == 4 && nowGame.gameName == "지하철게임") {
+      if (nowGame.playerInput == true) {
+        fill(255);
+        rectMode(CENTER);
+        rect(w / 2, h / 2, w / 2, h / 2);
+        fill(0);
+        textAlign(CENTER);
+        textSize(32);
+        text("역 이름을 입력하세요!", w * 0.5, h * 0.45);
+        subwayInput.show();
+        subwayButton.show();
+        subwayButton.mousePressed(saveStations);
+      }
     }
   }
 }

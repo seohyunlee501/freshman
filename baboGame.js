@@ -6,15 +6,16 @@ class baboGame extends Game {
     this.recording = false;
     this.myRec = new p5.SpeechRec(); // new P5.SpeechRec object
     //hand
-    this.video = createCapture(VIDEO);
-    this.video.size(0.3 * w, 0.5 * h);
-    // Hide the video element, and just show the canvas
-    this.video.hide();
-    this.myHand;
+    this.video = video;
+    // this.video = createCapture(VIDEO);
+    // this.video.size(0.3 * w, 0.5 * h);
+    // // Hide the video element, and just show the canvas
+    // this.video.hide();
+    this.myHand = myHand;
     this.handposeReady = false;
-    this.handposeOn = false;
+    // this.handposeOn = false;
     this.videoOn = false;
-    this.predictionsHand = [];
+    this.predictionsHand = predictionsHand;
     //else
     this.inputVoice = 0;
     this.inputHand = 0;
@@ -55,10 +56,10 @@ class baboGame extends Game {
       }
     }
   }
-  modelReady() {
-    this.handposeOn = true;
-    console.log("Model ready!");
-  }
+  // modelReady() {
+  //   this.handposeOn = true;
+  //   console.log("Model ready!");
+  // }
 
   readingHand() {
     fill(255);
@@ -66,22 +67,28 @@ class baboGame extends Game {
     rect(w / 2, h / 2, 0.5 * w, 0.5 * h);
     if (this.videoOn) {
       image(this.video, w / 2, h / 2, 0.5 * w, 0.5 * h);
-      console.log("videoOn,", this.handposeOn);
+      // console.log("videoOn,", this.handposeOn);
+      console.log("videoOn,", handposeOn);
     }
-    if (this.handposeOn) {
-      console.log(this.handposeOn);
+    // if (this.handposeOn) {
+    //   console.log(this.handposeOn);
+    if (handposeOn) {
+      console.log(handposeOn);
       this.drawKeypoints();
     }
   }
 
   drawKeypoints() {
-    for (let i = 0; i < this.predictionsHand.length; i += 1) {
-      const prediction = this.predictionsHand[i];
+    for (let i = 0; i < predictionsHand.length; i += 1) {
+      const prediction = predictionsHand[i];
       for (let j = 0; j < prediction.landmarks.length; j += 1) {
         const keypoint = prediction.landmarks[j];
         fill(0, 255, 0);
         noStroke();
-        ellipse(keypoint[0], keypoint[1], 10, 10);
+        let kx = keypoint[0] + w / 4;
+        let ky = keypoint[1] + h / 4;
+        // ellipse(keypoint[0], keypoint[1], 10, 10);
+        ellipse(kx, ky, 10, 10);
       }
     }
   }
@@ -124,10 +131,18 @@ class baboGame extends Game {
     if (!this.handposeReady) {
       console.log("***turnOnHandPose called");
       this.handposeReady = true;
-      this.myHand = ml5.handpose(this.video, this.modelReady);
-      this.myHand.on("predict", (results) => {
-        this.predictionsHand = results;
-      });
+      handposeOn = true;
+
+      // function modelReady() {
+      //   // this.handposeOn = true;
+      //   handposeOn = true;
+      //   console.log("Model ready!");
+      // }
+
+      // this.myHand = ml5.handpo se(this.video, modelReady);
+      // this.myHand.on("predict", (results) => {
+      //   this.predictionsHand = results;
+      // });
     }
   }
 
@@ -170,7 +185,7 @@ class baboGame extends Game {
       }
       this.turnOffCapture();
       this.turnOffHandpose();
-      //this.inputHand = int(random(1, 6));
+      this.inputHand = int(random(1, 6));
     }
 
     if (this.turnStarted) {
