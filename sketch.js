@@ -82,8 +82,9 @@ function preload() {
   soju_img_g = loadImage("Assets/soju_2.png"); // 초록뚜껑
   item_img = loadImage("Assets/item_1.png");
   imgs_npc["g_1"] = loadImage("Assets/npc_g_1.png");
+  imgs_npc["g_7"] = loadImage("Assets/npc_g_7.png");
   for (let i = 1; i <= 4; i++) {
-    for (let j = 1; j <= 6; j++) {
+    for (let j = 1; j <= 7; j++) {
       let idx = `${i}_${j}`;
       imgs_npc[idx] = loadImage(`Assets/npc_${idx}.png`);
     }
@@ -94,6 +95,9 @@ function preload() {
     imgs_player[`m_${i}_y`] = loadImage(`Assets/player_m_${i}_y.png`);
     imgs_player[`f_${i}_y`] = loadImage(`Assets/player_f_${i}_y.png`);
   }
+  imgs_player[`m_7_y`] = loadImage(`Assets/player_m_7_y.png`);
+  imgs_player[`f_7_y`] = loadImage(`Assets/player_f_7_y.png`);
+
   arrow = loadImage("Assets/arrow.png");
   bubble_l = loadImage("Assets/bubble_left.png");
   bubble_r = loadImage("Assets/bubble_right.png");

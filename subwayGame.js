@@ -227,11 +227,17 @@ class subwayGame extends Game {
       this.endTime = millis();
     } else {
       if(this.loseIssue == '입력'){
-        if(millis() - this.endTime <  2000){
+        if(millis() - this.endTime < 4000){
+          fill(255);
+          rectMode(CENTER);
+          rect(w / 2, h / 2, w * 0.5, h * 0.65);
+          imageMode(CENTER);
+          image(player.image[5], w /2 , h / 2, w / 3, w / 3);
+        } else if(millis() - this.endTime <  6000){
           this.gameFinishedText("집중은 생명!")
-        } else if(millis() - this.endTime < 3200){
+        } else if(millis() - this.endTime < 7200){
           this.gameFinishedText("생명! 생명!")
-        } else if(millis() - this.endTime < 4400){
+        } else if(millis() - this.endTime < 8400){
           this.gameFinishedText("생명! 생명! 생명!")
         } else {
           this.gameOver = true;
@@ -239,7 +245,13 @@ class subwayGame extends Game {
           this.gameList.gameNum++;
         }
       } else if(this.loseIssue == '호선'){
-        if(millis() - this.endTime <  2000){
+        if(millis() - this.endTime < 4000){
+          fill(255);
+          rectMode(CENTER);
+          rect(w / 2, h / 2, w * 0.5, h * 0.65);
+          imageMode(CENTER);
+          image(player.image[5], w /2 , h / 2, w / 3, w / 3);
+        }else if(millis() - this.endTime < 6000){
           this.gameFinishedText("겐세이! 겐세이!")
         } else {
           this.gameOver = true;
@@ -248,7 +260,23 @@ class subwayGame extends Game {
           this.gameList.gameNum++;
         }
       } else if(this.loseIssue == 'NPC') {
-        if(millis() - this.endTime <  2000){
+        if(millis() - this.endTime < 4000){
+          fill(255);
+          rectMode(CENTER);
+          rect(w / 2, h / 2, w * 0.5, h * 0.65);
+          imageMode(CENTER);
+          if(this.idx == 2){
+            image(imgs_npc["g_7"], w / 2, h / 2, w / 3, w / 3);
+          } else if(this.idx == 0){
+            image(imgs_npc["1_7"], w / 2, h / 2, w / 3, w / 3);
+          } else if(this.idx == 1){
+            image(imgs_npc["2_7"], w / 2, h / 2, w / 3, w / 3);
+          } else if(this.idx == 4){
+            image(imgs_npc["3_7"], w / 2, h / 2, w / 3, w / 3);
+          } else if(this.idx == 5){
+            image(imgs_npc["4_7"], w / 2, h / 2, w / 3, w / 3);
+          }
+        } else if(millis() - this.endTime < 6000){
           this.gameFinishedText("휴~ 살았다!")
         } else {
           this.gameOver = true;

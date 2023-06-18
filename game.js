@@ -26,7 +26,7 @@ class Game {
     let temptext = "게임" + this.gameNum + " / 6";
     text(temptext, 0.15 * w, 0.05 * h);
     fill(255);
-    text(this.gameName, 0.28 * w, 0.05 * h);
+    text(this.gameName, 0.32 * w, 0.05 * h);
 
     //혈중알콜농도
     textAlign(CENTER);

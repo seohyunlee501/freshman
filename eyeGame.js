@@ -346,7 +346,13 @@ class eyeGame extends Game {
       this.idx = 3;
       if(millis()- this.endStartTime < 2000){
 
-      } else if(millis() - this.endStartTime < 4000){
+      } else if(millis() - this.endStartTime < 6000){
+        fill(255);
+        rectMode(CENTER);
+        rect(w / 2, h / 2, w * 0.5, h * 0.65);
+        imageMode(CENTER);
+        image(player.image[5], w /2 , h / 2, w / 3, w / 3);
+      } else if(millis() - this.endStartTime < 8000){
         this.npcOneDisplay = false;
         this.npcTwoDisplay = false;
         this.npcThreeDisplay = false;
@@ -360,7 +366,7 @@ class eyeGame extends Game {
         textAlign(CENTER);
         textSize(32);
         text('눈치는 생명! 생명!', w / 2, h * 0.5);
-      } else if(millis() - this.endStartTime < 6000){
+      } else if(millis() - this.endStartTime < 10000){
         fill(255);
         rectMode(CENTER);
         rect(w/2, h/2, w/2, h/3);
@@ -368,15 +374,31 @@ class eyeGame extends Game {
         textAlign(CENTER);
         textSize(32);
         text('생명! 생명! 생명! 생명! 생명!', w / 2, h * 0.5);
-      }else if(millis() - this.endStartTime > 6000){
+      }else if(millis() - this.endStartTime > 10000){
         this.gameOver = true;
         this.everyone[this.idx].lose();
         this.gameList.gameNum++;
       }
     }else if(this.endNPC){
       if(millis() - this.endStartTime < 2000){
-
-      } else if(millis() - this.endStartTime < 4000){
+        
+      } else if(millis() - this.endStartTime < 6000) {
+        fill(255);
+        rectMode(CENTER);
+        rect(w / 2, h / 2, w * 0.5, h * 0.65);
+        imageMode(CENTER);
+        if(this.idx == 2){
+          image(imgs_npc["g_7"], w / 2, h / 2, w / 3, w / 3);
+        } else if(this.idx == 0){
+          image(imgs_npc["1_7"], w / 2, h / 2, w / 3, w / 3);
+        } else if(this.idx == 1){
+          image(imgs_npc["2_7"], w / 2, h / 2, w / 3, w / 3);
+        } else if(this.idx == 4){
+          image(imgs_npc["3_7"], w / 2, h / 2, w / 3, w / 3);
+        } else if(this.idx == 5){
+          image(imgs_npc["4_7"], w / 2, h / 2, w / 3, w / 3);
+        }
+      } else if(millis() - this.endStartTime < 8000){
         this.npcOneDisplay = false;
         this.npcTwoDisplay = false;
         this.npcThreeDisplay = false;
@@ -390,13 +412,14 @@ class eyeGame extends Game {
         textAlign(CENTER);
         textSize(32);
         text('휴~ 살았다', w / 2, h / 2);
-      }else if(millis() - this.endStartTime > 4000){
+      }else if(millis() - this.endStartTime > 8000){
         this.gameOver = true;
         this.everyone[this.idx].lose();
         this.gameList.gameNum++;
       }
     }
   }
+
 
   round() {
     this.gamePlay();
