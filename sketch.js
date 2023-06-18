@@ -560,11 +560,30 @@ function keyPressed() {
       nowGame.temp = 3;
     }
   }
+
   if (mode == 4 && nowGame.gameName == "눈치게임") {
-    if (keyCode === 13) {
-      nowGame.interruption = true;
+    if (nowGame.tutorialStart == false && nowGame.introStart == false){
+      if (keyCode === 13) {
+        nowGame.interruption = true;
+      }
+    }
+    if(nowGame.tutorialStart == true){
+      if (keyCode === 13 || keyCode === 32){
+        console.log("tutorialend")
+        nowGame.tutorialStart = false;
+        nowGame.gameStartTime = millis();
+        nowGame.lastCalledTime = millis() + 4000;
+      }
     }
   }
+
+  if(mode == 4 && nowGame.gameName == "지하철게임" && nowGame.tutorialStart == true){
+    if(keyCode === 13 || keyCode === 32){
+      nowGame.tutorialStart = false;
+      nowGame.gameStartTime = millis();
+    }
+  }
+
   if (
     mode == 4 &&
     nowGame.gameName == "지하철게임" &&
