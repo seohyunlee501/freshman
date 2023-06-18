@@ -59,5 +59,31 @@ class Game {
     image(table, 0.2 * w + 0.17 * h * 2.5, 0.6 * h, 0.6 * w, 0.2 * h);
     //bottles
   }
+
+  playerDrinkDisplay() {
+    fill(255);
+    rectMode(CENTER);
+    rect(w / 2, h / 2, w * 0.5, h * 0.65);
+    imageMode(CENTER);
+    image(player.image[5], w /2 , h / 2, w / 3, w / 3);
+  }
+
+  npcDrinkDisplay() {
+    fill(255);
+    rectMode(CENTER);
+    rect(w / 2, h / 2, w * 0.5, h * 0.65);
+    imageMode(CENTER);
+    if(this.idx == 2){
+      image(imgs_npc["g_7"], w / 2, h / 2, w / 3, w / 3);
+    } else if(this.idx == 0){
+      image(imgs_npc["1_7"], w / 2, h / 2, w / 3, w / 3);
+    } else if(this.idx == 1){
+      image(imgs_npc["2_7"], w / 2, h / 2, w / 3, w / 3);
+    } else if(this.idx == 4){
+      image(imgs_npc["3_7"], w / 2, h / 2, w / 3, w / 3);
+    } else if(this.idx == 5){
+      image(imgs_npc["4_7"], w / 2, h / 2, w / 3, w / 3);
+    }
+  }
 }
 
