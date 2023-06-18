@@ -227,11 +227,13 @@ class subwayGame extends Game {
       this.endTime = millis();
     } else {
       if(this.loseIssue == '입력'){
-        if(millis() - this.endTime <  2000){
+        if(millis() - this.endTime < 4000){
+          super.playerDrinkDisplay();
+        } else if(millis() - this.endTime <  6000){
           this.gameFinishedText("집중은 생명!")
-        } else if(millis() - this.endTime < 3200){
+        } else if(millis() - this.endTime < 7200){
           this.gameFinishedText("생명! 생명!")
-        } else if(millis() - this.endTime < 4400){
+        } else if(millis() - this.endTime < 8400){
           this.gameFinishedText("생명! 생명! 생명!")
         } else {
           this.gameOver = true;
@@ -239,7 +241,9 @@ class subwayGame extends Game {
           this.gameList.gameNum++;
         }
       } else if(this.loseIssue == '호선'){
-        if(millis() - this.endTime <  2000){
+        if(millis() - this.endTime < 4000){
+          super.playerDrinkDisplay();
+        }else if(millis() - this.endTime < 6000){
           this.gameFinishedText("겐세이! 겐세이!")
         } else {
           this.gameOver = true;
@@ -248,7 +252,9 @@ class subwayGame extends Game {
           this.gameList.gameNum++;
         }
       } else if(this.loseIssue == 'NPC') {
-        if(millis() - this.endTime <  2000){
+        if(millis() - this.endTime < 4000){
+          super.npcDrinkDisplay();
+        } else if(millis() - this.endTime < 6000){
           this.gameFinishedText("휴~ 살았다!")
         } else {
           this.gameOver = true;

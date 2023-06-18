@@ -346,7 +346,9 @@ class eyeGame extends Game {
       this.idx = 3;
       if(millis()- this.endStartTime < 2000){
 
-      } else if(millis() - this.endStartTime < 4000){
+      } else if(millis() - this.endStartTime < 6000){
+        super.playerDrinkDisplay();
+      } else if(millis() - this.endStartTime < 8000){
         this.npcOneDisplay = false;
         this.npcTwoDisplay = false;
         this.npcThreeDisplay = false;
@@ -360,7 +362,7 @@ class eyeGame extends Game {
         textAlign(CENTER);
         textSize(32);
         text('눈치는 생명! 생명!', w / 2, h * 0.5);
-      } else if(millis() - this.endStartTime < 6000){
+      } else if(millis() - this.endStartTime < 10000){
         fill(255);
         rectMode(CENTER);
         rect(w/2, h/2, w/2, h/3);
@@ -368,15 +370,17 @@ class eyeGame extends Game {
         textAlign(CENTER);
         textSize(32);
         text('생명! 생명! 생명! 생명! 생명!', w / 2, h * 0.5);
-      }else if(millis() - this.endStartTime > 6000){
+      }else if(millis() - this.endStartTime > 10000){
         this.gameOver = true;
         this.everyone[this.idx].lose();
         this.gameList.gameNum++;
       }
     }else if(this.endNPC){
       if(millis() - this.endStartTime < 2000){
-
-      } else if(millis() - this.endStartTime < 4000){
+        
+      } else if(millis() - this.endStartTime < 6000) {
+        super.npcDrinkDisplay();
+      } else if(millis() - this.endStartTime < 8000){
         this.npcOneDisplay = false;
         this.npcTwoDisplay = false;
         this.npcThreeDisplay = false;
@@ -390,13 +394,14 @@ class eyeGame extends Game {
         textAlign(CENTER);
         textSize(32);
         text('휴~ 살았다', w / 2, h / 2);
-      }else if(millis() - this.endStartTime > 4000){
+      }else if(millis() - this.endStartTime > 8000){
         this.gameOver = true;
         this.everyone[this.idx].lose();
         this.gameList.gameNum++;
       }
     }
   }
+
 
   round() {
     this.gamePlay();
