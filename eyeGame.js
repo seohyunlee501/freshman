@@ -91,10 +91,8 @@ class eyeGame extends Game {
   }
 
   tutorial() {
-    if(this.tutorialStart == true){
-      imageMode(CENTER);
-      image(tutorial[1], w/2, h/2, w, h);
-    }
+    imageMode(CENTER);
+    image(playDes[1], w/2, h/2, w, h);
   }
 
   intro() {

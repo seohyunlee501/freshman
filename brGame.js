@@ -14,7 +14,14 @@ class brGame extends Game {
     this.infoTime = 0;
     this.endStarted = false;
     this.endTime = 0;
+    this.tutorialStart = true;
   }
+
+  tutorial() {
+    imageMode(CENTER);
+    image(playDes[2], w / 2, h / 2, w, h);
+  }
+
   intro() {
     textSize(32);
     textAlign(CENTER);
@@ -179,13 +186,18 @@ class brGame extends Game {
     }
   }
   round() {
-    if (this.turn == 0) {
-      this.intro();
-    } else {
-      if (this.idx == 3) {
-        this.playerturn();
+    if(this.tutorialStart == true){
+      this.tutorial();
+    }
+    if(this.tutorialStart == false){
+      if (this.turn == 0) {
+        this.intro();
       } else {
-        this.npcturn();
+        if (this.idx == 3) {
+          this.playerturn();
+        } else {
+          this.npcturn();
+        }
       }
     }
   }

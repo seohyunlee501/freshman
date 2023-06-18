@@ -36,6 +36,7 @@ let subwayButton;
 let startButton;
 
 let gameLostImage, gameWinImage;
+let subwayImage = [];
 
 let infoButton1,
   infoButton2,
@@ -47,6 +48,8 @@ let tutorial = [];
 let xButton;
 let infoNum = 0;
 let showingGameInfo = false;
+let playDes = [];
+let gameDes = [];
 
 //babo
 let handposeOn = false;
@@ -115,6 +118,11 @@ function preload() {
   gameWinImage = loadImage("Assets/gameover_win.png");
   for (let i = 1; i <= 6; i++) {
     tutorial[i - 1] = loadImage(`Assets/tutorial_${i}.jpg`);
+    gameDes[i - 1] = loadImage(`Assets/gameDes_${i}.png`);
+    playDes[i - 1] = loadImage(`Assets/playDes_${i}.png`);
+  }
+  for (let i = 0; i < 3; i++){
+    subwayImage[i] = loadImage(`Assets/subway_${i + 2}.png`);
   }
 }
 
@@ -207,75 +215,90 @@ function draw() {
       mode = 6;
     }
 
-    textFont(retroFont);
-    textAlign(CENTER, CENTER);
+  
+  console.log("mode", mode);
+  textFont(retroFont);
+  textAlign(CENTER, CENTER);
 
-    switch (mode) {
-      case 0:
-        //start button
+  switch (mode) {
+    case 0:
+      infoButton1.hide();
+      infoButton2.hide();
+      infoButton3.hide();
+      infoButton4.hide();
+      infoButton5.hide();
+      infoButton6.hide();
+      //start button
+      imageMode(CENTER);
+      image(startButton, 0.5 * w, 0.81 * h, 0.1 * w, 0.1 * w);
+      fill(252, 212, 0);
+      textSize(50);
+      textAlign(CENTER, CENTER);
+      textFont(movieFont);
+      text("▶", 0.5 * w, 0.805 * h);
+      textSize(30);
+      text("서문19 신민정", 0.1 * w, 0.9 * h);
+      text("전기19 이서현", 0.3 * w, 0.9 * h);
+      text("경영19 김재현", 0.7 * w, 0.9 * h);
+      text("자전19 나정현", 0.9 * w, 0.9 * h);
+      fill(255);
+      textSize(50);
+      textFont(retroFont);
+      text("PRESS TO START", 0.5 * w, 0.9 * h);
+      //title image
+      push();
+      translate(w * 0.5, h * 0.4);
+      imageMode(CENTER);
+      image(title, 0, 0, 0.916 * w * 0.5, 0.491 * w * 0.5);
+      pop();
+      break;
+    case 1:
+      textAlign(CENTER);
+      textSize(50);
+      fill(255);
+      text("select your character.", w * 0.5, h * 0.15);
+      introdisplay(w * 0.3, h * 0.5, "boy");
+      introdisplay(w * 0.7, h * 0.5, "girl");
+      break;
+    case 2:
+      // bSelecting = false;
+      // gSelecting = false;
+      textFont(movieFont);
+      story.drawScene();
+      break;
+    case 3:
+      imageMode(CENTER);
+      gameSelect.display();
+      if (showingGameInfo) {
         imageMode(CENTER);
-        image(startButton, 0.5 * w, 0.81 * h, 0.1 * w, 0.1 * w);
-        fill(252, 212, 0);
-        textSize(50);
-        textAlign(CENTER, CENTER);
-        textFont(movieFont);
-        text("▶", 0.5 * w, 0.805 * h);
-        textSize(30);
-        text("서문19 신민정", 0.1 * w, 0.9 * h);
-        text("전기19 이서현", 0.3 * w, 0.9 * h);
-        text("경영19 김재현", 0.7 * w, 0.9 * h);
-        text("자전19 나정현", 0.9 * w, 0.9 * h);
-        fill(255);
-        textSize(50);
-        textFont(retroFont);
-        text("PRESS TO START", 0.5 * w, 0.9 * h);
-        //title image
-        push();
-        translate(w * 0.5, h * 0.4);
-        imageMode(CENTER);
-        image(title, 0, 0, 0.916 * w * 0.5, 0.491 * w * 0.5);
-        pop();
-        break;
-      case 1:
-        textAlign(CENTER);
-        textSize(50);
-        fill(255);
-        text("select your character.", w * 0.5, h * 0.15);
-        introdisplay(w * 0.3, h * 0.5, "boy");
-        introdisplay(w * 0.7, h * 0.5, "girl");
-        break;
-      case 2:
-        // bSelecting = false;
-        // gSelecting = false;
-        textFont(movieFont);
-        story.drawScene();
-        break;
-      case 3:
-        imageMode(CENTER);
-        gameSelect.display();
-        if (showingGameInfo) {
-          imageMode(CENTER);
-          image(tutorial[infoNum - 1], w / 2, h / 2, 0.2 * w, 0.2 * h);
-          xButton.show();
-          xButton.position(w / 2, h / 2);
-          xButton.mousePressed(infoX);
+        image(gameDes[infoNum - 1], w / 2, h / 2, h , h);
+        xButton.show();
+        xButton.position(w * 0.48, h * 0.9);
+        xButton.mousePressed(infoX);
+        infoButton1.hide();
+        infoButton2.hide();
+        infoButton3.hide();
+        infoButton4.hide();
+        infoButton5.hide();
+        infoButton6.hide();
+      }
+
+      //temp = gameSelect.gameNum;
+      break;
+    case 4:
+      nowGame.display();
+      nowGame.round();
+      if (nowGame.gameOver) {
+        idx = nowGame.idx;
+        if (gameSelect.gameNum == 4) {
+          mode = 5;
+        } else if(gameSelect.gameNum == 7) {
+          mode = 6;
+        } else {
+          mode = 3;
         }
-
+      }
         //temp = gameSelect.gameNum;
-        break;
-      case 4:
-        nowGame.display();
-        nowGame.round();
-        if (nowGame.gameOver) {
-          idx = nowGame.idx;
-          if (gameSelect.gameNum == 4) {
-            mode = 5;
-          } else if (gameSelect.gameNum == 7) {
-            mode = 6;
-          } else {
-            mode = 3;
-          }
-        }
         break;
       case 5:
         textFont(movieFont);
@@ -579,6 +602,14 @@ function infoX() {
 
 function keyPressed() {
   if (mode == 4 && nowGame.gameName == "배스킨 라빈스 31") {
+    if(nowGame.tutorialStart == true){
+      if (keyCode === 13 || keyCode === 32){
+        nowGame.tutorialStart = false;
+        nowGame.startTime = millis();
+      }
+    }
+    //console.log("key pressed");
+    //console.log(keyCode);
     if (keyCode === 49 || keyCode === 97) {
       nowGame.temp = 1;
     } else if (keyCode === 50 || keyCode === 98) {
@@ -596,7 +627,6 @@ function keyPressed() {
     }
     if(nowGame.tutorialStart == true){
       if (keyCode === 13 || keyCode === 32){
-        console.log("tutorialend")
         nowGame.tutorialStart = false;
         nowGame.gameStartTime = millis();
         nowGame.lastCalledTime = millis() + 4000;
@@ -628,6 +658,14 @@ function keyPressed() {
     }
   }
   if (mode == 4 && nowGame.gameName == "두부게임") {
+    if(nowGame.tutorialStart == true){
+      if(keyCode === 13 || keyCode === 32){
+        nowGame.tutorialStart = false;
+        nowGame.startTime = millis();
+      }
+    }
+    //console.log("key pressed");
+    //console.log(keyCode);
     if (keyCode === 48 || keyCode === 96) {
       nowGame.temp = 0;
     } else if (keyCode === 49 || keyCode === 97) {

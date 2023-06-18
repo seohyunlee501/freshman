@@ -14,6 +14,12 @@ class doobooGame extends Game {
     this.endTime = 0;
     this.loseIssue = 0;
     this.temp;
+    this.tutorialStart = true;
+  }
+
+  tutorial() {
+    imageMode(CENTER);
+    image(playDes[4], w / 2, h / 2, w, h);
   }
 
   dbBgm() {
@@ -281,13 +287,18 @@ class doobooGame extends Game {
   }
 
   round() {
-    if (this.turn == 0) {
-      this.dbBgm();
-    } else {
-      if (this.idx == 3) {
-        this.playerTurn();
+    if(this.tutorialStart == true){
+      this.tutorial();
+    }
+    if(this.tutorialStart == false){
+      if (this.turn == 0) {
+        this.dbBgm();
       } else {
-        this.npcTurn();
+        if (this.idx == 3) {
+          this.playerTurn();
+        } else {
+          this.npcTurn();
+        }
       }
     }
   }

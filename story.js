@@ -4,8 +4,9 @@ class Story {
     this.numberInput = null;
     this.submitButton = null;
     this.kkk = false;
-    this.alcholbloodMinus = false;
-    this.alcholbloodPlus = false;
+    this.expectedID;
+    this.caseinput = false;
+    this.buttonPressTime = 0;
   }
   checkScene() {
     if (!this.ready) {
@@ -67,11 +68,14 @@ class Story {
         this.drawTextbox();
         this.drawSceneText(`- 혹시 내가 몇 학번인지 아니?`);
         this.drawNumberInput();
+        this.numberInput.show();
+        this.submitButton.show();
+        this.submitButton.value("");
         break;
       case "5-3":
         console.log("5-3");
-        this.numberInput.remove();
-        this.submitButton.remove();
+        this.numberInput.hide();
+        this.submitButton.hide();
         this.drawSceneBackground("5-1");
         this.drawNPC("5-1");
         this.drawObject("item");
@@ -80,22 +84,18 @@ class Story {
         break;
       case "5-4":
         console.log("5-4");
-        this.numberInput.remove();
-        this.submitButton.remove();
+        this.numberInput.hide();
+        this.submitButton.hide();
         this.drawSceneBackground("5-1");
         this.drawNPC("5-1");
         this.drawObject("soju_green");
         this.drawTextbox();
         this.drawSceneText(`- ... 내가 그렇게 늙어보여...?`);
-        if (!this.alcholbloodPlus) {
-          player.alcholblood += 2;
-          this.alcholbloodPlus = true;
-        }
         break;
       case "5-5":
         console.log("5-5");
-        this.numberInput.remove();
-        this.submitButton.remove();
+        this.numberInput.hide();
+        this.submitButton.hide();
         this.drawSceneBackground("5-1");
         this.drawNPC("5-1");
         this.drawObject("soju_green");
@@ -174,10 +174,15 @@ class Story {
       this.ready = false;
     } else if (this.scene === "5-1") {
       this.scene = "5-2";
-    } else if (
-      (this.scene === "5-3" || this.scene === "5-4" || this.scene === "5-5") &&
-      this.kkk
-    ) {
+      this.kkk = false;
+    } else if ((this.scene === "5-3" || this.scene === "5-4" || this.scene === "5-5") && millis() - this.buttonPressTime > 2000) {
+      if(this.expectedID === 19 && this.kkk == false){
+        player.alcholblood--;
+        this.kkk = true;
+      }else if(this.kkk == false && (this.expectedID > 19 || this.expectedID < 19)){
+        player.alcholblood++;
+        this.kkk = true;
+      }
       mode = 3;
       this.ready = false;
     }
@@ -198,17 +203,17 @@ class Story {
       this.submitButton = createButton("학번");
       this.submitButton.position(w * 0.5, h * 0.65);
       this.submitButton.mousePressed(() => {
-        let number = parseInt(this.numberInput.value());
-        if (number === 19) {
+        this.expectedID = parseInt(this.numberInput.value());
+        if (this.expectedID === 19) {
           this.scene = "5-3";
-          player.alcholblood -= 1;
-        } else if (number < 19) {
+          this.buttonPressTime = millis();
+        } else if (this.expectedID < 19) {
           this.scene = "5-4";
-        } else if (number > 19) {
+          this.buttonPressTime = millis();
+        } else if (this.expectedID > 19) {
           this.scene = "5-5";
-          player.alcholblood += 1;
+          this.buttonPressTime = millis();
         }
-        this.kkk = true;
       });
     }
   }
