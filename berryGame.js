@@ -78,7 +78,7 @@ class berryGame extends Game {
         textAlign(CENTER);
         rectMode(CENTER);
         text(
-          "제한 시간 내에 아래 버튼을 순서대로 클릭하세요.",
+          "아래 버튼을 순서대로 클릭하세요.",
           0.2 * w + 0.17 * h * 3,
           0.3 * h
         );
@@ -102,24 +102,28 @@ class berryGame extends Game {
           let berryCheck = fruit[answer[this.step - 1]];
           text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
         } else {
-          if (this.step <= answer.length) {
-            if (
-              this.buttons2[this.whatBerryCheck] == fruit[answer[this.step - 1]]
-            ) {
-              this.stepStarted = false;
-            } else {
-              console.log("틀렸음", fruit[answer[this.step - 1]]);
-              this.stepO = false;
-              this.loseIssue = 1;
-              this.gameend();
-            }
-          }
           if (this.step >= answer.length) {
             this.berryCall = false;
             this.turnStarted = false;
             this.turn++;
             this.idx++;
             this.idx = this.idx % 6;
+            this.buttons = [strawberry, carrot, watermelon, k_melon, melon];
+            this.buttons2 = ["딸기!", "당근!", "수박!", "참외!", "메론!"];
+            this.userPlayed = false;
+          }
+        }
+        if (this.step <= answer.length) {
+          if (
+            this.buttons2[this.whatBerryCheck] == fruit[answer[this.step - 1]]
+          ) {
+            this.stepStarted = false;
+            this.shuffleDone = false;
+          } else {
+            console.log("틀렸음", fruit[answer[this.step - 1]]);
+            this.stepO = false;
+            this.loseIssue = 1;
+            this.gameend();
           }
         }
       }
