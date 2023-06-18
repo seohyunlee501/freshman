@@ -70,11 +70,11 @@ class berryGame extends Game {
       this.infoTime = millis();
       this.userPlayed = true;
       this.step = 0;
-      if (!this.shuffleDone) {
-        this.shuffleArray();
-        this.shuffleDone = true;
-        console.log("suffled 1");
-      }
+      // if (!this.shuffleDone) {
+      //   this.shuffleArray();
+      //   this.shuffleDone = true;
+      //   console.log("suffled 1");
+      // }
     } else if (this.infoStarted) {
       if (millis() - this.infoTime < 1200) {
         // instructions:
@@ -121,22 +121,22 @@ class berryGame extends Game {
                 this.shuffleDone = true;
                 console.log("suffled");
               }
+              if (this.step >= answer.length) {
+                this.berryCall = false;
+                this.turnStarted = false;
+                this.turn++;
+                this.idx++;
+                this.idx = this.idx % 6;
+                this.buttons = [strawberry, carrot, watermelon, k_melon, melon];
+                this.buttons2 = ["딸기!", "당근!", "수박!", "참외!", "메론!"];
+                this.userPlayed = false;
+              }
             } else {
               console.log("틀렸음", fruit[answer[this.step - 1]]);
               this.stepO = false;
               this.loseIssue = 1;
               this.gameend();
             }
-          }
-          if (this.step >= answer.length) {
-            this.berryCall = false;
-            this.turnStarted = false;
-            this.turn++;
-            this.idx++;
-            this.idx = this.idx % 6;
-            this.buttons = [strawberry, carrot, watermelon, k_melon, melon];
-            this.buttons2 = ["딸기!", "당근!", "수박!", "참외!", "메론!"];
-            this.userPlayed = false;
           }
         }
       }
@@ -150,7 +150,6 @@ class berryGame extends Game {
       this.turnStarted = true;
       this.berryCallTime = millis();
     } else if (this.turnStarted) {
-      
       if (this.turn % 14 == 1) {
         if (millis() - this.berryCallTime < 500) {
           text("(쿵)", x, 0.3 * h);
@@ -320,8 +319,6 @@ class berryGame extends Game {
   displayButtons() {
     //buttons[] 순서대로 이미지 가져와서 배치
 
-
-
     imageMode(CENTER);
     image(this.buttons[0], w * 0.1, h * 0.8, w * 0.16, h * 0.2);
     image(this.buttons[1], w * 0.25, h * 0.8, w * 0.16, h * 0.2);
@@ -340,8 +337,6 @@ class berryGame extends Game {
       ];
     }
   }
-
-
 
   rhythmIsLife() {
     console.log("rhythmislife");
@@ -437,10 +432,10 @@ class berryGame extends Game {
   }
 
   round() {
-    if(this.tutorialStart == true){
+    if (this.tutorialStart == true) {
       this.tutorial();
     }
-    if(this.tutorialStart == false){
+    if (this.tutorialStart == false) {
       if (this.turn == 0) {
         this.berryBgm();
       } else {
@@ -455,4 +450,3 @@ class berryGame extends Game {
     }
   }
 }
-
