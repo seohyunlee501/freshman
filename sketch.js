@@ -411,14 +411,19 @@ function mousePressed() {
     if (mouseY > 0.7 * h && mouseY < 0.9 * h) {
       if (mouseX > 0.02 * w && mouseX < 0.18 * w) {
         nowGame.whatBerry = 0;
+        //nowGame.step++;
       } else if (mouseX > 0.17 * w && mouseX < 0.33 * w) {
         nowGame.whatBerry = 1;
+        //nowGame.step++;
       } else if (mouseX > 0.32 * w && mouseX < 0.48 * w) {
         nowGame.whatBerry = 2;
+        //nowGame.step++;
       } else if (mouseX > 0.47 * w && mouseX < 0.63 * w) {
         nowGame.whatBerry = 3;
+        //nowGame.step++;
       } else if (mouseX > 0.62 * w && mouseX < 0.78 * w) {
         nowGame.whatBerry = 4;
+        //nowGame.step++;
       }
     }
   }
