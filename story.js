@@ -36,7 +36,7 @@ class Story {
         this.drawNPC("2-1");
         this.drawTextbox("soju");
         this.drawSceneText(
-          `- ${player.name}아 그거 알아? 오늘 우리 과 개강파티가 있대!`
+          `- ${player.name} 그거 알아? 오늘 우리 과 개강파티가 있대!`
         );
         break;
       case "2-3":
@@ -55,39 +55,50 @@ class Story {
         this.drawSceneText(`- 어허 새내기가 늦으면 어떡하나! 한 잔 마셔~!`);
         break;
       case "2-5":
+        //player 술마시는 장면
         this.drawSceneBackground("2-4");
-        this.drawNPC("2-4");
-        this.drawObject("soju");
         this.drawTextbox();
-        this.drawSceneText(`- 어허 새내기가 늦으면 어떡하나! 한 잔 마셔~!`);
+        imageMode(CENTER);
+        image(player.image[5], w / 2, h / 2, w / 3, w / 3);
         break;
       case "2-6":
-        this.drawSceneBackground("2-4");
+        this.drawSceneBackground("2-6");
+        //여기 NPC 2-4가 고학번이라는 뜻이더라고요! 안고치셔도 되어요
         this.drawNPC("2-4");
-        this.drawObject("soju");
         this.drawTextbox();
-        this.drawSceneText(`- 어허 새내기가 늦으면 어떡하나! 한 잔 마셔~!`);
+        this.drawSceneText(
+          `- 술게임에 온 걸 환영해! 방금 로그인샷을 마셔서 좀 어지럽지? 이제 원하는 게임을 골라봐!`
+        );
         break;
       case "2-7":
-        this.drawSceneBackground("2-4");
+        this.drawSceneBackground("2-7");
         this.drawNPC("2-4");
-        this.drawObject("soju");
         this.drawTextbox();
-        this.drawSceneText(`- 어허 새내기가 늦으면 어떡하나! 한 잔 마셔~!`);
+        this.drawSceneText(
+          `- i 버튼을 누르면 게임에 대한 설명을 확인할 수 있어!`
+        );
         break;
       case "2-8":
-        this.drawSceneBackground("2-4");
+        this.drawSceneBackground("2-8");
         this.drawNPC("2-4");
-        this.drawObject("soju");
         this.drawTextbox();
-        this.drawSceneText(`- 어허 새내기가 늦으면 어떡하나! 한 잔 마셔~!`);
+        this.drawSceneText(
+          `- 게임을 시작하기 전에 조작 방법을 알려줄테니 걱정말라구!`
+        );
+      case "2-9":
+        this.drawSceneBackground("2-9");
+        this.drawNPC("2-4");
+        this.drawTextbox();
+        this.drawSceneText(
+          `- 혈중알콜농도가 최대에 다다르면 게임 종료야. 즐거운 시간 보내길 바랄게 ^^`
+        );
         break;
       case "5-1":
         this.drawSceneBackground("5-1");
         this.drawNPC("5-1");
         this.drawObject("item");
         this.drawTextbox();
-        this.drawSceneText(`- ${player.name}아 괜찮아? 많이 취했니?`);
+        this.drawSceneText(`- ${player.name} 괜찮아? 많이 취했니?`);
         break;
       case "5-2":
         this.drawSceneBackground("5-1");
@@ -139,6 +150,14 @@ class Story {
       image(bg2, w * 0.5, h * 0.5, w, h);
     } else if (scene == "2-4") {
       image(bg2_1, w * 0.5, h * 0.5, w, h);
+    } else if (scene == "2-6") {
+      image(bg2_6, w * 0.5, h * 0.5, w, h);
+    } else if (scene == "2-7") {
+      image(bg2_7, w * 0.5, h * 0.5, w, h);
+    } else if (scene == "2-8") {
+      image(bg2_8, w * 0.5, h * 0.5, w, h);
+    } else if (scene == "2-9") {
+      image(bg2_9, w * 0.5, h * 0.5, w, h);
     } else if (scene == "5-1") {
       image(bg5, w * 0.5, h * 0.5, w, h);
     }
@@ -198,6 +217,16 @@ class Story {
     } else if (this.scene === "2-3") {
       this.scene = "2-4";
     } else if (this.scene === "2-4") {
+      this.scene = "2-5";
+    } else if (this.scene === "2-5") {
+      this.scene = "2-6";
+    } else if (this.scene === "2-6") {
+      this.scene = "2-7";
+    } else if (this.scene === "2-7") {
+      this.scene = "2-8";
+    } else if (this.scene === "2-8") {
+      this.scene = "2-9";
+    } else if (this.scene === "2-9") {
       mode = 3;
       this.ready = false;
     } else if (this.scene === "5-1") {

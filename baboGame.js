@@ -274,6 +274,9 @@ class baboGame extends Game {
         fill(255);
         textSize(50);
         text(this.inputVoice, -0.04 * h, 0);
+        if (this.inputHand == 0) {
+          this.inputHand = (this.inputVoice % 5) + 1;
+        }
         console.log(this.idx, this.inputVoice, this.inputHand);
         imageMode(CENTER);
         image(handimg[this.inputHand - 1], 0.04 * h, 0, 0.1 * h, 0.1 * h);

@@ -28,7 +28,7 @@ let playerimg, bImg, gImg;
 let title;
 let cursor, cursor_clicked;
 let arrow, bubble_l, bubble_r;
-let bg2, bg2_1, bg5;
+let bg2, bg2_1, bg2_6, bg2_7, bg2_8, bg2_9, bg5;
 let imgs_npc = [];
 let imgs_player = [];
 let subwayInput;
@@ -87,6 +87,10 @@ function preload() {
   }
   bg2 = loadImage("Assets/background_mode2.jpg");
   bg2_1 = loadImage("Assets/background_mode2_1.jpg");
+  bg2_6 = loadImage("Assets/background_mode2_6.jpg");
+  bg2_7 = loadImage("Assets/background_mode2_7.jpg");
+  bg2_8 = loadImage("Assets/background_mode2_8.jpg");
+  bg2_9 = loadImage("Assets/background_mode2_9.jpg");
   bg5 = loadImage("Assets/background_mode5.jpg");
   soju_img = loadImage("Assets/soju_1.png"); // 빨뚜
   soju_img_g = loadImage("Assets/soju_2.png"); // 초록뚜껑
@@ -190,6 +194,8 @@ function setup() {
   myHand.on("predict", (results) => {
     predictionsHand = results;
   });
+  textSize(150);
+  textFont(retroFont);
   text("LOADING...", width / 2, height / 2);
 }
 
@@ -207,7 +213,6 @@ function draw() {
     }
 
     // game end display test
-
     if (mode == 3 && player.name === "mode6win") {
       mode = 6;
     } else if (mode == 3 && player.name === "mode6lose") {
@@ -217,6 +222,7 @@ function draw() {
 
     console.log("mode", mode);
     textFont(retroFont);
+    textSize(50);
     textAlign(CENTER, CENTER);
 
     switch (mode) {
@@ -260,8 +266,8 @@ function draw() {
         introdisplay(w * 0.7, h * 0.5, "girl");
         break;
       case 2:
-        // bSelecting = false;
-        // gSelecting = false;
+        bSelecting = false;
+        gSelecting = false;
         textFont(movieFont);
         story.drawScene();
         break;
@@ -334,6 +340,7 @@ function draw() {
         textAlign(CENTER);
         textSize(32);
         text("역 이름을 입력하세요!", w * 0.5, h * 0.45);
+        subwayInput.value("");
         subwayInput.show();
         subwayButton.show();
         subwayButton.mousePressed(saveStations);
@@ -469,6 +476,7 @@ function mouseClicked() {
       } else {
         mode = 3;
       }
+      xButton.hide();
     }
   }
   //select player
