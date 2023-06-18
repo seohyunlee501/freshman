@@ -74,6 +74,7 @@ class gameList {
     fill(255);
     translate(w * 0.27, h * 0.86);
     rect(0, 0, w * 0.6, h * 0.08);
+    stroke(255);
     console.log("alcholblood", this.player.alcholblood);
     for (let i = 0; i < this.player.alcholblood; i++) {
       // switch (i) {

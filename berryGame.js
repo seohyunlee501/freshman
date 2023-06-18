@@ -4,6 +4,7 @@ class berryGame extends Game {
     this.gameName = "딸기당근수박참외메론";
     this.turn = 0;
     this.buttons = [strawberry, carrot, watermelon, k_melon, melon];
+    this.buttons2 = ["딸기!", "당근!", "수박!", "참외!", "메론!"];
     this.startTime = millis();
     this.bgmOn = true;
     this.userPlayed = false;
@@ -20,27 +21,16 @@ class berryGame extends Game {
     this.turnStarted = false;
     this.shuffleDone = false;
 
+    this.step = 0;
+    this.stepTime = 0;
+    this.stepStarted = false;
+    this.stepO = false;
+    this.tutorialStart = true;
+  }
 
-    this.step1 = false;
-    this.step2 = false;
-    this.step3 = false;
-    this.step4 = false;
-    this.step5 = false;
-    this.step6 = false;
-    this.step7 = false;
-    this.step8 = false;
-    
-
-    this.step1time = millis();
-    this.step2time = millis();
-    this.step3time = millis();
-    this.step4time = millis();
-    this.step5time = millis();
-    this.step6time = millis();
-    this.step7time = millis();
-    this.step8time = millis();
-
-
+  tutorial() {
+    imageMode(CENTER);
+    image(playDes[0], w / 2, h / 2, w, h);
   }
 
   berryBgm() {
@@ -61,19 +51,97 @@ class berryGame extends Game {
   }
 
   playerTurn() {
+    //make answer array
     let fruit = ["딸기!", "당근!", "수박!", "참외!", "메론!"];
-
-    if (!this.shuffleDone) {
-      this.shuffleArray();
-      this.shuffleDone = true;
+    let fruitNum = [0, 1, 2, 3, 4];
+    let answer = [];
+    let temp = this.turn;
+    temp = ((temp - 1) % 14) + 1;
+    if (temp > 8) {
+      temp = 16 - temp;
     }
-    this.displayButtons();
-    this.turn++;
-    this.idx = 4;
+    for (let i = 0; i < temp; i++) {
+      answer[i] = fruitNum[i % 5];
     }
 
-
-  
+    //info
+    if (!this.userPlayed) {
+      if (this.turn < 6) this.infoStarted = true;
+      this.infoTime = millis();
+      this.userPlayed = true;
+      this.step = 0;
+      if (!this.shuffleDone) {
+        this.shuffleArray();
+        this.shuffleDone = true;
+        console.log("suffled 1");
+      }
+    } else if (this.infoStarted) {
+      if (millis() - this.infoTime < 1200) {
+        // instructions:
+        console.log("info");
+        textSize(32);
+        fill(255);
+        textAlign(CENTER);
+        rectMode(CENTER);
+        text(
+          "아래 버튼을 순서대로 클릭하세요.",
+          0.2 * w + 0.17 * h * 3,
+          0.3 * h
+        );
+      } else {
+        this.infoStarted = false;
+      }
+    } else if (!this.turnStarted) {
+      this.whatBerryCheck = 5;
+      //shuffle button
+      this.turnStarted = true;
+    } else if (this.turnStarted) {
+      this.displayButtons();
+      if (!this.stepStarted) {
+        this.whatBerryCheck = this.whatBerry;
+        if (this.whatBerryCheck != 5) {
+          this.stepStarted = true;
+          this.stepTime = millis();
+          this.whatBerry = 5;
+          this.step++;
+        }
+      } else if (this.stepStarted) {
+        if (millis() - this.stepTime < 400) {
+          let berryCheck = this.buttons2[this.whatBerryCheck];
+          text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
+        } else {
+          if (this.step <= answer.length) {
+            if (
+              this.buttons2[this.whatBerryCheck] == fruit[answer[this.step - 1]]
+            ) {
+              this.stepStarted = false;
+              this.shuffleDone = false;
+              if (!this.shuffleDone) {
+                this.shuffleArray();
+                this.shuffleDone = true;
+                console.log("suffled");
+              }
+            } else {
+              console.log("틀렸음", fruit[answer[this.step - 1]]);
+              this.stepO = false;
+              this.loseIssue = 1;
+              this.gameend();
+            }
+          }
+          if (this.step >= answer.length) {
+            this.berryCall = false;
+            this.turnStarted = false;
+            this.turn++;
+            this.idx++;
+            this.idx = this.idx % 6;
+            this.buttons = [strawberry, carrot, watermelon, k_melon, melon];
+            this.buttons2 = ["딸기!", "당근!", "수박!", "참외!", "메론!"];
+            this.userPlayed = false;
+          }
+        }
+      }
+    }
+  }
   npcTurn() {
     fill(0);
     let x = 0.2 * w + 0.17 * h * this.idx;
@@ -266,6 +334,10 @@ class berryGame extends Game {
     for (let i = 4; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [this.buttons[i], this.buttons[j]] = [this.buttons[j], this.buttons[i]]; // 배열의 두 원소를 랜덤하게 교환
+      [this.buttons2[i], this.buttons2[j]] = [
+        this.buttons2[j],
+        this.buttons2[i],
+      ];
     }
   }
 
@@ -276,27 +348,36 @@ class berryGame extends Game {
     textSize(32);
     textAlign(CENTER);
     rectMode(CENTER);
-    //if (this.rhythmIsLifeOn) {
-    if (millis() - this.endTime < 1200) {
+    if (millis() - this.endTime < 2000) {
+      if (this.idx == 3) {
+        super.playerDrinkDisplay();
+      } else {
+        super.npcDrinkDisplay();
+      }
+    } else if (millis() - this.endTime < 3200) {
       fill(255);
       rect(w / 2, h / 2, w / 3, h / 3);
       fill(0);
       text("박자는 생명!", w / 2, h / 2);
-    } else if (millis() - this.endTime < 2400) {
+    } else if (millis() - this.endTime < 4400) {
       fill(255);
       rect(w / 2, h / 2, w / 3, h / 3);
       fill(0);
       text("박자는 생명!", w / 2, h / 2);
-    } else if (millis() - this.endTime < 3600) {
+    } else if (millis() - this.endTime < 5600) {
       fill(255);
       rect(w / 2, h / 2, w / 3, h / 3);
       fill(0);
       text("생명! 생명!!", w / 2, h / 2);
-    } else if (millis() - this.endTime < 4800) {
+    } else if (millis() - this.endTime < 6800) {
       fill(255);
       rect(w / 2, h / 2, w / 3, h / 3);
       fill(0);
       text("생명! 생명! 생명!", w / 2, h / 2);
+    } else {
+      this.gameOver = true;
+      this.everyone[this.idx].lose();
+      this.gameList.gameNum++;
     }
   }
 
@@ -305,7 +386,13 @@ class berryGame extends Game {
     textSize(32);
     textAlign(CENTER);
     rectMode(CENTER);
-    if (millis() - this.endTime < 3200) {
+    if (millis() - this.endTime < 2000) {
+      if (this.idx == 3) {
+        super.playerDrinkDisplay();
+      } else {
+        super.npcDrinkDisplay();
+      }
+    } else if (millis() - this.endTime < 3200) {
       fill(255);
       rect(w / 2, h / 2, w / 3, h / 3);
       fill(0);
@@ -315,7 +402,7 @@ class berryGame extends Game {
       rect(w / 2, h / 2, w / 3, h / 3);
       fill(0);
       text("집중은 생명!", w / 2, h / 2);
-    } else if (millis() - this.endTime < 5600) {
+    } else if (millis() - this.endTime < 3600) {
       fill(255);
       rect(w / 2, h / 2, w / 3, h / 3);
       fill(0);
@@ -332,23 +419,17 @@ class berryGame extends Game {
     if (!this.endStarted) {
       this.endStarted = true;
       this.endTime = millis();
+      console.log("end started");
     } else {
       if (millis() - this.endTime < 6800) {
-        if(millis() - this.endTime < 2000){
-          if(this.idx == 3){
-            super.playerDrinkDisplay();
-          }else{
-            super.npcDrinkDisplay();
-          }
-        }else{
-          if (this.loseIssue == 1) {
-            this.focusIsLife();
-          } else if (this.loseIssue == 2) {
-            this.rhythmIsLife();
-          }
+        if (this.loseIssue == 1) {
+          this.focusIsLife();
+        } else if (this.loseIssue == 2) {
+          this.rhythmIsLife();
         }
       } else {
         this.gameOver = true;
+        console.log("gameOver", this.gameOver);
         this.everyone[this.idx].lose();
         this.gameList.gameNum++;
       }
@@ -356,13 +437,18 @@ class berryGame extends Game {
   }
 
   round() {
-    if (this.turn == 0) {
-      this.berryBgm();
-    } else {
-      if (this.idx == 3) {
-        this.playerTurn();
+    if(this.tutorialStart == true){
+      this.tutorial();
+    }
+    if(this.tutorialStart == false){
+      if (this.turn == 0) {
+        this.berryBgm();
       } else {
-        this.npcTurn();
+        if (this.idx == 3) {
+          this.playerTurn();
+        } else {
+          this.npcTurn();
+        }
       }
 
       //this.displayButtons();

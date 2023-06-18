@@ -32,6 +32,12 @@ class baboGame extends Game {
     this.endTime = 0;
     this.loseIssue = "";
     this.predictions;
+    this.tutorialStart = true;
+  }
+
+  tutorial() {
+    imageMode(CENTER);
+    image(playDes[5], w / 2, h / 2, w, h);
   }
 
   intro() {
@@ -319,13 +325,18 @@ class baboGame extends Game {
   }
 
   round() {
-    if (this.turn == 0) {
-      this.intro();
-    } else {
-      if (this.idx == 3) {
-        this.playerturn();
+    if(this.tutorialStart == true){
+      this.tutorial();
+    }
+    if(this.tutorialStart == false){
+      if (this.turn == 0) {
+        this.intro();
       } else {
-        this.npcturn();
+        if (this.idx == 3) {
+          this.playerturn();
+        } else {
+          this.npcturn();
+        }
       }
     }
   }
