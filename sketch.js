@@ -51,6 +51,13 @@ let showingGameInfo = false;
 let playDes = [];
 let gameDes = [];
 
+//babo
+let handposeOn = false;
+let video;
+let myHand;
+let predictionsHand = [];
+let modelReadyComplete = false;
+
 function preload() {
   carrot = loadImage("Assets/button_carrot.png");
   k_melon = loadImage("Assets/button_k-melon.png");
@@ -108,7 +115,7 @@ function preload() {
   table = loadImage("Assets/table.png");
 
   gameLostImage = loadImage("Assets/gameover_lose.png");
-  gameWinImage = loadImage("Assets/gameover_win.png")
+  gameWinImage = loadImage("Assets/gameover_win.png");
   for (let i = 1; i <= 6; i++) {
     tutorial[i - 1] = loadImage(`Assets/tutorial_${i}.jpg`);
     gameDes[i - 1] = loadImage(`Assets/gameDes_${i}.png`);
@@ -168,20 +175,45 @@ function setup() {
   xButton = createButton("X");
   xButton.class("info");
   xButton.hide();
+
+  //babo
+  video = createCapture(VIDEO);
+  video.size(0.3 * w, 0.5 * h);
+  // Hide the video element, and just show the canvas
+  video.hide();
+  function modelReady() {
+    console.log("Model ready!");
+    modelReadyComplete = true;
+  }
+
+  myHand = ml5.handpose(video, modelReady);
+  myHand.on("predict", (results) => {
+    predictionsHand = results;
+  });
+  text("LOADING...", width / 2, height / 2);
 }
 
 function draw() {
-  background(0, 64, 0);
-  // console.log(mode);
-  //game lost condition: need revise
-  if(mode >= 3){
-    if(player.alcholblood >= 8) {
-      player.die = true;
+  if (modelReadyComplete) {
+    background(0, 64, 0);
+    //game lost condition: need revise
+    if (mode >= 3) {
+      if (player.alcholblood >= 8) {
+        player.die = true;
+      }
+      if (player.die === true) {
+        mode = 6;
+      }
     }
-    if(player.die === true){
+
+    // game end display test
+
+    if (mode == 3 && player.name === "mode6win") {
+      mode = 6;
+    } else if (mode == 3 && player.name === "mode6lose") {
+      player.die = true;
       mode = 6;
     }
-  }
 
   
   console.log("mode", mode);
@@ -266,45 +298,47 @@ function draw() {
           mode = 3;
         }
       }
-      break;
-    case 5:
-      textFont(movieFont);
-      // eventStory = new Story(5, player);
-      story.drawScene();
-      break;
-    case 6:
-      // reset button
-      player.gameover();
-      imageMode(CENTER);
-      image(startButton, 0.5 * w, 0.9 * h, 0.1 * w, 0.1 * w);
-      fill(252, 212, 0);
-      textSize(50);
-      textAlign(CENTER, CENTER);
-      textFont(movieFont);
-      text("▶", 0.5 * w, 0.895 * h);
-      break;
-  }
+        //temp = gameSelect.gameNum;
+        break;
+      case 5:
+        textFont(movieFont);
+        // eventStory = new Story(5, player);
+        story.drawScene();
+        break;
+      case 6:
+        // reset button
+        player.gameover();
+        imageMode(CENTER);
+        image(startButton, 0.5 * w, 0.9 * h, 0.1 * w, 0.1 * w);
+        fill(252, 212, 0);
+        textSize(50);
+        textAlign(CENTER, CENTER);
+        textFont(movieFont);
+        text("▶", 0.5 * w, 0.895 * h);
+        break;
+    }
 
-  // reset button
-  if (mode != 0 && mode != 1 && mode != 6 && mode != 2 && mode != 5) {
-    fill(0);
-    imageMode(CORNER);
-    image(reset, 0.05 * w, 0.05 * h, 0.1 * h, 0.1 * h);
-  }
-
-  // subwayGame setup
-  if (mode == 4 && nowGame.gameName == "지하철게임") {
-    if (nowGame.playerInput == true) {
-      fill(255);
-      rectMode(CENTER);
-      rect(w / 2, h / 2, w / 2, h / 2);
+    // reset button
+    if (mode != 0 && mode != 1 && mode != 6 && mode != 2 && mode != 5) {
       fill(0);
-      textAlign(CENTER);
-      textSize(32);
-      text("역 이름을 입력하세요!", w * 0.5, h * 0.45);
-      subwayInput.show();
-      subwayButton.show();
-      subwayButton.mousePressed(saveStations);
+      imageMode(CORNER);
+      image(reset, 0.05 * w, 0.05 * h, 0.1 * h, 0.1 * h);
+    }
+
+    // subwayGame setup
+    if (mode == 4 && nowGame.gameName == "지하철게임") {
+      if (nowGame.playerInput == true) {
+        fill(255);
+        rectMode(CENTER);
+        rect(w / 2, h / 2, w / 2, h / 2);
+        fill(0);
+        textAlign(CENTER);
+        textSize(32);
+        text("역 이름을 입력하세요!", w * 0.5, h * 0.45);
+        subwayInput.show();
+        subwayButton.show();
+        subwayButton.mousePressed(saveStations);
+      }
     }
   }
 }
@@ -522,8 +556,6 @@ function setPlayer() {
   let name = nameInput.value();
   let soju = sojuInput.value();
   player = new Player(name, soju, gender);
-  //player.set(name, soju, gender);
-  //console.log(name, soju, gender);
   nameInput.value("");
   sojuInput.value("");
   nameInput.hide();
@@ -610,7 +642,6 @@ function keyPressed() {
     nowGame.lineSelected == false &&
     nowGame.gameStarted == false
   ) {
-    //console.log(keyCode);
     if (keyCode === 50 || keyCode === 98) {
       nowGame.lineSelection = 2;
     } else if (keyCode === 51 || keyCode === 99) {

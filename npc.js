@@ -1,6 +1,6 @@
 class PlayerNPC {
   constructor(_soju, _idx) {
-    console.log("npc called");
+    //console.log("npc called");
     this.soju = _soju;
     this.idx = _idx;
     this.alcholblood = 0;
@@ -45,4 +45,3 @@ class PlayerNPC {
     image(img, x, y, h * 0.3, h * 0.3);
   }
 }
-

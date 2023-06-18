@@ -23,7 +23,7 @@ class Game {
     fill(0, 64, 0);
     textAlign(LEFT, CENTER);
     textSize(50);
-    let temptext = "게임" + this.gameNum + " / 6";
+    let temptext = "게임" + this.gameNum + "/6";
     text(temptext, 0.15 * w, 0.05 * h);
     fill(255);
     text(this.gameName, 0.32 * w, 0.05 * h);
@@ -86,4 +86,3 @@ class Game {
     }
   }
 }
-
