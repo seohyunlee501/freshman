@@ -57,19 +57,17 @@ class berryGame extends Game {
       answer[i] = fruitNum[i % 5];
     }
 
-    //shuffle button
-    if (!this.shuffleDone) {
-      this.shuffleArray();
-      this.shuffleDone = true;
-    }
-    this.displayButtons();
-
     //info
     if (!this.userPlayed) {
       if (this.turn < 6) this.infoStarted = true;
       this.infoTime = millis();
       this.userPlayed = true;
       this.step = 0;
+      if (!this.shuffleDone) {
+        this.shuffleArray();
+        this.shuffleDone = true;
+        console.log("suffled 1");
+      }
     } else if (this.infoStarted) {
       if (millis() - this.infoTime < 2000) {
         // instructions:
@@ -88,8 +86,10 @@ class berryGame extends Game {
       }
     } else if (!this.turnStarted) {
       this.whatBerryCheck = 5;
+      //shuffle button
       this.turnStarted = true;
     } else if (this.turnStarted) {
+      this.displayButtons();
       if (!this.stepStarted) {
         this.whatBerryCheck = this.whatBerry;
         if (this.whatBerryCheck != 5) {
@@ -103,12 +103,17 @@ class berryGame extends Game {
           let berryCheck = this.buttons2[this.whatBerryCheck];
           text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
         } else {
-          this.shuffleDone = false;
           if (this.step <= answer.length) {
             if (
               this.buttons2[this.whatBerryCheck] == fruit[answer[this.step - 1]]
             ) {
               this.stepStarted = false;
+              this.shuffleDone = false;
+              if (!this.shuffleDone) {
+                this.shuffleArray();
+                this.shuffleDone = true;
+                console.log("suffled");
+              }
             } else {
               console.log("틀렸음", fruit[answer[this.step - 1]]);
               this.stepO = false;
@@ -352,6 +357,10 @@ class berryGame extends Game {
       rect(w / 2, h / 2, w / 3, h / 3);
       fill(0);
       text("생명! 생명! 생명!", w / 2, h / 2);
+    } else {
+      this.gameOver = true;
+      this.everyone[this.idx].lose();
+      this.gameList.gameNum++;
     }
   }
 
@@ -360,22 +369,29 @@ class berryGame extends Game {
     textSize(32);
     textAlign(CENTER);
     rectMode(CENTER);
-    if (millis() - this.endTime < 1200) {
+    console.log(millis() - this.endTime);
+    if (millis() - this.endTime < 2000) {
+      if (this.idx == 3) {
+        super.playerDrinkDisplay();
+      } else {
+        super.npcDrinkDisplay();
+      }
+    } else if (millis() - this.endTime < 3200) {
       fill(255);
       rect(w / 2, h / 2, w / 3, h / 3);
       fill(0);
       text("집중은 생명!", w / 2, h / 2);
-    } else if (millis() - this.endTime < 2400) {
+    } else if (millis() - this.endTime < 4400) {
       fill(255);
       rect(w / 2, h / 2, w / 3, h / 3);
       fill(0);
-      text("집중은 생명!", w / 2, h / 2);
-    } else if (millis() - this.endTime < 3600) {
+      text("집중은 생명!!!", w / 2, h / 2);
+    } else if (millis() - this.endTime < 5600) {
       fill(255);
       rect(w / 2, h / 2, w / 3, h / 3);
       fill(0);
       text("생명! 생명!!", w / 2, h / 2);
-    } else if (millis() - this.endTime < 4800) {
+    } else if (millis() - this.endTime < 6800) {
       fill(255);
       rect(w / 2, h / 2, w / 3, h / 3);
       fill(0);
@@ -383,19 +399,43 @@ class berryGame extends Game {
     }
   }
 
+  // gameend() {
+  //   if (!this.endStarted) {
+  //     console.log("endstart now");
+  //     this.endStarted = true;
+  //     this.endTime = millis();
+  //   } else {
+  //     if (millis() - this.endTime < 4800) {
+  //       if (this.loseIssue == 1) {
+  //         this.focusIsLife();
+  //       } else if (this.loseIssue == 2) {
+  //         this.rhythmIsLife();
+  //       }
+  //     } else {
+  //       this.gameOver = true;
+  //       this.everyone[this.idx].lose();
+  //       this.gameList.gameNum++;
+  //     }
+  //   }
+  // }
+
   gameend() {
     if (!this.endStarted) {
       this.endStarted = true;
       this.endTime = millis();
+      console.log("end started");
     } else {
-      if (millis() - this.endTime < 4800) {
+      console.log(millis() - this.endTime);
+      if (millis() - this.endTime < 6800) {
         if (this.loseIssue == 1) {
+          console.log("focusend started");
           this.focusIsLife();
         } else if (this.loseIssue == 2) {
           this.rhythmIsLife();
         }
       } else {
         this.gameOver = true;
+        console.log("gameOver", this.gameOver);
         this.everyone[this.idx].lose();
         this.gameList.gameNum++;
       }
