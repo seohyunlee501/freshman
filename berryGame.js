@@ -50,6 +50,7 @@ class berryGame extends Game {
     let answer = [];
     let temp = this.turn;
     temp = temp % 14;
+    if (temp == 0) temp = 14;
     if (this.turn > 8) {
       temp = 16 - this.turn;
     }
@@ -66,7 +67,7 @@ class berryGame extends Game {
 
     //info
     if (!this.userPlayed) {
-      this.infoStarted = true;
+      if (this.turn < 6) this.infoStarted = true;
       this.infoTime = millis();
       this.userPlayed = true;
     } else if (this.infoStarted) {
@@ -98,10 +99,23 @@ class berryGame extends Game {
           this.step++;
         }
       } else if (this.stepStarted) {
-        if (millis() - this.stepTime < 1200) {
+        if (millis() - this.stepTime < 400) {
           let berryCheck = fruit[answer[this.step - 1]];
           text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
         } else {
+          this.shuffleDone = false;
+          if (this.step <= answer.length) {
+            if (
+              this.buttons2[this.whatBerryCheck] == fruit[answer[this.step - 1]]
+            ) {
+              this.stepStarted = false;
+            } else {
+              console.log("틀렸음", fruit[answer[this.step - 1]]);
+              this.stepO = false;
+              this.loseIssue = 1;
+              this.gameend();
+            }
+          }
           if (this.step >= answer.length) {
             this.berryCall = false;
             this.turnStarted = false;
@@ -111,19 +125,6 @@ class berryGame extends Game {
             this.buttons = [strawberry, carrot, watermelon, k_melon, melon];
             this.buttons2 = ["딸기!", "당근!", "수박!", "참외!", "메론!"];
             this.userPlayed = false;
-          }
-        }
-        if (this.step <= answer.length) {
-          if (
-            this.buttons2[this.whatBerryCheck] == fruit[answer[this.step - 1]]
-          ) {
-            this.stepStarted = false;
-            this.shuffleDone = false;
-          } else {
-            console.log("틀렸음", fruit[answer[this.step - 1]]);
-            this.stepO = false;
-            this.loseIssue = 1;
-            this.gameend();
           }
         }
       }
