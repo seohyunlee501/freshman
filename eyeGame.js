@@ -33,6 +33,8 @@ class eyeGame extends Game {
     this.endStartTime;
     this.endPlayer = false;
     this.endNPC = false;
+    this.randomTime = [];
+    this.npcStart = [false, false, false, false, false];
     
     for (let i = 0; i < 3; i++) {
       this.randChar[i][0] = this.chars[i];
@@ -53,7 +55,11 @@ class eyeGame extends Game {
     this.randChar[1][1] = Math.floor(random(1000, 1500) / 100) * 100
     
     for (let i = 0; i < 5; i++){
-      console.log(this.randChar[i][1], this.randChar[i][2], this.randChar[i][3]);
+      this.randomTime[i] = this.randChar[i][1];
+    }
+
+    for (let i = 0; i < 5; i++){
+      console.log("call interval: " + this.randChar[i][1] + " called: " +  this.randChar[i][2] + " index: " +  this.randChar[i][3]);
     }
 
     this.lastCalledTime = millis() + 4000;
@@ -116,11 +122,8 @@ class eyeGame extends Game {
       this.npcPlay();
       this.displayOverhead();
       this.endGame();
-      for (let i = 0; i < 5; i++){
-        console.log(this.randChar[i][1], this.randChar[i][2], this.randChar[i][3]);
       }
     }
-  }
 
   playerPlay() {
     //player's play
@@ -218,9 +221,28 @@ class eyeGame extends Game {
     }
   }
 
+  timeCheck() {
+    if(millis() - this.lastCalledTime > this.randomTime[0] && this.npcStart[0] == false){
+      this.npcStart[0] = true;
+      this.lastCalledTime = millis();
+    } else if(millis() - this.lastCalledTime > this.randomTime[1] && this.npcStart[1] == false) {
+      this.npcStart[1] = true;
+      this.lastCalledTime = millis();
+    } else if(millis() - this.lastCalledTime > this.randomTime[2] && this.npcStart[2] == false) {
+      this.npcStart[2] = true;
+      this.lastCalledTime = millis();
+    } else if(millis() - this.lastCalledTime > this.randomTime[3] && this.npcStart[3] == false) {
+      this.npcStart[3] = true;
+      this.lastCalledTime = millis()
+    } else if(millis() = this.lastCalledTime > this.randomTime[4] && this.npcStart[4] == false) {
+      this.npcStart[4] = true;
+      this.lastCalledTime = millis();
+    }
+  }
+
   npcPlay() {
     //npcs' play
-    if(!this.endNPC || !this.endPlayer){
+    if(!this.endNPC && !this.endPlayer){
       if(!this.gameOver && this.randChar[0][0].die == false && this.randChar[0][2] == false && millis() - this.lastCalledTime > this.randChar[0][1]){
         this.idx = this.randChar[0][3];
         this.npcOneDisplay = true;
@@ -234,7 +256,6 @@ class eyeGame extends Game {
         console.log(this.currentNumber);
         this.lastCalledTime = millis();
         this.randChar[0][2] = true;
-        this.currentNumber++;
         this.endNPC = true;
         this.endStartTime = millis();
         this.randChar[1][2] = true;
@@ -243,7 +264,7 @@ class eyeGame extends Game {
         this.randChar[4][2] = true;
       }
     }
-    if(!this.endNPC || !this.endPlayer){
+    if(!this.endNPC && !this.endPlayer){
       if(!this.gameOver && this.randChar[1][0].die == false && this.randChar[1][2] == false && millis() - this.lastCalledTime > this.randChar[1][1] && this.randChar[1][1] > this.failureInterval && this.randChar[0][2] == true){
         this.idx = this.randChar[1][3];
         this.npcTwoDisplay = true;
@@ -257,7 +278,6 @@ class eyeGame extends Game {
         console.log(this.currentNumber);
         this.lastCalledTime = millis();
         this.randChar[1][2] = true;
-        this.currentNumber++;
         this.endNPC = true;
         this.endStartTime = millis();
         this.randChar[2][2] = true;
@@ -265,7 +285,7 @@ class eyeGame extends Game {
         this.randChar[4][2] = true;
       }
     }
-    if(!this.endNPC || !this.endPlayer){
+    if(!this.endNPC && !this.endPlayer){
       if(!this.gameOver && this.randChar[2][0].die == false && this.randChar[2][2] == false && millis() - this.lastCalledTime > this.randChar[2][1] && this.randChar[2][1] > this.failureInterval && this.randChar[1][2] == true){
         this.idx = this.randChar[2][3];
         this.npcThreeDisplay = true;
@@ -279,14 +299,13 @@ class eyeGame extends Game {
         console.log(this.currentNumber);
         this.lastCalledTime = millis();
         this.randChar[2][2] = true;
-        this.currentNumber++;
         this.endNPC = true;
         this.endStartTime = millis();
         this.randChar[3][2] = true;
         this.randChar[4][2] = true;
       }
     }
-    if(!this.endNPC || !this.endPlayer){
+    if(!this.endNPC && !this.endPlayer){
       if(!this.gameOver && this.randChar[3][0].die == false && this.randChar[3][2] == false && millis() - this.lastCalledTime > this.randChar[3][1] && this.randChar[3][1] > this.failureInterval && this.randChar[2][2] == true){
         this.idx = this.randChar[3][3];
         this.npcFourDisplay = true;
@@ -300,14 +319,13 @@ class eyeGame extends Game {
         console.log(this.currentNumber);
         this.lastCalledTime = millis();
         this.randChar[3][2] = true;
-        this.currentNumber++;
         this.endNPC = true;
         this.endStartTime = millis();
         this.randChar[4][2] = true;
       }
     }
     
-    if(!this.endNPC || !this.endPlayer){
+    if(!this.endNPC && !this.endPlayer){
       if(!this.gameOver && this.randChar[4][0].die == false && this.randChar[4][2] == false && millis() - this.lastCalledTime > this.randChar[4][1] && this.randChar[4][1] > this.failureInterval && this.randChar[3][2] == true){
         this.idx = this.randChar[4][3];
         this.npcFiveDisplay = true;
@@ -328,7 +346,6 @@ class eyeGame extends Game {
         console.log(this.currentNumber);
         this.lastCalledTime = millis();
         this.randChar[4][2] = true;
-        this.currentNumber++;
         this.endNPC = true;
         this.endStartTime = millis();
       }
