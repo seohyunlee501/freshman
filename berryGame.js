@@ -21,7 +21,6 @@ class berryGame extends Game {
     this.turnStarted = false;
     this.shuffleDone = false;
 
-<<<<<<< HEAD
     this.step = 0;
     this.stepTime = 0;
     this.stepStarted = false;
@@ -32,33 +31,6 @@ class berryGame extends Game {
   tutorial() {
     imageMode(CENTER);
     image(playDes[0], w / 2, h / 2, w, h);
-=======
-    this.strawberry = 5;
-    this.carrot = 5;
-    this.watermelon = 5;
-    this.k_melon = 5;
-    this.melon = 5;
-
-
-    this.step1 = false
-    this.step1time = millis();
-    this.step2 = false
-    this.step2time = millis();
-    this.step3 = false
-    this.step3time = millis();
-    this.step4 = false
-    this.step4time = millis();
-    this.step5 = false
-    this.step5time = millis();
-    this.step6 = false
-    this.step6time = millis();
-    this.step7 = false
-    this.step7time = millis();
-    this.step8 = false
-    this.step8time = millis();
-
-
->>>>>>> parent of 5dc84c7 (Merge branch 'jeonghyun')
   }
 
   berryBgm() {
@@ -88,7 +60,6 @@ class berryGame extends Game {
     if (temp > 8) {
       temp = 16 - temp;
     }
-<<<<<<< HEAD
     for (let i = 0; i < temp; i++) {
       answer[i] = fruitNum[i % 5];
     }
@@ -170,501 +141,6 @@ class berryGame extends Game {
         }
       }
     }
-=======
-    this.displayButtons();
-
-
-    if (!this.userPlayed) {
-      this.infoStarted = true;
-      this.infoTime = millis();
-      this.userPlayed = true;
-    } else if (this.infoStarted) {
-      if (millis() - this.infoTime < 2000) {
-        // instructions:
-        console.log('info');
-        textSize(32);
-        fill(255);
-        textAlign(CENTER);
-        rectMode(CENTER);
-        text(
-          "제한 시간 내에 아래 버튼을 순서대로 클릭하세요.",
-          0.2 * w + 0.17 * h * 3,
-          0.3 * h
-        );
-      } else {
-        this.infoStarted = false;
-      }
-    } else if (!this.turnStarted) {
-      this.whatBerryCheck = 5;
-      this.whatBerryCheck = this.whatBerry;
-      if (this.whatBerryCheck != 5) {
-        this.turnStarted = true;
-        this.step1time = millis();
-        this.whatBerry = 5;
-      }
-
-    } else if (this.turnStarted) {
-
-      if (!this.step1) {
-        if (millis() - this.step1time < 1500) {
-          let berryCheck;
-          if (this.buttons[this.whatBerryCheck] == strawberry) {
-            berryCheck = '딸기!'
-          } else if (this.buttons[this.whatBerryCheck] == carrot) {
-            berryCheck = '당근!'
-          } else if (this.buttons[this.whatBerryCheck] == watermelon) {
-            berryCheck = '수박!'
-          } else if (this.buttons[this.whatBerryCheck] == k_melon) {
-            berryCheck = '참외!'
-          } else if (this.buttons[this.whatBerryCheck] == melon) {
-            berryCheck = '메론!'
-          }
-
-          text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
-
-        } else {
-          if (this.buttons[this.whatBerryCheck] != strawberry) {
-            if (this.buttons[this.whatBerryCheck] == carrot
-              || this.buttons[this.whatBerryCheck] == watermelon
-              || this.buttons[this.whatBerryCheck] == k_melon
-              ||this.buttons[this.whatBerryCheck] == melon
-              ) {
-              this.loseIssue = 1;
-              this.gameend();
-            } else {
-              this.loseIssue = 2;
-              this.gameend();
-            }
-          } else {
-            if (this.turn % 14 == 1) {
-              this.turnStarted = false;
-              this.turn++;
-              this.idx = 4;
-            } else {
-              
-              this.whatBerryCheck = 5;
-              this.whatBerryCheck = this.whatBerry;
-              if (this.whatBerryCheck != 5) {
-                this.step2time = millis();
-                this.whatBerry = 5;
-                this.step1 = true;
-              }
-            }
-          }
-        }
-      } else if (this.step1) {
-        if (!this.step2) {
-          if (millis() - this.step2time < 1400) {
-            let berryCheck;
-            if (this.buttons[this.whatBerryCheck] == strawberry) {
-              berryCheck = '딸기!'
-            } else if (this.buttons[this.whatBerryCheck] == carrot) {
-              berryCheck = '당근!'
-            } else if (this.buttons[this.whatBerryCheck] == watermelon) {
-              berryCheck = '수박!'
-            } else if (this.buttons[this.whatBerryCheck] == k_melon) {
-              berryCheck = '참외!'
-            } else if (this.buttons[this.whatBerryCheck] == melon) {
-              berryCheck = '메론!'
-            }
-
-            text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
-          } else {
-            if (this.buttons[this.whatBerryCheck] != carrot) {
-              if (this.buttons[this.whatBerryCheck] == strawberry
-                || this.buttons[this.whatBerryCheck] == watermelon
-                || this.buttons[this.whatBerryCheck] == k_melon
-                ||this.buttons[this.whatBerryCheck] == melon
-                ) {
-                this.loseIssue = 1;
-                this.gameend();
-              } else {
-                this.loseIssue = 2;
-                this.gameend();
-              }
-            } else {
-              if (this.turn % 14 == 2 ||
-                (this.turn % 14 == 0 && this.turn != 0)) {
-                this.turnStarted = false;
-                this.turn++;
-                this.idx = 4;
-              } else {
-                
-                this.whatBerryCheck = 5;
-                this.whatBerryCheck = this.whatBerry;
-                if (this.whatBerryCheck != 5) {
-                  this.step3time = millis();
-                  this.whatBerry = 5;
-                  this.step2 = true;
-                }
-              }
-            }
-          }
-        } else if (this.step2) {
-          if (!this.step3) {
-            if (millis() - this.step3time < 1400) {
-              let berryCheck;
-
-              if (this.buttons[this.whatBerryCheck] == strawberry) {
-                berryCheck = '딸기!'
-              } else if (this.buttons[this.whatBerryCheck] == carrot) {
-                berryCheck = '당근!'
-              } else if (this.buttons[this.whatBerryCheck] == watermelon) {
-                berryCheck = '수박!'
-              } else if (this.buttons[this.whatBerryCheck] == k_melon) {
-                berryCheck = '참외!'
-              } else if (this.buttons[this.whatBerryCheck] == melon) {
-                berryCheck = '메론!'
-              }
-
-              text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
-            } else {
-              if (this.buttons[this.whatBerryCheck] != watermelon) {
-                if (this.buttons[this.whatBerryCheck] == carrot
-                  || this.buttons[this.whatBerryCheck] == strawberry
-                  || this.buttons[this.whatBerryCheck] == k_melon
-                  ||this.buttons[this.whatBerryCheck] == melon
-                  ) {
-                  this.loseIssue = 1;
-                  this.gameend();
-                } else {
-                  this.loseIssue = 2;
-                  this.gameend();
-                }
-              } else {
-                if (this.turn % 14 == 3 || this.turn % 14 == 13) {
-                  this.turnStarted = false;
-                  this.turn++;
-                  this.idx = 4;
-                } else {
-                  
-                  this.whatBerryCheck = 5;
-                  this.whatBerryCheck = this.whatBerry;
-                  if (this.whatBerryCheck != 5) {
-                    this.step4time = millis();
-                    this.whatBerry = 5;
-                    this.step3 = true;
-                  }
-                }
-              }
-            }
-          } else if (this.step3) {
-            if (!this.step4) {
-              if (millis() - this.step4time < 1400) {
-                let berryCheck;
-
-                if (this.buttons[this.whatBerryCheck] == strawberry) {
-                  berryCheck = '딸기!'
-                } else if (this.buttons[this.whatBerryCheck] == carrot) {
-                  berryCheck = '당근!'
-                } else if (this.buttons[this.whatBerryCheck] == watermelon) {
-                  berryCheck = '수박!'
-                } else if (this.buttons[this.whatBerryCheck] == k_melon) {
-                  berryCheck = '참외!'
-                } else if (this.buttons[this.whatBerryCheck] == melon) {
-                  berryCheck = '메론!'
-                }
-
-
-                text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
-              } else {
-                if (this.buttons[this.whatBerryCheck] != k_melon) {
-                  if (this.buttons[this.whatBerryCheck] == carrot
-                    || this.buttons[this.whatBerryCheck] == watermelon
-                    || this.buttons[this.whatBerryCheck] == strawberry
-                    ||this.buttons[this.whatBerryCheck] == melon
-                    ) {
-                    this.loseIssue = 1;
-                    this.gameend();
-                  } else {
-                    this.loseIssue = 2;
-                    this.gameend();
-                  }
-                } else {
-                  if (this.turn % 14 == 4 || this.turn % 14 == 12) {
-                    this.turnStarted = false;
-                    this.turn++;
-                    this.idx = 4;
-                  } else {
-                    
-                    this.whatBerryCheck = 5;
-                    this.whatBerryCheck = this.whatBerry;
-                    if (this.whatBerryCheck != 5) {
-                      this.step5time = millis();
-                      this.whatBerry = 5;
-                      this.step4 = true;
-                    }
-                  }
-                }
-              }
-            } else if (this.step4) {
-              if (!this.step5) {
-                if (millis() - this.step5time < 1400) {
-                  let berryCheck;
-
-                  if (this.buttons[this.whatBerryCheck] == strawberry) {
-                    berryCheck = '딸기!'
-                  } else if (this.buttons[this.whatBerryCheck] == carrot) {
-                    berryCheck = '당근!'
-                  } else if (this.buttons[this.whatBerryCheck] == watermelon) {
-                    berryCheck = '수박!'
-                  } else if (this.buttons[this.whatBerryCheck] == k_melon) {
-                    berryCheck = '참외!'
-                  } else if (this.buttons[this.whatBerryCheck] == melon) {
-                    berryCheck = '메론!'
-                  }
-
-
-                  text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
-                } else {
-                  if (this.buttons[this.whatBerryCheck] != melon) {
-                    if (this.buttons[this.whatBerryCheck] == carrot
-                      || this.buttons[this.whatBerryCheck] == watermelon
-                      || this.buttons[this.whatBerryCheck] == k_melon
-                      ||this.buttons[this.whatBerryCheck] == strawberry
-                      ) {
-                      this.loseIssue = 1;
-                      this.gameend();
-                    } else {
-                      this.loseIssue = 2;
-                      this.gameend();
-                    }
-                  } else {
-                    if (this.turn % 14 == 5 || this.turn % 14 == 11) {
-                      this.turnStarted = false;
-                      this.turn++;
-                      this.idx = 4;
-                    } else {
-                      
-                      this.whatBerryCheck = 5;
-                      this.whatBerryCheck = this.whatBerry;
-                      if (this.whatBerryCheck != 5) {
-                        this.step6time = millis();
-                        this.whatBerry = 5;
-                        this.step5 = true;
-                      }
-                    }
-                  }
-                }
-              } else if (this.step5) {
-                if (!this.step6) {
-                  if (millis() - this.step6time < 1400) {
-                    let berryCheck;
-
-                    if (this.buttons[this.whatBerryCheck] == strawberry) {
-                      berryCheck = '딸기!'
-                    } else if (this.buttons[this.whatBerryCheck] == carrot) {
-                      berryCheck = '당근!'
-                    } else if (this.buttons[this.whatBerryCheck] == watermelon) {
-                      berryCheck = '수박!'
-                    } else if (this.buttons[this.whatBerryCheck] == k_melon) {
-                      berryCheck = '참외!'
-                    } else if (this.buttons[this.whatBerryCheck] == melon) {
-                      berryCheck = '메론!'
-                    }
-
-
-                    text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
-                  } else {
-                    if (this.buttons[this.whatBerryCheck] != strawberry) {
-                      if (this.buttons[this.whatBerryCheck] == carrot
-                        || this.buttons[this.whatBerryCheck] == watermelon
-                        || this.buttons[this.whatBerryCheck] == k_melon
-                        ||this.buttons[this.whatBerryCheck] == melon
-                        ) {
-                        this.loseIssue = 1;
-                        this.gameend();
-                      } else {
-                        this.loseIssue = 2;
-                        this.gameend();
-                      }
-                    } else {
-                      if (this.turn % 14 == 6 || this.turn % 14 == 10) {
-                        this.turnStarted = false;
-                        this.turn++;
-                        this.idx = 4;
-                      } else {
-                        
-                        this.whatBerryCheck = 5;
-                        this.whatBerryCheck = this.whatBerry;
-                        if (this.whatBerryCheck != 5) {
-                          this.step7time = millis();
-                          this.whatBerry = 5;
-                          this.step6 = true;
-                        }
-                      }
-                    }
-                  }
-                } else if (this.step6) {
-                  if (!this.step7) {
-                    if (millis() - this.step6time < 1400) {
-                      let berryCheck;
-
-                      if (this.buttons[this.whatBerryCheck] == strawberry) {
-                        berryCheck = '딸기!'
-                      } else if (this.buttons[this.whatBerryCheck] == carrot) {
-                        berryCheck = '당근!'
-                      } else if (this.buttons[this.whatBerryCheck] == watermelon) {
-                        berryCheck = '수박!'
-                      } else if (this.buttons[this.whatBerryCheck] == k_melon) {
-                        berryCheck = '참외!'
-                      } else if (this.buttons[this.whatBerryCheck] == melon) {
-                        berryCheck = '메론!'
-                      }
-
-
-                      text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
-                    } else {
-                      if (this.buttons[this.whatBerryCheck] != carrot) {
-                        if (this.buttons[this.whatBerryCheck] == strawberry
-                          || this.buttons[this.whatBerryCheck] == watermelon
-                          || this.buttons[this.whatBerryCheck] == k_melon
-                          ||this.buttons[this.whatBerryCheck] == melon
-                          ) {
-                          this.loseIssue = 1;
-                          this.gameend();
-                        } else {
-                          this.loseIssue = 2;
-                          this.gameend();
-                        }
-                      } else {
-                        if (this.turn % 14 == 7 || this.turn % 14 == 9) {
-                          this.turnStarted = false;
-                          this.turn++;
-                          this.idx = 4;
-                        } else {
-                          
-                          this.whatBerryCheck = 5;
-                          this.whatBerryCheck = this.whatBerry;
-                          if (this.whatBerryCheck != 5) {
-                            this.step8time = millis();
-                            this.whatBerry = 5;
-                            this.step7 = true;
-                          }
-                        }
-                      }
-                    }
-                  } else if (this.step7) {
-                    if (!this.step8) {
-                      if (millis() - this.step6time < 1400) {
-                        let berryCheck;
-
-                        if (this.buttons[this.whatBerryCheck] == strawberry) {
-                          berryCheck = '딸기!'
-                        } else if (this.buttons[this.whatBerryCheck] == carrot) {
-                          berryCheck = '당근!'
-                        } else if (this.buttons[this.whatBerryCheck] == watermelon) {
-                          berryCheck = '수박!'
-                        } else if (this.buttons[this.whatBerryCheck] == k_melon) {
-                          berryCheck = '참외!'
-                        } else if (this.buttons[this.whatBerryCheck] == melon) {
-                          berryCheck = '메론!'
-                        }
-
-
-                        text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
-                      } else {
-                        if (this.buttons[this.whatBerryCheck] != watermelon) {
-                          if (this.buttons[this.whatBerryCheck] == carrot
-                            || this.buttons[this.whatBerryCheck] == strawberry
-                            || this.buttons[this.whatBerryCheck] == k_melon
-                            ||this.buttons[this.whatBerryCheck] == melon
-                            ) {
-                            this.loseIssue = 1;
-                            this.gameend();
-                          } else {
-                            this.loseIssue = 2;
-                            this.gameend();
-                          }
-                        } else {
-                          if (this.turn % 14 == 8) {
-                            this.turnStarted = false;
-                            this.turn++;
-                            this.idx = 4;
-                            this.step8 = true;
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
-
-    /*
-    if (millis() - this.currentTime < 1200) {
-      text(this.buttons[this.whatBerry]+'!', 0.2 * w + 0.51 * h, 0.3 * h);
-    } else {
-      if (this.whatBerry == 5) {
-        this.loseIssue = 2;
-        this.gameend();
-      } else if (
-        this.buttons[this.whatBerry] != strawberry
-      ) {
-        this.loseIssue = 1;
-        this.gameend();
-      } else {
-        if (this.turn % 14 == 1){
-          this.turnStarted = false;
-          this.turn++;
-          this.idx = 4;
-        } else if (this.turn % 14 == 2 ||
-          (this.turn % 14 == 0 && this.turn != 0)){
-          this.turnStarted = false;
-          this.turn++;
-          this.idx = 4;
-        }
-      }*/
-
-
-  
-
-  /*
-
-  if (!this.userPlayed) {
-    this.infoStarted = true;
-    this.infoTime = millis();
-    this.whatBerry = 5;
-    this.userPlayed = true;
-  } else if (!this.turnStarted) {
-    
-
-
-
-
-
-
-
-
-
-
-
-
-    let temp = 0;
-    if (this.turn % 14 <= 8) temp = this.turn % 14;
-    else if (this.turn % 14 > 8) temp = 16 - (this.turn % 14);
-    if (this.whatBerry.length == temp) {
-      this.turnStarted = true;
-      this.currentTime = millis();
-    }
-  } else if (this.turnStarted) {
-    if (millis() - this.startTime < 400) {
-      text(fruit[this.whatBerry[-1] - 1], 0.2 * w + 0.51 * h, 0.3 * h);
-    } else {
-      this.turn++;
-      this.idx++;
-      this.idx = this.idx % 6;
-      this.whatBerry = [];
-      this.shuffleDone = false;
-    }
-  }*/
-
->>>>>>> parent of 5dc84c7 (Merge branch 'jeonghyun')
   }
   npcTurn() {
     fill(0);
@@ -676,9 +152,9 @@ class berryGame extends Game {
     } else if (this.turnStarted) {
       if (this.turn % 14 == 1) {
         if (millis() - this.berryCallTime < 500) {
-          text("...", x, 0.3 * h);
+          text("(쿵)", x, 0.3 * h);
         } else if (millis() - this.berryCallTime < 1000) {
-          text("...", x, 0.3 * h);
+          text("(짝)", x, 0.3 * h);
         } else if (millis() - this.berryCallTime < 1500) {
           text("...", x, 0.3 * h);
         } else if (millis() - this.berryCallTime < 2000) {
@@ -695,9 +171,9 @@ class berryGame extends Game {
         (this.turn % 14 == 0 && this.turn != 0)
       ) {
         if (millis() - this.berryCallTime < 500) {
-          text("...", x, 0.3 * h);
+          text("(쿵)", x, 0.3 * h);
         } else if (millis() - this.berryCallTime < 1000) {
-          text("...", x, 0.3 * h);
+          text("(짝)", x, 0.3 * h);
         } else if (millis() - this.berryCallTime < 1500) {
           text("딸기!", x, 0.3 * h);
         } else if (millis() - this.berryCallTime < 2000) {
@@ -711,7 +187,7 @@ class berryGame extends Game {
         }
       } else if (this.turn % 14 == 3 || this.turn % 14 == 13) {
         if (millis() - this.berryCallTime < 500) {
-          text("...", x, 0.3 * h);
+          text("(쿵)", x, 0.3 * h);
         } else if (millis() - this.berryCallTime < 1000) {
           text("딸기!", x, 0.3 * h);
         } else if (millis() - this.berryCallTime < 1500) {
@@ -751,9 +227,9 @@ class berryGame extends Game {
         } else if (millis() - this.berryCallTime < 2000) {
           text("참외!", x, 0.3 * h);
         } else if (millis() - this.berryCallTime < 2500) {
-          text("...", x, 0.3 * h);
+          text("(쿵)", x, 0.3 * h);
         } else if (millis() - this.berryCallTime < 3000) {
-          text("...", x, 0.3 * h);
+          text("(짝)", x, 0.3 * h);
         } else if (millis() - this.berryCallTime < 3500) {
           text("...", x, 0.3 * h);
         } else if (millis() - this.berryCallTime < 4000) {
@@ -775,9 +251,9 @@ class berryGame extends Game {
         } else if (millis() - this.berryCallTime < 2000) {
           text("참외!", x, 0.3 * h);
         } else if (millis() - this.berryCallTime < 2500) {
-          text("...", x, 0.3 * h);
+          text("(쿵)", x, 0.3 * h);
         } else if (millis() - this.berryCallTime < 3000) {
-          text("...", x, 0.3 * h);
+          text("(짝)", x, 0.3 * h);
         } else if (millis() - this.berryCallTime < 3500) {
           text("메론!", x, 0.3 * h);
         } else if (millis() - this.berryCallTime < 4000) {
@@ -799,7 +275,7 @@ class berryGame extends Game {
         } else if (millis() - this.berryCallTime < 2000) {
           text("참외!", x, 0.3 * h);
         } else if (millis() - this.berryCallTime < 2500) {
-          text("...", x, 0.3 * h);
+          text("(쿵)", x, 0.3 * h);
         } else if (millis() - this.berryCallTime < 3000) {
           text("메론!", x, 0.3 * h);
         } else if (millis() - this.berryCallTime < 3500) {
@@ -860,24 +336,6 @@ class berryGame extends Game {
         this.buttons2[i],
       ];
     }
-
-    for (let j = 0; j < 5; j++) {
-      if (this.buttons[j] == strawberry) {
-        this.strawberry = j;
-      }
-      if (this.buttons[j] == carrot) {
-        this.carrot = j;
-      }
-      if (this.buttons[j] == watermelon) {
-        this.watermelon = j;
-      }
-      if (this.buttons[j] == k_melon) {
-        this.k_melon = j;
-      }
-      if (this.buttons[j] == melon) {
-        this.melon = j;
-      }
-    }
   }
 
   rhythmIsLife() {
@@ -900,7 +358,7 @@ class berryGame extends Game {
       fill(255);
       rect(w / 2, h / 2, w / 3, h / 3);
       fill(0);
-      text("박자는 생명!", w / 2, h / 2);
+      text("박자는 생명!!!", w / 2, h / 2);
     } else if (millis() - this.endTime < 5600) {
       fill(255);
       rect(w / 2, h / 2, w / 3, h / 3);
@@ -938,7 +396,7 @@ class berryGame extends Game {
       fill(255);
       rect(w / 2, h / 2, w / 3, h / 3);
       fill(0);
-      text("집중은 생명!", w / 2, h / 2);
+      text("집중은 생명!!!", w / 2, h / 2);
     } else if (millis() - this.endTime < 3600) {
       fill(255);
       rect(w / 2, h / 2, w / 3, h / 3);
