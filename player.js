@@ -21,6 +21,7 @@ class Player {
       this.image[i] = imgs_player[`${gKey}_${i + 1}`];
       this.image_y[i] = imgs_player[`${gKey}_${i + 1}_y`];
     }
+    this.image[5] = imgs_player[`${gKey}_7_y`];
   }
 
   lose() {

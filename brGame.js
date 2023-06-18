@@ -153,15 +153,23 @@ class brGame extends Game {
       this.endStarted = true;
       this.endTime = millis();
     } else {
-      if (millis() - this.endTime < 2000) {
-        fill(255);
-        rectMode(CENTER);
-        rect(w / 2, h / 2, w / 3, h / 3);
-        fill(0);
-        if (this.loseIssue == "32") {
-          text("멍청하게 말고 귀엽게!", w / 2, h / 2);
+      if (millis() - this.endTime < 4000) {
+        if(millis() - this.endTime < 2000){
+          if(this.idx == 3){
+            super.playerDrinkDisplay();
+          }else{
+            super.npcDrinkDisplay();
+          }
         } else {
-          text("휴 살았다!", w / 2, h / 2);
+          fill(255);
+          rectMode(CENTER);
+          rect(w / 2, h / 2, w / 3, h / 3);
+          fill(0);
+          if (this.loseIssue == "32") {
+            text("멍청하게 말고 귀엽게!", w / 2, h / 2);
+          }else{
+            text("휴 살았다!", w / 2, h / 2);
+          }
         }
       } else {
         this.gameOver = true;

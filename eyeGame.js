@@ -51,13 +51,15 @@ class eyeGame extends Game {
     this.randChar.sort(() => random() - 0.5);
     this.randChar[0][1] = 1000;
     this.randChar[1][1] = Math.floor(random(1000, 1500) / 100) * 100
-    
+
     for (let i = 0; i < 5; i++){
-      console.log(this.randChar[i][1], this.randChar[i][2], this.randChar[i][3]);
+      console.log("call interval: " + this.randChar[i][1] + " called: " +  this.randChar[i][2] + " index: " +  this.randChar[i][3]);
     }
 
-    this.lastCalledTime = millis() + 4000;
-    this.gameStartTime = millis();
+    this.lastCalledTime;
+    this.tutorialStart = true;
+    this.gameStartTime;
+    this.introStart = true;
   }
 
   interrupt() {
@@ -73,7 +75,6 @@ class eyeGame extends Game {
         if(this.playerCalledTime - this.lastCalledTime < this.failureInterval){
           console.log(this.currentNumber); //should be displayed later
           this.lastCalledTime = millis();
-          this.currentNumber++;
           this.endPlayer = true;
           this.endStartTime = millis();
           this.playerTurnPassed = true;
@@ -86,6 +87,13 @@ class eyeGame extends Game {
     }else{
       this.endPlayer = true;
       this.endStartTime = millis();
+    }
+  }
+
+  tutorial() {
+    if(this.tutorialStart == true){
+      imageMode(CENTER);
+      image(tutorial[1], w/2, h/2, w, h);
     }
   }
 
@@ -110,14 +118,17 @@ class eyeGame extends Game {
   }
 
   gamePlay() {
-    this.intro();
-    if(millis() - this.gameStartTime > 4000) {
-      this.playerPlay();
-      this.npcPlay();
-      this.displayOverhead();
-      this.endGame();
-      for (let i = 0; i < 5; i++){
-        console.log(this.randChar[i][1], this.randChar[i][2], this.randChar[i][3]);
+    if(this.tutorialStart == true){
+      this.tutorial();
+    }
+    if(this.tutorialStart == false){
+      this.intro();
+      if(millis() - this.gameStartTime > 4000) {
+        this.introStart = false;
+        this.playerPlay();
+        this.npcPlay();
+        this.displayOverhead();
+        this.endGame();
       }
     }
   }
@@ -220,7 +231,7 @@ class eyeGame extends Game {
 
   npcPlay() {
     //npcs' play
-    if(!this.endNPC || !this.endPlayer){
+    if(!this.endNPC && !this.endPlayer){
       if(!this.gameOver && this.randChar[0][0].die == false && this.randChar[0][2] == false && millis() - this.lastCalledTime > this.randChar[0][1]){
         this.idx = this.randChar[0][3];
         this.npcOneDisplay = true;
@@ -234,7 +245,6 @@ class eyeGame extends Game {
         console.log(this.currentNumber);
         this.lastCalledTime = millis();
         this.randChar[0][2] = true;
-        this.currentNumber++;
         this.endNPC = true;
         this.endStartTime = millis();
         this.randChar[1][2] = true;
@@ -243,7 +253,7 @@ class eyeGame extends Game {
         this.randChar[4][2] = true;
       }
     }
-    if(!this.endNPC || !this.endPlayer){
+    if(!this.endNPC && !this.endPlayer){
       if(!this.gameOver && this.randChar[1][0].die == false && this.randChar[1][2] == false && millis() - this.lastCalledTime > this.randChar[1][1] && this.randChar[1][1] > this.failureInterval && this.randChar[0][2] == true){
         this.idx = this.randChar[1][3];
         this.npcTwoDisplay = true;
@@ -257,7 +267,6 @@ class eyeGame extends Game {
         console.log(this.currentNumber);
         this.lastCalledTime = millis();
         this.randChar[1][2] = true;
-        this.currentNumber++;
         this.endNPC = true;
         this.endStartTime = millis();
         this.randChar[2][2] = true;
@@ -265,7 +274,7 @@ class eyeGame extends Game {
         this.randChar[4][2] = true;
       }
     }
-    if(!this.endNPC || !this.endPlayer){
+    if(!this.endNPC && !this.endPlayer){
       if(!this.gameOver && this.randChar[2][0].die == false && this.randChar[2][2] == false && millis() - this.lastCalledTime > this.randChar[2][1] && this.randChar[2][1] > this.failureInterval && this.randChar[1][2] == true){
         this.idx = this.randChar[2][3];
         this.npcThreeDisplay = true;
@@ -279,14 +288,13 @@ class eyeGame extends Game {
         console.log(this.currentNumber);
         this.lastCalledTime = millis();
         this.randChar[2][2] = true;
-        this.currentNumber++;
         this.endNPC = true;
         this.endStartTime = millis();
         this.randChar[3][2] = true;
         this.randChar[4][2] = true;
       }
     }
-    if(!this.endNPC || !this.endPlayer){
+    if(!this.endNPC && !this.endPlayer){
       if(!this.gameOver && this.randChar[3][0].die == false && this.randChar[3][2] == false && millis() - this.lastCalledTime > this.randChar[3][1] && this.randChar[3][1] > this.failureInterval && this.randChar[2][2] == true){
         this.idx = this.randChar[3][3];
         this.npcFourDisplay = true;
@@ -300,14 +308,13 @@ class eyeGame extends Game {
         console.log(this.currentNumber);
         this.lastCalledTime = millis();
         this.randChar[3][2] = true;
-        this.currentNumber++;
         this.endNPC = true;
         this.endStartTime = millis();
         this.randChar[4][2] = true;
       }
     }
     
-    if(!this.endNPC || !this.endPlayer){
+    if(!this.endNPC && !this.endPlayer){
       if(!this.gameOver && this.randChar[4][0].die == false && this.randChar[4][2] == false && millis() - this.lastCalledTime > this.randChar[4][1] && this.randChar[4][1] > this.failureInterval && this.randChar[3][2] == true){
         this.idx = this.randChar[4][3];
         this.npcFiveDisplay = true;
@@ -328,7 +335,6 @@ class eyeGame extends Game {
         console.log(this.currentNumber);
         this.lastCalledTime = millis();
         this.randChar[4][2] = true;
-        this.currentNumber++;
         this.endNPC = true;
         this.endStartTime = millis();
       }
@@ -340,7 +346,9 @@ class eyeGame extends Game {
       this.idx = 3;
       if(millis()- this.endStartTime < 2000){
 
-      } else if(millis() - this.endStartTime < 4000){
+      } else if(millis() - this.endStartTime < 6000){
+        super.playerDrinkDisplay();
+      } else if(millis() - this.endStartTime < 8000){
         this.npcOneDisplay = false;
         this.npcTwoDisplay = false;
         this.npcThreeDisplay = false;
@@ -354,7 +362,7 @@ class eyeGame extends Game {
         textAlign(CENTER);
         textSize(32);
         text('눈치는 생명! 생명!', w / 2, h * 0.5);
-      } else if(millis() - this.endStartTime < 6000){
+      } else if(millis() - this.endStartTime < 10000){
         fill(255);
         rectMode(CENTER);
         rect(w/2, h/2, w/2, h/3);
@@ -362,15 +370,17 @@ class eyeGame extends Game {
         textAlign(CENTER);
         textSize(32);
         text('생명! 생명! 생명! 생명! 생명!', w / 2, h * 0.5);
-      }else if(millis() - this.endStartTime > 6000){
+      }else if(millis() - this.endStartTime > 10000){
         this.gameOver = true;
         this.everyone[this.idx].lose();
         this.gameList.gameNum++;
       }
     }else if(this.endNPC){
       if(millis() - this.endStartTime < 2000){
-
-      } else if(millis() - this.endStartTime < 4000){
+        
+      } else if(millis() - this.endStartTime < 6000) {
+        super.npcDrinkDisplay();
+      } else if(millis() - this.endStartTime < 8000){
         this.npcOneDisplay = false;
         this.npcTwoDisplay = false;
         this.npcThreeDisplay = false;
@@ -384,13 +394,14 @@ class eyeGame extends Game {
         textAlign(CENTER);
         textSize(32);
         text('휴~ 살았다', w / 2, h / 2);
-      }else if(millis() - this.endStartTime > 4000){
+      }else if(millis() - this.endStartTime > 8000){
         this.gameOver = true;
         this.everyone[this.idx].lose();
         this.gameList.gameNum++;
       }
     }
   }
+
 
   round() {
     this.gamePlay();
