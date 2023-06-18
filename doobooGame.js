@@ -105,9 +105,6 @@ class doobooGame extends Game {
         this.temp = 10;
       }
     } else if (this.turnStarted) {
-      if(millis() - this.inputTime < 2500){
-
-      }
       if (millis() - this.currentTime < 1000) {
         this.dbCall();
       } else {

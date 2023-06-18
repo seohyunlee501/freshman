@@ -358,7 +358,7 @@ class berryGame extends Game {
       fill(255);
       rect(w / 2, h / 2, w / 3, h / 3);
       fill(0);
-      text("박자는 생명!", w / 2, h / 2);
+      text("박자는 생명!!!", w / 2, h / 2);
     } else if (millis() - this.endTime < 5600) {
       fill(255);
       rect(w / 2, h / 2, w / 3, h / 3);
@@ -396,7 +396,7 @@ class berryGame extends Game {
       fill(255);
       rect(w / 2, h / 2, w / 3, h / 3);
       fill(0);
-      text("집중은 생명!", w / 2, h / 2);
+      text("집중은 생명!!!", w / 2, h / 2);
     } else if (millis() - this.endTime < 3600) {
       fill(255);
       rect(w / 2, h / 2, w / 3, h / 3);
