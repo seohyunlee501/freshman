@@ -23,7 +23,7 @@ class doobooGame extends Game {
   }
 
   dbBgm() {
-    console.log("dbBgm");
+    //console.log("dbBgm");
     textSize(32);
     textAlign(CENTER);
     rectMode(CENTER);
@@ -88,7 +88,7 @@ class doobooGame extends Game {
         textAlign(CENTER);
         rectMode(CENTER);
         text(
-          "두부 모수를 키보드에 입력해 주세요.",
+          "2초 안에 키보드로 두부 모수를 입력해 주세요.",
           0.2 * w + 0.17 * h * 3,
           0.3 * h
         );
@@ -105,7 +105,10 @@ class doobooGame extends Game {
         this.temp = 10;
       }
     } else if (this.turnStarted) {
-      if (millis() - this.currentTime < 2500) {
+      if(millis() - this.inputTime < 2500){
+
+      }
+      if (millis() - this.currentTime < 1000) {
         this.dbCall();
       } else {
         if (this.dbCount === undefined) {
@@ -120,6 +123,27 @@ class doobooGame extends Game {
           this.loseIssue = 1;
           this.gameend();
         } else {
+          let x1 = 0.2 * w;
+        let x2 = 0.2 * w + 0.17 * h;
+        let x3 = 0.2 * w + 0.17 * h * 2;
+        let x4 = 0.2 * w + 0.17 * h * 3;
+        let x5 = 0.2 * w + 0.17 * h * 4;
+        let x6 = 0.2 * w + 0.17 * h * 5;
+          if (millis() - this.currentTime < 3500) {
+            text("(쿵)", x1, 0.3 * h);
+            text("(쿵)", x2, 0.3 * h);
+            text("(쿵)", x3, 0.3 * h);
+            text("(쿵)", x4, 0.3 * h);
+            text("(쿵)", x5, 0.3 * h);
+            text("(쿵)", x6, 0.3 * h);
+          }else if (millis() - this.currentTime < 4000) {
+            text("(짝)", x1, 0.3 * h);
+            text("(짝)", x2, 0.3 * h);
+            text("(짝)", x3, 0.3 * h);
+            text("(짝)", x4, 0.3 * h);
+            text("(짝)", x5, 0.3 * h);
+            text("(짝)", x6, 0.3 * h);
+          }
           this.point();
           this.turnStarted = false;
           this.turn++;
@@ -134,7 +158,7 @@ class doobooGame extends Game {
       this.idx = this.idx % 6;
     } else {
       if (!this.turnStarted) {
-        if (this.turn > 10) {
+        if (this.userPlayed) {
           this.dbCount = int(random(0, 10));
         } else {
           let dbNum = [1, 2, 4, 5];
@@ -211,7 +235,6 @@ class doobooGame extends Game {
   }
 
   dbCall() {
-    console.log("dbcall");
     fill(0);
     let x = 0.2 * w + 0.17 * h * this.idx;
     fill(255);
@@ -239,7 +262,6 @@ class doobooGame extends Game {
   }
 
   dbIsSquare() {
-    console.log("dbissquare");
     textSize(32);
     textAlign(CENTER);
     rectMode(CENTER);
@@ -273,18 +295,20 @@ class doobooGame extends Game {
   }
 
   rhythmIsLife() {
-    console.log("rhythmislife");
+    //console.log("rhythmislife");
     textSize(32);
     textAlign(CENTER);
     rectMode(CENTER);
-    //if (this.rhythmIsLifeOn) {
     if(millis() = this.endTime < 2000){
       if(this.idx == 3){
         super.playerDrinkDisplay();
+        console.log("one");
       }else{
         super.npcDrinkDisplay();
+        console.log("one_");
       }
     } else if (millis() - this.endTime < 3200) {
+      console.log("two");
       fill(255);
       rect(w / 2, h / 2, w / 3, h / 3);
       fill(0);
@@ -306,7 +330,7 @@ class doobooGame extends Game {
       text("생명! 생명! 생명!", w / 2, h / 2);
     }
   }
-  //}
+
 
   gameend() {
     if (!this.endStarted) {
