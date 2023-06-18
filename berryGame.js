@@ -26,6 +26,9 @@ class berryGame extends Game {
     this.stepStarted = false;
     this.stepO = false;
     this.tutorialStart = true;
+
+    this.npcOut = false;
+    this.a = 0;
   }
 
   tutorial() {
@@ -84,7 +87,7 @@ class berryGame extends Game {
         textAlign(CENTER);
         rectMode(CENTER);
         text(
-          "아래 버튼을 순서대로 클릭하세요.",
+          "아래 버튼을 순서에 맞게 클릭하세요.",
           0.2 * w + 0.17 * h * 3,
           0.3 * h
         );
@@ -130,6 +133,7 @@ class berryGame extends Game {
                 this.buttons = [strawberry, carrot, watermelon, k_melon, melon];
                 this.buttons2 = ["딸기!", "당근!", "수박!", "참외!", "메론!"];
                 this.userPlayed = false;
+                this.npcOut = true;
               }
             } else {
               console.log("틀렸음", fruit[answer[this.step - 1]]);
@@ -149,6 +153,14 @@ class berryGame extends Game {
     if (!this.turnStarted) {
       this.turnStarted = true;
       this.berryCallTime = millis();
+      this.a = int(random(1,10));
+
+      if(this.a>5){
+        this.npcFalse();
+      } else {
+        this.turnStarted = true;
+      }
+
     } else if (this.turnStarted) {
       if (this.turn % 14 == 1) {
         if (millis() - this.berryCallTime < 500) {
@@ -316,6 +328,170 @@ class berryGame extends Game {
       }
     }
   }
+
+  npcFalse() {
+    fill(0);
+    let x = 0.2 * w + 0.17 * h * this.idx;
+    fill(255);
+    if (!this.turnStarted) {
+      this.turnStarted = true;
+      this.berryCallTime = millis();
+    } else if (this.turnStarted) {
+      if (this.turn % 14 == 1) {
+        if (millis() - this.berryCallTime < 500) {
+          text("(쿵)", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 1000) {
+          text("(짝)", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 1500) {
+          text("딸기!", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 2300) {
+          text("앗...", x, 0.3 * h);
+        } else {
+          this.loseIssue = 2;
+          this.gameend();
+        }
+      } else if (
+        this.turn % 14 == 2 ||
+        (this.turn % 14 == 0 && this.turn != 0)
+      ) {
+        if (millis() - this.berryCallTime < 500) {
+          text("(쿵)", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 1000) {
+          text("(짝)", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 1500) {
+          text("딸기!", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 2000) {
+          text("참외!", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 3000) {
+          text("아악참외말고당근!", x, 0.3 * h);
+        } else {
+          this.loseIssue = 1;
+          this.gameend();
+        }
+      } else if (this.turn % 14 == 3 || this.turn % 14 == 13) {
+        if (millis() - this.berryCallTime < 500) {
+          text("(쿵)", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 1000) {
+          text("딸기!", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 1500) {
+          text("(짝)", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 2400) {
+          text("당근...?", x, 0.3 * h);
+        } else {
+          this.loseIssue = 2;
+          this.gameend();
+        }
+      } else if (this.turn % 14 == 4 || this.turn % 14 == 12) {
+        if (millis() - this.berryCallTime < 500) {
+          text("딸기", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 1000) {
+          text("당근!", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 1500) {
+          text("멜론!", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 2400) {
+          text("아아악!", x, 0.3 * h);
+        } else {
+          this.loseIssue = 1;
+          this.gameend();
+        }
+      } else if (this.turn % 14 == 5 || this.turn % 14 == 11) {
+        if (millis() - this.berryCallTime < 500) {
+          text("딸기!", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 1000) {
+          text("당근!", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 1500) {
+          text("수박!", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 2000) {
+          text("참외!", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 2500) {
+          text("(쿵)", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 3000) {
+          text("...읏", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 3500) {
+          text("멜ㄹㄹㄹㅇㄴㅇㅎ론", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 4500) {
+          text("느으아아ㅏ봐주세요ㅠ!", x, 0.3 * h);
+        } else {
+          this.loseIssue = 2;
+          this.gameend();
+        }
+      } else if (this.turn % 14 == 6 || this.turn % 14 == 10) {
+        if (millis() - this.berryCallTime < 500) {
+          text("딸기!", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 1000) {
+          text("당근!", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 1500) {
+          text("수박!", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 2000) {
+          text("참외!", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 2500) {
+          text("(쿵)", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 3000) {
+          text("(짝)", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 3500) {
+          text("딸기!", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 4400) {
+          text("어아닌데?!", x, 0.3 * h);
+        } else {
+          this.loseIssue = 1;
+          this.gameend();
+        }
+      } else if (this.turn % 14 == 7 || this.turn % 14 == 9) {
+        if (millis() - this.berryCallTime < 500) {
+          text("딸기!", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 1000) {
+          text("당근!", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 1500) {
+          text("수박!", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 2000) {
+          text("참외!", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 2500) {
+          text("(쿵)", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 2600) {
+      
+        } else if (millis() - this.berryCallTime < 3000) {
+          text("(쿵)", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 3100) {
+      
+        } else if (millis() - this.berryCallTime < 3500) {
+          text("(쿵)", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 4400) {
+          text("skrr skrr...", x, 0.3 * h);
+        } else {
+          this.loseIssue = 1;
+          this.gameend();
+        }
+      } else if (this.turn % 14 == 8) {
+        if (millis() - this.berryCallTime < 500) {
+          text("딸기!", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 1000) {
+          text("당근!", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 1500) {
+          text("수박!", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 2000) {
+          text("참외!", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 2500) {
+          text("메론!", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 3000) {
+          text("메롱!", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 3500) {
+          text("레몬?", x, 0.3 * h);
+        } else if (millis() - this.berryCallTime < 4300) {
+          text("아ㅠ", x, 0.3 * h);
+        } else {
+          this.loseIssue = 1;
+          this.gameend();
+        }
+      }
+    }
+  }
+
+
+
+
+
+
+
   displayButtons() {
     //buttons[] 순서대로 이미지 가져와서 배치
 
@@ -431,6 +607,8 @@ class berryGame extends Game {
     }
   }
 
+
+
   round() {
     if (this.tutorialStart == true) {
       this.tutorial();
@@ -443,10 +621,11 @@ class berryGame extends Game {
           this.playerTurn();
         } else {
           this.npcTurn();
+          }
         }
       }
 
       //this.displayButtons();
     }
   }
-}
+

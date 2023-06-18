@@ -30,12 +30,12 @@ class doobooGame extends Game {
     textAlign(CENTER);
     rectMode(CENTER);
     if (this.bgmOn) {
-        let x1 = 0.2 * w;
-        let x2 = 0.2 * w + 0.17 * h;
-        let x3 = 0.2 * w + 0.17 * h * 2;
-        let x4 = 0.2 * w + 0.17 * h * 3;
-        let x5 = 0.2 * w + 0.17 * h * 4;
-        let x6 = 0.2 * w + 0.17 * h * 5;
+      let x1 = 0.2 * w;
+      let x2 = 0.2 * w + 0.17 * h;
+      let x3 = 0.2 * w + 0.17 * h * 2;
+      let x4 = 0.2 * w + 0.17 * h * 3;
+      let x5 = 0.2 * w + 0.17 * h * 4;
+      let x6 = 0.2 * w + 0.17 * h * 5;
       if (millis() - this.startTime < 1200) {
         fill(255);
         rect(w / 2, h / 2, w / 3, h / 3);
@@ -90,12 +90,12 @@ class doobooGame extends Game {
         textAlign(CENTER);
         rectMode(CENTER);
         text(
-          "두부 모수를 키보드에 입력해 주세요.",
+          "키보드에 두부 모수를 입력해 주세요.",
           0.2 * w + 0.17 * h * 3,
           0.3 * h
         );
         this.temp = 10;
-      
+
       } else {
         this.infoStarted = false;
       }
@@ -124,16 +124,16 @@ class doobooGame extends Game {
           this.loseIssue = 1;
           this.gameend();
         } else {
-          if(!this.playerCorrect){
+          if (!this.playerCorrect) {
             this.playerTime = millis();
             this.playerCorrect = true;
-          } else{
+          } else {
             let x1 = 0.2 * w;
-        let x2 = 0.2 * w + 0.17 * h;
-        let x3 = 0.2 * w + 0.17 * h * 2;
-        let x4 = 0.2 * w + 0.17 * h * 3;
-        let x5 = 0.2 * w + 0.17 * h * 4;
-        let x6 = 0.2 * w + 0.17 * h * 5;
+            let x2 = 0.2 * w + 0.17 * h;
+            let x3 = 0.2 * w + 0.17 * h * 2;
+            let x4 = 0.2 * w + 0.17 * h * 3;
+            let x5 = 0.2 * w + 0.17 * h * 4;
+            let x6 = 0.2 * w + 0.17 * h * 5;
             if (millis() - this.playerTime < 500) {
               text("(쿵)", x1, 0.3 * h);
               text("(쿵)", x2, 0.3 * h);
@@ -141,18 +141,18 @@ class doobooGame extends Game {
               text("(쿵)", x4, 0.3 * h);
               text("(쿵)", x5, 0.3 * h);
               text("(쿵)", x6, 0.3 * h);
-            }else if (millis() - this.playerTime < 1000) {
+            } else if (millis() - this.playerTime < 1000) {
               text("(짝)", x1, 0.3 * h);
               text("(짝)", x2, 0.3 * h);
               text("(짝)", x3, 0.3 * h);
               text("(짝)", x4, 0.3 * h);
               text("(짝)", x5, 0.3 * h);
               text("(짝)", x6, 0.3 * h);
-            } else{
+            } else {
               this.point();
-          this.turnStarted = false;
-          this.turn++;
-          this.playerCorrect = false;
+              this.turnStarted = false;
+              this.turn++;
+              this.playerCorrect = false;
             }
           }
         }
@@ -190,16 +190,16 @@ class doobooGame extends Game {
             this.loseIssue = 1;
             this.gameend();
           } else {
-            if(!this.playerCorrect){
+            if (!this.playerCorrect) {
               this.playerTime = millis();
               this.playerCorrect = true;
-            } else{
+            } else {
               let x1 = 0.2 * w;
-          let x2 = 0.2 * w + 0.17 * h;
-          let x3 = 0.2 * w + 0.17 * h * 2;
-          let x4 = 0.2 * w + 0.17 * h * 3;
-          let x5 = 0.2 * w + 0.17 * h * 4;
-          let x6 = 0.2 * w + 0.17 * h * 5;
+              let x2 = 0.2 * w + 0.17 * h;
+              let x3 = 0.2 * w + 0.17 * h * 2;
+              let x4 = 0.2 * w + 0.17 * h * 3;
+              let x5 = 0.2 * w + 0.17 * h * 4;
+              let x6 = 0.2 * w + 0.17 * h * 5;
               if (millis() - this.playerTime < 500) {
                 text("(쿵)", x1, 0.3 * h);
                 text("(쿵)", x2, 0.3 * h);
@@ -207,25 +207,25 @@ class doobooGame extends Game {
                 text("(쿵)", x4, 0.3 * h);
                 text("(쿵)", x5, 0.3 * h);
                 text("(쿵)", x6, 0.3 * h);
-              }else if (millis() - this.playerTime < 1000) {
+              } else if (millis() - this.playerTime < 1000) {
                 text("(짝)", x1, 0.3 * h);
                 text("(짝)", x2, 0.3 * h);
                 text("(짝)", x3, 0.3 * h);
                 text("(짝)", x4, 0.3 * h);
                 text("(짝)", x5, 0.3 * h);
                 text("(짝)", x6, 0.3 * h);
-              } else{
+              } else {
                 this.point();
-            this.turnStarted = false;
-            this.turn++;
-            this.playerCorrect = false;
+                this.turnStarted = false;
+                this.turn++;
+                this.playerCorrect = false;
               }
             }
-        
-      
-    }
-  }
-}
+
+
+          }
+        }
+      }
     }
   }
 
@@ -287,8 +287,8 @@ class doobooGame extends Game {
     textSize(32);
     textAlign(CENTER);
     rectMode(CENTER);
-    if(millis() - this.endTime < 2000) {
-      if(this.idx == 3){
+    if (millis() - this.endTime < 2000) {
+      if (this.idx == 3) {
         super.playerDrinkDisplay();
       } else {
         super.npcDrinkDisplay();
@@ -321,11 +321,11 @@ class doobooGame extends Game {
     textSize(32);
     textAlign(CENTER);
     rectMode(CENTER);
-    if(millis() = this.endTime < 2000){
-      if(this.idx == 3){
+    if (millis() = this.endTime < 2000) {
+      if (this.idx == 3) {
         super.playerDrinkDisplay();
         console.log("one");
-      }else{
+      } else {
         super.npcDrinkDisplay();
         console.log("one_");
       }
@@ -373,10 +373,10 @@ class doobooGame extends Game {
   }
 
   round() {
-    if(this.tutorialStart == true){
+    if (this.tutorialStart == true) {
       this.tutorial();
     }
-    if(this.tutorialStart == false){
+    if (this.tutorialStart == false) {
       if (this.turn == 0) {
         this.dbBgm();
       } else {
