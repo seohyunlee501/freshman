@@ -28,7 +28,7 @@ let playerimg, bImg, gImg;
 let title;
 let cursor, cursor_clicked;
 let arrow, bubble_l, bubble_r;
-let bg2, bg2_1, bg5;
+let bg2, bg2_1, bg2_6, bg2_7, bg2_8, bg2_9, bg5;
 let imgs_npc = [];
 let imgs_player = [];
 let subwayInput;
@@ -87,6 +87,10 @@ function preload() {
   }
   bg2 = loadImage("Assets/background_mode2.jpg");
   bg2_1 = loadImage("Assets/background_mode2_1.jpg");
+  bg2_6 = loadImage("Assets/background_mode2_6.jpg");
+  bg2_7 = loadImage("Assets/background_mode2_7.jpg");
+  bg2_8 = loadImage("Assets/background_mode2_8.jpg");
+  bg2_9 = loadImage("Assets/background_mode2_9.jpg");
   bg5 = loadImage("Assets/background_mode5.jpg");
   soju_img = loadImage("Assets/soju_1.png"); // 빨뚜
   soju_img_g = loadImage("Assets/soju_2.png"); // 초록뚜껑
@@ -121,7 +125,7 @@ function preload() {
     gameDes[i - 1] = loadImage(`Assets/gameDes_${i}.png`);
     playDes[i - 1] = loadImage(`Assets/playDes_${i}.png`);
   }
-  for (let i = 0; i < 3; i++){
+  for (let i = 0; i < 3; i++) {
     subwayImage[i] = loadImage(`Assets/subway_${i + 2}.png`);
   }
 }
@@ -190,6 +194,8 @@ function setup() {
   myHand.on("predict", (results) => {
     predictionsHand = results;
   });
+  textSize(150);
+  textFont(retroFont);
   text("LOADING...", width / 2, height / 2);
 }
 
@@ -207,7 +213,6 @@ function draw() {
     }
 
     // game end display test
-
     if (mode == 3 && player.name === "mode6win") {
       mode = 6;
     } else if (mode == 3 && player.name === "mode6lose") {
@@ -215,89 +220,89 @@ function draw() {
       mode = 6;
     }
 
-  
-  console.log("mode", mode);
-  textFont(retroFont);
-  textAlign(CENTER, CENTER);
+    console.log("mode", mode);
+    textFont(retroFont);
+    textSize(50);
+    textAlign(CENTER, CENTER);
 
-  switch (mode) {
-    case 0:
-      infoButton1.hide();
-      infoButton2.hide();
-      infoButton3.hide();
-      infoButton4.hide();
-      infoButton5.hide();
-      infoButton6.hide();
-      //start button
-      imageMode(CENTER);
-      image(startButton, 0.5 * w, 0.81 * h, 0.1 * w, 0.1 * w);
-      fill(252, 212, 0);
-      textSize(50);
-      textAlign(CENTER, CENTER);
-      textFont(movieFont);
-      text("▶", 0.5 * w, 0.805 * h);
-      textSize(30);
-      text("서문19 신민정", 0.1 * w, 0.9 * h);
-      text("전기19 이서현", 0.3 * w, 0.9 * h);
-      text("경영19 김재현", 0.7 * w, 0.9 * h);
-      text("자전19 나정현", 0.9 * w, 0.9 * h);
-      fill(255);
-      textSize(50);
-      textFont(retroFont);
-      text("PRESS TO START", 0.5 * w, 0.9 * h);
-      //title image
-      push();
-      translate(w * 0.5, h * 0.4);
-      imageMode(CENTER);
-      image(title, 0, 0, 0.916 * w * 0.5, 0.491 * w * 0.5);
-      pop();
-      break;
-    case 1:
-      textAlign(CENTER);
-      textSize(50);
-      fill(255);
-      text("select your character.", w * 0.5, h * 0.15);
-      introdisplay(w * 0.3, h * 0.5, "boy");
-      introdisplay(w * 0.7, h * 0.5, "girl");
-      break;
-    case 2:
-      // bSelecting = false;
-      // gSelecting = false;
-      textFont(movieFont);
-      story.drawScene();
-      break;
-    case 3:
-      imageMode(CENTER);
-      gameSelect.display();
-      if (showingGameInfo) {
-        imageMode(CENTER);
-        image(gameDes[infoNum - 1], w / 2, h / 2, h , h);
-        xButton.show();
-        xButton.position(w * 0.48, h * 0.9);
-        xButton.mousePressed(infoX);
+    switch (mode) {
+      case 0:
         infoButton1.hide();
         infoButton2.hide();
         infoButton3.hide();
         infoButton4.hide();
         infoButton5.hide();
         infoButton6.hide();
-      }
-
-      //temp = gameSelect.gameNum;
-      break;
-    case 4:
-      nowGame.display();
-      nowGame.round();
-      if (nowGame.gameOver) {
-        idx = nowGame.idx;
-        if (gameSelect.gameNum == 4) {
-          mode = 5;
-        } else if(gameSelect.gameNum == 7) {
-          mode = 6;
-        } else {
-          mode = 3;
+        //start button
+        imageMode(CENTER);
+        image(startButton, 0.5 * w, 0.81 * h, 0.1 * w, 0.1 * w);
+        fill(252, 212, 0);
+        textSize(50);
+        textAlign(CENTER, CENTER);
+        textFont(movieFont);
+        text("▶", 0.5 * w, 0.805 * h);
+        textSize(30);
+        text("서문19 신민정", 0.1 * w, 0.9 * h);
+        text("전기19 이서현", 0.3 * w, 0.9 * h);
+        text("경영19 김재현", 0.7 * w, 0.9 * h);
+        text("자전19 나정현", 0.9 * w, 0.9 * h);
+        fill(255);
+        textSize(50);
+        textFont(retroFont);
+        text("PRESS TO START", 0.5 * w, 0.9 * h);
+        //title image
+        push();
+        translate(w * 0.5, h * 0.4);
+        imageMode(CENTER);
+        image(title, 0, 0, 0.916 * w * 0.5, 0.491 * w * 0.5);
+        pop();
+        break;
+      case 1:
+        textAlign(CENTER);
+        textSize(50);
+        fill(255);
+        text("select your character.", w * 0.5, h * 0.15);
+        introdisplay(w * 0.3, h * 0.5, "boy");
+        introdisplay(w * 0.7, h * 0.5, "girl");
+        break;
+      case 2:
+        bSelecting = false;
+        gSelecting = false;
+        textFont(movieFont);
+        story.drawScene();
+        break;
+      case 3:
+        imageMode(CENTER);
+        gameSelect.display();
+        if (showingGameInfo) {
+          imageMode(CENTER);
+          image(gameDes[infoNum - 1], w / 2, h / 2, w, h);
+          xButton.show();
+          xButton.position(w * 0.48, h * 0.9);
+          xButton.mousePressed(infoX);
+          infoButton1.hide();
+          infoButton2.hide();
+          infoButton3.hide();
+          infoButton4.hide();
+          infoButton5.hide();
+          infoButton6.hide();
         }
-      }
+
+        //temp = gameSelect.gameNum;
+        break;
+      case 4:
+        nowGame.display();
+        nowGame.round();
+        if (nowGame.gameOver) {
+          idx = nowGame.idx;
+          if (gameSelect.gameNum == 4) {
+            mode = 5;
+          } else if (gameSelect.gameNum == 7) {
+            mode = 6;
+          } else {
+            mode = 3;
+          }
+        }
         //temp = gameSelect.gameNum;
         break;
       case 5:
@@ -335,6 +340,7 @@ function draw() {
         textAlign(CENTER);
         textSize(32);
         text("역 이름을 입력하세요!", w * 0.5, h * 0.45);
+        subwayInput.value("");
         subwayInput.show();
         subwayButton.show();
         subwayButton.mousePressed(saveStations);
@@ -470,6 +476,7 @@ function mouseClicked() {
       } else {
         mode = 3;
       }
+      xButton.hide();
     }
   }
   //select player
@@ -601,18 +608,18 @@ function infoX() {
 }
 
 function keyPressed() {
-  if(mode == 4 && nowGame.gameName == "바보게임"){
-    if(nowGame.tutorialStart == true){
-      if (keyCode === 13 || keyCode === 32){
+  if (mode == 4 && nowGame.gameName == "바보게임") {
+    if (nowGame.tutorialStart == true) {
+      if (keyCode === 13 || keyCode === 32) {
         nowGame.tutorialStart = false;
         nowGame.startTime = millis();
       }
     }
   }
 
-  if(mode == 4 && nowGame.gameName == "딸기당근수박참외메론"){
-    if(nowGame.tutorialStart == true){
-      if (keyCode === 13 || keyCode === 32){
+  if (mode == 4 && nowGame.gameName == "딸기당근수박참외메론") {
+    if (nowGame.tutorialStart == true) {
+      if (keyCode === 13 || keyCode === 32) {
         nowGame.tutorialStart = false;
         nowGame.startTime = millis();
       }
@@ -620,8 +627,8 @@ function keyPressed() {
   }
 
   if (mode == 4 && nowGame.gameName == "배스킨 라빈스 31") {
-    if(nowGame.tutorialStart == true){
-      if (keyCode === 13 || keyCode === 32){
+    if (nowGame.tutorialStart == true) {
+      if (keyCode === 13 || keyCode === 32) {
         nowGame.tutorialStart = false;
         nowGame.startTime = millis();
       }
@@ -638,13 +645,13 @@ function keyPressed() {
   }
 
   if (mode == 4 && nowGame.gameName == "눈치게임") {
-    if (nowGame.tutorialStart == false && nowGame.introStart == false){
+    if (nowGame.tutorialStart == false && nowGame.introStart == false) {
       if (keyCode === 13) {
         nowGame.interruption = true;
       }
     }
-    if(nowGame.tutorialStart == true){
-      if (keyCode === 13 || keyCode === 32){
+    if (nowGame.tutorialStart == true) {
+      if (keyCode === 13 || keyCode === 32) {
         nowGame.tutorialStart = false;
         nowGame.gameStartTime = millis();
         nowGame.lastCalledTime = millis() + 4000;
@@ -652,8 +659,12 @@ function keyPressed() {
     }
   }
 
-  if(mode == 4 && nowGame.gameName == "지하철게임" && nowGame.tutorialStart == true){
-    if(keyCode === 13 || keyCode === 32){
+  if (
+    mode == 4 &&
+    nowGame.gameName == "지하철게임" &&
+    nowGame.tutorialStart == true
+  ) {
+    if (keyCode === 13 || keyCode === 32) {
       nowGame.tutorialStart = false;
       nowGame.gameStartTime = millis();
     }
@@ -676,8 +687,8 @@ function keyPressed() {
     }
   }
   if (mode == 4 && nowGame.gameName == "두부게임") {
-    if(nowGame.tutorialStart == true){
-      if(keyCode === 13 || keyCode === 32){
+    if (nowGame.tutorialStart == true) {
+      if (keyCode === 13 || keyCode === 32) {
         nowGame.tutorialStart = false;
         nowGame.startTime = millis();
       }

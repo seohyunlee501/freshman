@@ -195,6 +195,8 @@ class baboGame extends Game {
   turnOnCapture() {
     console.log("video on");
     this.videoOn = true;
+    video = createCapture(VIDEO);
+    video.hide();
   }
 
   turnOffCapture() {
@@ -207,7 +209,10 @@ class baboGame extends Game {
       console.log("***turnOnHandPose called");
       this.handposeReady = true;
       handposeOn = true;
-
+      //myHand = ml5.handpose(video, modelReady);
+      myHand.on("predict", (results) => {
+        predictionsHand = results;
+      });
       // function modelReady() {
       //   // this.handposeOn = true;
       //   handposeOn = true;
@@ -274,6 +279,9 @@ class baboGame extends Game {
         fill(255);
         textSize(50);
         text(this.inputVoice, -0.04 * h, 0);
+        if (this.inputHand == 0) {
+          this.inputHand = (this.inputVoice % 5) + 1;
+        }
         console.log(this.idx, this.inputVoice, this.inputHand);
         imageMode(CENTER);
         image(handimg[this.inputHand - 1], 0.04 * h, 0, 0.1 * h, 0.1 * h);
