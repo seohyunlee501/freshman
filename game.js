@@ -35,6 +35,7 @@ class Game {
 
     push();
     rectMode(CORNER);
+    stroke(255);
     translate(w * 0.8, h * 0.3);
     rect(0, 0, h * 0.1, h * 0.6);
     for (let i = 0; i < this.player.alcholblood; i++) {
