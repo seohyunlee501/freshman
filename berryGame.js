@@ -24,6 +24,12 @@ class berryGame extends Game {
     this.stepTime = 0;
     this.stepStarted = false;
     this.stepO = false;
+    this.tutorialStart = true;
+  }
+
+  tutorial() {
+    imageMode(CENTER);
+    image(playDes[0], w / 2, h / 2, w, h);
   }
 
   berryBgm() {
@@ -425,13 +431,18 @@ class berryGame extends Game {
   }
 
   round() {
-    if (this.turn == 0) {
-      this.berryBgm();
-    } else {
-      if (this.idx == 3) {
-        this.playerTurn();
+    if(this.tutorialStart == true){
+      this.tutorial();
+    }
+    if(this.tutorialStart == false){
+      if (this.turn == 0) {
+        this.berryBgm();
       } else {
-        this.npcTurn();
+        if (this.idx == 3) {
+          this.playerTurn();
+        } else {
+          this.npcTurn();
+        }
       }
     }
   }

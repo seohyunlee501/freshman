@@ -601,6 +601,24 @@ function infoX() {
 }
 
 function keyPressed() {
+  if(mode == 4 && nowGame.gameName == "바보게임"){
+    if(nowGame.tutorialStart == true){
+      if (keyCode === 13 || keyCode === 32){
+        nowGame.tutorialStart = false;
+        nowGame.startTime = millis();
+      }
+    }
+  }
+
+  if(mode == 4 && nowGame.gameName == "딸기당근수박참외메론"){
+    if(nowGame.tutorialStart == true){
+      if (keyCode === 13 || keyCode === 32){
+        nowGame.tutorialStart = false;
+        nowGame.startTime = millis();
+      }
+    }
+  }
+
   if (mode == 4 && nowGame.gameName == "배스킨 라빈스 31") {
     if(nowGame.tutorialStart == true){
       if (keyCode === 13 || keyCode === 32){
