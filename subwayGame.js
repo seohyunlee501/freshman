@@ -38,6 +38,7 @@ class subwayGame extends Game {
     for(let i = 0; i < 45; i++){
       this.falseProbability[i+5] = random(0, 1);
     }
+    this.koongTime = 0;
   }
   
   intro() {
@@ -62,6 +63,30 @@ class subwayGame extends Game {
     }
   }
 
+  koong() {
+    for(let i = 0; i < 6; i++){
+      push();
+      translate(0.2 * w + 0.17 * h * i, 0.3 * h);
+      textAlign(CENTER, CENTER);
+      fill(255);
+      textSize(50);
+      text('쿵!', 0, 0);
+      pop();
+    }
+  }
+
+  jjack() {
+    for(let i = 0; i < 6; i++){
+      push();
+      translate(0.2 * w + 0.17 * h * i, 0.3 * h);
+      textAlign(CENTER, CENTER);
+      fill(255);
+      textSize(50);
+      text('짝!', 0, 0);
+      pop();
+    }
+  }
+
   lineSelect() {
     textSize(32);
     textAlign(CENTER);
@@ -80,12 +105,15 @@ class subwayGame extends Game {
     if(this.lineSelection == 2){
       this.currentLine = 2;
       this.lineSelected = true;
+      this.koongTime = millis();
     }else if(this.lineSelection == 3){
       this.currentLine = 3;
       this.lineSelected = true;
+      this.koongTime = millis();
     }else if(this.lineSelection == 4){
       this.currentLine = 4;
       this.lineSelected = true;
+      this.koongTime = millis();
     }else if(this.lineSelection == 0){
       //do nothing
     }else{
@@ -154,7 +182,11 @@ class subwayGame extends Game {
         this.turnStarted = true;
         this.currentTime = millis();
       } else if (this.turnStarted) {
-        if (millis() - this.currentTime < 1500) {
+        if(millis()- this.currentTime < 500){
+          this.koong();
+        } else if(millis() - this.currentTime < 1000){
+          this.jjack();
+        } else if (millis() - this.currentTime < 1500) {
           //show each
           push();
           translate(0.2 * w + 0.17 * h * this.idx, 0.3 * h);
@@ -172,6 +204,9 @@ class subwayGame extends Game {
             this.turn++;
             this.idx++;
             this.idx = this.idx % 6;
+            if(this.idx == 3){
+              this.koongTime = millis();
+            }
           }
         }
       }
@@ -239,7 +274,11 @@ class subwayGame extends Game {
         this.lineSelect();
       } else {
         if(this.idx == 3) {
-          if(this.playerInput == false && this.playerStarted == false){
+          if(millis() - this.koongTime < 500) {
+            this.koong();
+          } else if(millis() - this.koongTime < 1000) {
+            this.jjack();
+          } else if(this.playerInput == false && this.playerStarted == false){
             this.stationInput();
           } else if(this.playerStarted == true && this.playerEnd == false) {
             this.playerturn();

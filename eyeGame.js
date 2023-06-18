@@ -79,7 +79,6 @@ class eyeGame extends Game {
         if(this.playerCalledTime - this.lastCalledTime < this.failureInterval){
           console.log(this.currentNumber); //should be displayed later
           this.lastCalledTime = millis();
-          this.currentNumber++;
           this.endPlayer = true;
           this.endStartTime = millis();
           this.playerTurnPassed = true;
@@ -218,25 +217,6 @@ class eyeGame extends Game {
       textSize(50);
       text(numberCalled + '!', 0, 0);
       pop();
-    }
-  }
-
-  timeCheck() {
-    if(millis() - this.lastCalledTime > this.randomTime[0] && this.npcStart[0] == false){
-      this.npcStart[0] = true;
-      this.lastCalledTime = millis();
-    } else if(millis() - this.lastCalledTime > this.randomTime[1] && this.npcStart[1] == false) {
-      this.npcStart[1] = true;
-      this.lastCalledTime = millis();
-    } else if(millis() - this.lastCalledTime > this.randomTime[2] && this.npcStart[2] == false) {
-      this.npcStart[2] = true;
-      this.lastCalledTime = millis();
-    } else if(millis() - this.lastCalledTime > this.randomTime[3] && this.npcStart[3] == false) {
-      this.npcStart[3] = true;
-      this.lastCalledTime = millis()
-    } else if(millis() = this.lastCalledTime > this.randomTime[4] && this.npcStart[4] == false) {
-      this.npcStart[4] = true;
-      this.lastCalledTime = millis();
     }
   }
 
