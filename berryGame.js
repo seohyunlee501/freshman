@@ -3,7 +3,7 @@ class berryGame extends Game {
     super(_idx, _gameList);
     this.gameName = "딸기당근수박참외메론";
     this.buttons = [strawberry, carrot, watermelon, k_melon, melon];
-    this.buttons2 = [strawberry, carrot, watermelon, k_melon, melon];
+    this.buttons2 = ["딸기!", "당근!", "수박!", "참외!", "메론!"];
     this.startTime = millis();
     this.bgmOn = true;
     this.userPlayed = false;
@@ -95,13 +95,15 @@ class berryGame extends Game {
           this.stepStarted = true;
           this.stepTime = millis();
           this.whatBerry = 5;
+          this.step++;
         }
       } else if (this.stepStarted) {
         if (
-          this.buttons[this.whatBerryCheck] == this.buttons2[answer[this.step]]
+          this.buttons2[this.whatBerryCheck] == fruit[answer[this.step - 1]]
         ) {
           this.stepO = true;
         } else {
+          console.log("틀렸음", fruit[answer[this.step - 1]]);
           this.stepO = false;
           this.loseIssue = 1;
           this.gameend();
@@ -109,11 +111,11 @@ class berryGame extends Game {
       }
       if (this.stepO) {
         if (millis() - this.stepTime < 1500) {
-          let berryCheck = fruit[this.whatBerryCheck];
+          let berryCheck = fruit[answer[this.step - 1]];
           text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
         } else {
-          stepO = false;
-          stepStarted = false;
+          this.stepO = false;
+          this.stepStarted = false;
         }
       }
     }
@@ -307,6 +309,10 @@ class berryGame extends Game {
     for (let i = 4; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [this.buttons[i], this.buttons[j]] = [this.buttons[j], this.buttons[i]]; // 배열의 두 원소를 랜덤하게 교환
+      [this.buttons2[i], this.buttons2[j]] = [
+        this.buttons2[j],
+        this.buttons2[i],
+      ];
     }
   }
 
