@@ -154,11 +154,15 @@ class berryGame extends Game {
 
     if (!this.turnStarted) {
       this.berryCallTime = millis();
+      if(this.npcOut){
       this.a = int(random(1,10));
+      } else {
+        this.a = 0;
+      }
       this.turnStarted = true;
 
     } else if (this.turnStarted) {
-      if(this.a<6){
+      if(this.a<7){
       if (this.turn % 14 == 1) {
         if (millis() - this.berryCallTime < 500) {
           text("(쿵)", x, 0.3 * h);
