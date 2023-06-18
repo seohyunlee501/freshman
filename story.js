@@ -236,7 +236,7 @@ class Story {
       (this.scene === "5-3" || this.scene === "5-4" || this.scene === "5-5") &&
       millis() - this.buttonPressTime > 2000
     ) {
-      if (this.expectedID === 19 && this.kkk == false) {
+      if (this.expectedID == 19 && this.kkk == false) {
         player.alcholblood--;
         this.kkk = true;
       } else if (
