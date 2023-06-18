@@ -98,24 +98,43 @@ class berryGame extends Game {
           this.step++;
         }
       } else if (this.stepStarted) {
-        if (
-          this.buttons2[this.whatBerryCheck] == fruit[answer[this.step - 1]]
-        ) {
-          this.stepO = true;
-        } else {
-          console.log("틀렸음", fruit[answer[this.step - 1]]);
-          this.stepO = false;
-          this.loseIssue = 1;
-          this.gameend();
-        }
-      }
-      if (this.stepO) {
         if (millis() - this.stepTime < 1500) {
           let berryCheck = fruit[answer[this.step - 1]];
           text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
         } else {
           this.stepO = false;
           this.stepStarted = false;
+        }
+        if (this.step < answer.length) {
+          if (
+            this.buttons2[this.whatBerryCheck] == fruit[answer[this.step - 1]]
+          ) {
+            this.stepO = true;
+          } else {
+            console.log("틀렸음", fruit[answer[this.step - 1]]);
+            this.stepO = false;
+            this.loseIssue = 1;
+            this.gameend();
+          }
+
+          if (millis() - this.stepTime < 1500) {
+            let berryCheck = fruit[answer[this.step - 1]];
+            text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
+          } else {
+            this.stepO = false;
+            this.stepStarted = false;
+          }
+        } else {
+          this.step = 0;
+          this.stepTime = 0;
+          this.stepStarted = false;
+          this.stepO = false;
+          this.turnStarted = false;
+          this.berryCall = false;
+          this.turnStarted = false;
+          this.turn++;
+          this.idx++;
+          this.idx = this.idx % 6;
         }
       }
     }
