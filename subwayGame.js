@@ -7,7 +7,7 @@ class subwayGame extends Game {
     this.turnStarted = false;
     this.pturnStarted = false;
     this.lineSelected = false;
-    this.startTime = millis();
+    this.gameStartTime = millis();
     this.currentTime = 0;
     this.playerStarted = false;
     this.playerEnd = false;
@@ -39,19 +39,27 @@ class subwayGame extends Game {
       this.falseProbability[i+5] = random(0, 1);
     }
     this.koongTime = 0;
+    this.tutorialStart = true;
   }
   
+  tutorial() {
+    if(this.tutorialStart == true){
+      imageMode(CENTER);
+      image(tutorial[5], w / 2, h / 2, w, h);
+    }
+  }
+
   intro() {
     textSize(32);
     textAlign(CENTER);
     rectMode(CENTER);
     if (this.gameStarted) {
-      if (millis() - this.startTime < 1500) {
+      if (millis() - this.gameStartTime < 1500) {
         fill(255);
         rect(w / 2, h / 2, w / 3, h / 3);
         fill(0);
         text("지~하철! 지~하철!", w / 2, h / 2);
-      } else if (millis() - this.startTime < 3000) {
+      } else if (millis() - this.gameStartTime < 3000) {
         fill(255);
         rect(w / 2, h / 2, w / 3, h / 3);
         fill(0);
@@ -261,30 +269,36 @@ class subwayGame extends Game {
   }
 
   round() {
-    if(this.gamefinishedByWrongInput){
-      this.loseIssue = '호선';
-      this.gameend();
-    }else if(this.gamefinishedByWrongStation){
-      this.loseIssue = '입력';
-      this.gameend();
-    }else{
-      if(this.turn == 0) {
-        this.intro();
-      } else if(!this.lineSelected){
-        this.lineSelect();
-      } else {
-        if(this.idx == 3) {
-          if(millis() - this.koongTime < 500) {
-            this.koong();
-          } else if(millis() - this.koongTime < 1000) {
-            this.jjack();
-          } else if(this.playerInput == false && this.playerStarted == false){
-            this.stationInput();
-          } else if(this.playerStarted == true && this.playerEnd == false) {
-            this.playerturn();
-          }
+    if(this.tutorialStart == true){
+      this.tutorial();
+    }
+    
+    if(this.tutorialStart == false) {
+      if(this.gamefinishedByWrongInput){
+        this.loseIssue = '호선';
+        this.gameend();
+      }else if(this.gamefinishedByWrongStation){
+        this.loseIssue = '입력';
+        this.gameend();
+      }else{
+        if(this.turn == 0) {
+          this.intro();
+        } else if(!this.lineSelected){
+          this.lineSelect();
         } else {
-          this.npcturn();
+          if(this.idx == 3) {
+            if(millis() - this.koongTime < 500) {
+              this.koong();
+            } else if(millis() - this.koongTime < 1000) {
+              this.jjack();
+            } else if(this.playerInput == false && this.playerStarted == false){
+              this.stationInput();
+            } else if(this.playerStarted == true && this.playerEnd == false) {
+              this.playerturn();
+            }
+          } else {
+            this.npcturn();
+          }
         }
       }
     }

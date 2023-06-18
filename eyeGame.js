@@ -33,8 +33,6 @@ class eyeGame extends Game {
     this.endStartTime;
     this.endPlayer = false;
     this.endNPC = false;
-    this.randomTime = [];
-    this.npcStart = [false, false, false, false, false];
     
     for (let i = 0; i < 3; i++) {
       this.randChar[i][0] = this.chars[i];
@@ -53,17 +51,15 @@ class eyeGame extends Game {
     this.randChar.sort(() => random() - 0.5);
     this.randChar[0][1] = 1000;
     this.randChar[1][1] = Math.floor(random(1000, 1500) / 100) * 100
-    
-    for (let i = 0; i < 5; i++){
-      this.randomTime[i] = this.randChar[i][1];
-    }
 
     for (let i = 0; i < 5; i++){
       console.log("call interval: " + this.randChar[i][1] + " called: " +  this.randChar[i][2] + " index: " +  this.randChar[i][3]);
     }
 
-    this.lastCalledTime = millis() + 4000;
-    this.gameStartTime = millis();
+    this.lastCalledTime;
+    this.tutorialStart = true;
+    this.gameStartTime;
+    this.introStart = true;
   }
 
   interrupt() {
@@ -94,6 +90,13 @@ class eyeGame extends Game {
     }
   }
 
+  tutorial() {
+    if(this.tutorialStart == true){
+      imageMode(CENTER);
+      image(tutorial[1], w/2, h/2, w, h);
+    }
+  }
+
   intro() {
     if(millis() - this.gameStartTime < 2000) {
       fill(255);
@@ -115,14 +118,20 @@ class eyeGame extends Game {
   }
 
   gamePlay() {
-    this.intro();
-    if(millis() - this.gameStartTime > 4000) {
-      this.playerPlay();
-      this.npcPlay();
-      this.displayOverhead();
-      this.endGame();
+    if(this.tutorialStart == true){
+      this.tutorial();
+    }
+    if(this.tutorialStart == false){
+      this.intro();
+      if(millis() - this.gameStartTime > 4000) {
+        this.introStart = false;
+        this.playerPlay();
+        this.npcPlay();
+        this.displayOverhead();
+        this.endGame();
       }
     }
+  }
 
   playerPlay() {
     //player's play
