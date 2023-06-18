@@ -74,12 +74,12 @@ class baboGame extends Game {
     if (this.videoOn) {
       image(this.video, w / 2, h / 2, 0.5 * w, 0.5 * h);
       // console.log("videoOn,", this.handposeOn);
-      console.log("videoOn,", handposeOn);
+      //console.log("videoOn,", handposeOn);
     }
     // if (this.handposeOn) {
     //   console.log(this.handposeOn);
     if (handposeOn) {
-      console.log(handposeOn);
+      //console.log(handposeOn);
       this.drawKeypoints();
     }
   }
@@ -90,36 +90,95 @@ class baboGame extends Game {
       for (let j = 0; j < prediction.landmarks.length; j += 1) {
         const keypoint = prediction.landmarks[j];
         fill(0, 255, 0);
+        push();
         noStroke();
         let kx = keypoint[0] + w / 4;
         let ky = keypoint[1] + h / 4;
         // ellipse(keypoint[0], keypoint[1], 10, 10);
         ellipse(kx, ky, 10, 10);
+        pop();
       }
     }
   }
 
   guessHand() {
-    const a = this.myHand.annotations;
     let openFinger = 0;
-    let openlength = 0;
-    let closelength = 0;
+    let openlength = [0, 0, 0, 0, 0];
+    let closelength = [];
+    console.log("guess 1");
+    if (predictionsHand.length > 0) {
+      console.log("guess 2");
+      const a = predictionsHand[0].annotations;
+      console.log("guess 3");
 
-    openlength = dist(
-      a.thumb[0][0],
-      a.thumb[0][1],
-      a.thumb[1][0],
-      a.thumb[1][1]
-    );
-    closelength = dist(
-      a.thumb[0][0],
-      a.thumb[0][1],
-      a.thumb[3][0],
-      a.thumb[3][1]
-    );
+      //thumb
+      console.log("closelength", closelength);
+      closelength[0] =
+        (a.thumb[0][0] - a.thumb[1][0]) ** 2 +
+        (a.thumb[0][1] - a.thumb[1][1]) ** 2;
+      console.log("closelength[0]", closelength[0]);
+      console.log("guess 4");
+      console.log("closelength", closelength);
+      openlength[0] =
+        (a.thumb[0][0] - a.thumb[3][0]) ** 2 +
+        (a.thumb[0][1] - a.thumb[3][1]) ** 2;
 
-    if (openlength > closelength) {
-      openFinger++;
+      //index finger
+      console.log("closelength", closelength);
+      closelength[1] =
+        (a.indexFinger[0][0] - a.indexFinger[1][0]) ** 2 +
+        (a.indexFinger[0][1] - a.indexFinger[1][1]) ** 2;
+      console.log("closelength[1]", closelength[1]);
+      console.log("guess 4");
+      console.log("closelength", closelength);
+      openlength[1] =
+        (a.indexFinger[0][0] - a.indexFinger[3][0]) ** 2 +
+        (a.indexFinger[0][1] - a.indexFinger[3][1]) ** 2;
+
+      //middle finger
+      console.log("closelength", closelength);
+      closelength[2] =
+        (a.middleFinger[0][0] - a.middleFinger[1][0]) ** 2 +
+        (a.middleFinger[0][1] - a.middleFinger[1][1]) ** 2;
+      console.log("closelength[2]", closelength[2]);
+      console.log("guess 4");
+      console.log("closelength", closelength);
+      openlength[2] =
+        (a.middleFinger[0][0] - a.middleFinger[3][0]) ** 2 +
+        (a.middleFinger[0][1] - a.middleFinger[3][1]) ** 2;
+
+      //ring finger
+      console.log("closelength", closelength);
+      closelength[3] =
+        (a.ringFinger[0][0] - a.ringFinger[1][0]) ** 2 +
+        (a.ringFinger[0][1] - a.ringFinger[1][1]) ** 2;
+      console.log("closelength[3]", closelength[3]);
+      console.log("guess 4");
+      console.log("closelength", closelength);
+      openlength[3] =
+        (a.ringFinger[0][0] - a.ringFinger[3][0]) ** 2 +
+        (a.ringFinger[0][1] - a.ringFinger[3][1]) ** 2;
+
+      //pinky
+      console.log("closelength", closelength);
+      closelength[4] =
+        (a.pinky[0][0] - a.pinky[1][0]) ** 2 +
+        (a.pinky[0][1] - a.pinky[1][1]) ** 2;
+      console.log("closelength[4]", closelength[4]);
+      console.log("guess 4");
+      console.log("closelength", closelength);
+      openlength[4] =
+        (a.pinky[0][0] - a.pinky[3][0]) ** 2 +
+        (a.pinky[0][1] - a.pinky[3][1]) ** 2;
+
+      //count open finger
+      for (let i = 0; i < 5; i++) {
+        if (openlength[i] > closelength[i]) {
+          openFinger += 1;
+          console.log("open finger number:", i + 1);
+        }
+      }
+      this.inputHand = openFinger;
     }
   }
 
@@ -162,9 +221,10 @@ class baboGame extends Game {
 
   showResult() {
     if (!this.turnStarted && this.myRec.resultValue == true) {
+      this.guessHand();
       //myRec input 받아오기
       this.inputVoice = this.myRec.resultString;
-      console.log(this.inputVoice);
+      console.log("inputvoice:", this.inputVoice);
       if (this.inputVoice == "일" || this.inputVoice == "1") {
         this.inputVoice = 1;
         this.turnStarted = true;
@@ -189,9 +249,10 @@ class baboGame extends Game {
         this.loseIssue = "pronounce";
         this.gameend();
       }
+
       this.turnOffCapture();
       this.turnOffHandpose();
-      this.inputHand = int(random(1, 6));
+      //this.inputHand = int(random(1, 6));
     }
 
     if (this.turnStarted) {
@@ -231,9 +292,9 @@ class baboGame extends Game {
       this.turnOnCapture();
       this.turnOnHandpose();
       this.userPlayed = true;
-      console.log("userPlayed:", this.userPlayed);
+      //console.log("userPlayed:", this.userPlayed);
     } else {
-      console.log("userPlayed:", this.userPlayed);
+      //console.log("userPlayed:", this.userPlayed);
       this.readingHand();
       this.myRec.onResult = this.showResult;
       this.myRec.continuous = true;
@@ -268,7 +329,7 @@ class baboGame extends Game {
           fill(255);
           textSize(50);
           text(this.voice, -0.04 * h, 0);
-          console.log(this.idx, this.voice, this.hand);
+          //console.log(this.idx, this.voice, this.hand);
           imageMode(CENTER);
           image(handimg[this.hand - 1], 0.04 * h, 0, 0.1 * h, 0.1 * h);
           pop();
@@ -325,10 +386,10 @@ class baboGame extends Game {
   }
 
   round() {
-    if(this.tutorialStart == true){
+    if (this.tutorialStart == true) {
       this.tutorial();
     }
-    if(this.tutorialStart == false){
+    if (this.tutorialStart == false) {
       if (this.turn == 0) {
         this.intro();
       } else {
