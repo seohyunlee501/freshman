@@ -2,11 +2,21 @@ class baboGame extends Game {
   constructor(_idx, _gameList) {
     super(_idx, _gameList);
     this.gameName = "바보게임";
+    //voice
     this.recording = false;
     this.myRec = new p5.SpeechRec(); // new P5.SpeechRec object
-    this.video = createCapture(VIDEO);
-    this.video.size(0.5 * w, 0.5 * h);
-    this.myHand = ml5.handpose(this.video, this.modelLoaded);
+    //hand
+    this.video = video;
+    // this.video = createCapture(VIDEO);
+    // this.video.size(0.3 * w, 0.5 * h);
+    // // Hide the video element, and just show the canvas
+    // this.video.hide();
+    this.myHand = myHand;
+    this.handposeReady = false;
+    // this.handposeOn = false;
+    this.videoOn = false;
+    this.predictionsHand = predictionsHand;
+    //else
     this.inputVoice = 0;
     this.inputHand = 0;
     this.startTime = millis();
@@ -23,6 +33,7 @@ class baboGame extends Game {
     this.loseIssue = "";
     this.predictions;
   }
+
   intro() {
     textSize(32);
     textAlign(CENTER);
@@ -45,10 +56,107 @@ class baboGame extends Game {
       }
     }
   }
+  // modelReady() {
+  //   this.handposeOn = true;
+  //   console.log("Model ready!");
+  // }
+
+  readingHand() {
+    fill(255);
+    rectMode(CENTER);
+    rect(w / 2, h / 2, 0.5 * w, 0.5 * h);
+    if (this.videoOn) {
+      image(this.video, w / 2, h / 2, 0.5 * w, 0.5 * h);
+      // console.log("videoOn,", this.handposeOn);
+      console.log("videoOn,", handposeOn);
+    }
+    // if (this.handposeOn) {
+    //   console.log(this.handposeOn);
+    if (handposeOn) {
+      console.log(handposeOn);
+      this.drawKeypoints();
+    }
+  }
+
+  drawKeypoints() {
+    for (let i = 0; i < predictionsHand.length; i += 1) {
+      const prediction = predictionsHand[i];
+      for (let j = 0; j < prediction.landmarks.length; j += 1) {
+        const keypoint = prediction.landmarks[j];
+        fill(0, 255, 0);
+        noStroke();
+        let kx = keypoint[0] + w / 4;
+        let ky = keypoint[1] + h / 4;
+        // ellipse(keypoint[0], keypoint[1], 10, 10);
+        ellipse(kx, ky, 10, 10);
+      }
+    }
+  }
+
+  guessHand() {
+    const a = this.myHand.annotations;
+    let openFinger = 0;
+    let openlength = 0;
+    let closelength = 0;
+
+    openlength = dist(
+      a.thumb[0][0],
+      a.thumb[0][1],
+      a.thumb[1][0],
+      a.thumb[1][1]
+    );
+    closelength = dist(
+      a.thumb[0][0],
+      a.thumb[0][1],
+      a.thumb[3][0],
+      a.thumb[3][1]
+    );
+
+    if (openlength > closelength) {
+      openFinger++;
+    }
+  }
+
+  turnOnCapture() {
+    console.log("video on");
+    this.videoOn = true;
+  }
+
+  turnOffCapture() {
+    console.log("video off");
+    this.videoOn = false;
+  }
+
+  turnOnHandpose() {
+    if (!this.handposeReady) {
+      console.log("***turnOnHandPose called");
+      this.handposeReady = true;
+      handposeOn = true;
+
+      // function modelReady() {
+      //   // this.handposeOn = true;
+      //   handposeOn = true;
+      //   console.log("Model ready!");
+      // }
+
+      // this.myHand = ml5.handpo se(this.video, modelReady);
+      // this.myHand.on("predict", (results) => {
+      //   this.predictionsHand = results;
+      // });
+    }
+  }
+
+  turnOffHandpose() {
+    if (this.handposeOn) {
+      this.myHand.video = undefined;
+      this.handposeReady = false;
+      this.handposeOn = false;
+    }
+  }
+
   showResult() {
     if (!this.turnStarted && this.myRec.resultValue == true) {
       //myRec input 받아오기
-      //this.myRec.text(this.myRec.resultString, w / 2, h / 2);
       this.inputVoice = this.myRec.resultString;
       console.log(this.inputVoice);
       if (this.inputVoice == "일" || this.inputVoice == "1") {
@@ -75,6 +183,8 @@ class baboGame extends Game {
         this.loseIssue = "pronounce";
         this.gameend();
       }
+      this.turnOffCapture();
+      this.turnOffHandpose();
       this.inputHand = int(random(1, 6));
     }
 
@@ -86,21 +196,18 @@ class baboGame extends Game {
         textAlign(CENTER, CENTER);
         fill(255);
         textSize(50);
-        text(this.inputVoice, -0.05 * h, 0);
+        text(this.inputVoice, -0.04 * h, 0);
         console.log(this.idx, this.inputVoice, this.inputHand);
         imageMode(CENTER);
-        image(handimg[this.inputHand - 1], 0.05 * h, 0, 0.1 * h, 0.1 * h);
+        image(handimg[this.inputHand - 1], 0.04 * h, 0, 0.1 * h, 0.1 * h);
         pop();
         if (this.inputVoice == this.inputHand) {
           this.loseIssue = "babo";
           this.gameend();
           this.turnStarted = false;
-        } else if (this.inputVoice != this.hand) {
-          this.loseIssue = "babo2";
-          this.gameend();
-          this.turnStarted = false;
         }
       } else {
+        this.video.stop();
         this.turnStarted = false;
         this.turn++;
         this.idx++;
@@ -115,26 +222,18 @@ class baboGame extends Game {
       this.infoStarted = true;
       this.infoTime = millis();
       this.myRec.start();
-      //this.myHand.on("hand", (results) => {
-      //this.predictions = results;
-      //});
+      this.turnOnCapture();
+      this.turnOnHandpose();
       this.userPlayed = true;
+      console.log("userPlayed:", this.userPlayed);
     } else {
-      if (millis() - this.infoTime < 2000) {
-        // instructions:
-        textSize(32);
-        textAlign(CENTER);
-        rectMode(CENTER);
-        fill(255);
-        rect(w / 2, h / 2, w / 3, h / 3);
-        fill(0);
-        text("아라비아 숫자로 말해 주세요.", w / 2, h / 2);
-      }
+      console.log("userPlayed:", this.userPlayed);
+      this.readingHand();
+      this.myRec.onResult = this.showResult;
+      this.myRec.continuous = true;
+      this.myRec.interimResults = true;
+      this.showResult();
     }
-    this.myRec.onResult = this.showResult;
-    this.myRec.continuous = true;
-    this.myRec.interimResults = true;
-    this.showResult();
   }
 
   npcturn() {
@@ -143,14 +242,13 @@ class baboGame extends Game {
       this.idx = this.idx % 6;
     } else {
       if (!this.turnStarted) {
-        htemp = this.hand;
-        this.voice = htemp;
+        this.voice = int(random(1, 6));
         this.hand = int(random(1, 6));
         if (this.idx == 2 || !this.userPlayed) {
           if (this.voice == this.hand) {
-            this.hand = ((this.voice + 1) % 5) + 1;
+            this.hand = (this.voice % 5) + 1;
           }
-        } else if (this.turn > 7) {
+        } else if (this.userPlayed && this.turn >= 7) {
           this.hand = this.voice;
         }
         this.turnStarted = true;
@@ -163,10 +261,10 @@ class baboGame extends Game {
           textAlign(CENTER, CENTER);
           fill(255);
           textSize(50);
-          text(this.voice, -0.05 * h, 0);
+          text(this.voice, -0.04 * h, 0);
           console.log(this.idx, this.voice, this.hand);
           imageMode(CENTER);
-          image(handimg[this.hand - 1], 0.05 * h, 0, 0.1 * h, 0.1 * h);
+          image(handimg[this.hand - 1], 0.04 * h, 0, 0.1 * h, 0.1 * h);
           pop();
         } else {
           if (this.voice == this.hand) {
@@ -188,10 +286,10 @@ class baboGame extends Game {
       this.endTime = millis();
     } else {
       if (millis() - this.endTime < 4000) {
-        if(millis() - this.endTime < 2000){
-          if(this.idx == 3){
+        if (millis() - this.endTime < 2000) {
+          if (this.idx == 3) {
             super.playerDrinkDisplay();
-          }else{
+          } else {
             super.npcDrinkDisplay();
           }
         } else {
