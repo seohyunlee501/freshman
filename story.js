@@ -67,7 +67,7 @@ class Story {
         this.drawNPC("2-5");
         this.drawTextbox();
         this.drawSceneText(
-          `- 술게임에 온 걸 환영해! 방금 로그인샷을 마셔서 좀 어지럽지? 이제 원하는 게임을 골라봐!`
+          `- 환영해! 로그인샷을 마셔서 좀 어지럽지? 이제 원하는 게임을 골라봐!`
         );
         break;
       case "2-7":
