@@ -54,8 +54,7 @@ class baboGame extends Game {
         fill(255);
         rect(w / 2, h / 2, w / 3, h / 3);
         fill(0);
-        text("음성 기능 사용을 위해", w / 2, h / 2 - 0.05 * h);
-        text("이어폰을 착용해 주세요.", w / 2, h / 2 + 0.05 * h);
+        text("바보가 되어보아요 ^-^", w / 2, h / 2);
       } else {
         this.gameStarted = false;
         this.turn++;
