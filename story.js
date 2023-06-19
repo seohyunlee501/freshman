@@ -186,7 +186,7 @@ class Story {
     if (scene == "2-1") {
       image(imgs_npc["1_1"], w * 0.75, h * 0.5, h, h);
     } else if (scene == "2-4") {
-      image(imgs_npc["g_1"], w * 0.75, h * 0.5, h, h);
+      image(imgs_npc["g_1"], w * 0.8, h * 0.5, h, h);
     } else if (scene == "5-1") {
       image(imgs_npc["g_1"], w * 0.5, h * 0.5, h, h);
     } else if (scene == "2-5") {
