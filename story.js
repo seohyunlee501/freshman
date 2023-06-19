@@ -165,6 +165,7 @@ class Story {
 
   drawSceneText(t) {
     fill(255);
+    textSize(50);
     text(t, w * 0.5, h * 0.9);
   }
 
