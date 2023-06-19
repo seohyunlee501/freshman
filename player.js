@@ -30,10 +30,10 @@ class Player {
   display(x, y) {
     let a = this.alcholblood - 3;
     let img;
-    if(this.alcholblood < 8){
-      img = this.image[a];
+    if (this.alcholblood < 8) {
+      img = this.image_y[a];
     } else {
-      img = this.image[4];
+      img = this.image_y[4];
     }
     imageMode(CENTER);
     image(img, x, y, h * 0.3, h * 0.3);
@@ -41,7 +41,7 @@ class Player {
   displaybig(x, y) {
     let a = this.alcholblood - 3;
     let img;
-    if(this.alcholblood < 8){
+    if (this.alcholblood < 8) {
       img = this.image[a];
     } else {
       img = this.image[4];
@@ -56,7 +56,7 @@ class Player {
       imageMode(CENTER);
       push();
       scale(6, -6);
-      image(this.image[4], w * 0.8 / 6, -h * 0.2 / 6);
+      image(this.image[4], (w * 0.8) / 6, (-h * 0.2) / 6);
       pop();
     } else {
       imageMode(CENTER);
@@ -64,7 +64,7 @@ class Player {
       imageMode(CENTER);
       let a = this.alcholblood - 3;
       let img = this.image[a];
-      image(img, w * 0.73, h * 0.75, w * 0.8 , w * 0.8);
+      image(img, w * 0.73, h * 0.75, w * 0.8, w * 0.8);
     }
   }
 }
