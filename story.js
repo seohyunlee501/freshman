@@ -63,8 +63,8 @@ class Story {
         break;
       case "2-6":
         this.drawSceneBackground("2-6");
-        //여기 NPC 2-4가 고학번이라는 뜻이더라고요! 안고치셔도 되어요
-        this.drawNPC("2-4");
+        // 고학번 더 오른쪽으로 옮기고 싶어서 새로 햇어요!
+        this.drawNPC("2-5");
         this.drawTextbox();
         this.drawSceneText(
           `- 술게임에 온 걸 환영해! 방금 로그인샷을 마셔서 좀 어지럽지? 이제 원하는 게임을 골라봐!`
@@ -72,7 +72,7 @@ class Story {
         break;
       case "2-7":
         this.drawSceneBackground("2-7");
-        this.drawNPC("2-4");
+        this.drawNPC("2-5");
         this.drawTextbox();
         this.drawSceneText(
           `- i 버튼을 누르면 게임에 대한 설명을 확인할 수 있어!`
@@ -80,14 +80,14 @@ class Story {
         break;
       case "2-8":
         this.drawSceneBackground("2-8");
-        this.drawNPC("2-4");
+        this.drawNPC("2-5");
         this.drawTextbox();
         this.drawSceneText(
           `- 게임을 시작하기 전에 조작 방법을 알려줄테니 걱정말라구!`
         );
       case "2-9":
         this.drawSceneBackground("2-9");
-        this.drawNPC("2-4");
+        this.drawNPC("2-5");
         this.drawTextbox();
         this.drawSceneText(
           `- 혈중알콜농도가 최대에 다다르면 게임 종료야. 즐거운 시간 보내길 바랄게 ^^`
@@ -189,16 +189,18 @@ class Story {
       image(imgs_npc["g_1"], w * 0.75, h * 0.5, h, h);
     } else if (scene == "5-1") {
       image(imgs_npc["g_1"], w * 0.5, h * 0.5, h, h);
+    } else if (scene == "2-5") {
+      image(imgs_npc["g_1"], w * 0.85, h * 0.5, h, h);
     }
   } // 변수 써서 하기? 캐릭터 이미지 프리로드하기
 
   drawObject(obj_img) {
     if (obj_img == "soju") {
-      image(soju_img, w * 0.65, h * 0.75, h * 0.2, h * 0.2);
+      image(soju_img, w * 0.65, h * 0.5, h * 0.2, h * 0.2);
     } else if (obj_img == "item") {
-      image(item_img, w * 0.4, h * 0.8, h * 0.2, h * 0.2);
+      image(item_img, w * 0.4, h * 0.5, h * 0.2, h * 0.2);
     } else if (obj_img == "soju_green") {
-      image(soju_img_g, w * 0.6, h * 0.75, h * 0.2, h * 0.2);
+      image(soju_img_g, w * 0.6, h * 0.5, h * 0.2, h * 0.2);
     }
   }
 

@@ -88,9 +88,9 @@ function preload() {
   bg2 = loadImage("Assets/background_mode2.jpg");
   bg2_1 = loadImage("Assets/background_mode2_1.jpg");
   bg2_6 = loadImage("Assets/background_mode2_6.png");
-  bg2_7 = loadImage("Assets/background_mode2_7.jpg");
-  bg2_8 = loadImage("Assets/background_mode2_8.jpg");
-  bg2_9 = loadImage("Assets/background_mode2_9.jpg");
+  bg2_7 = loadImage("Assets/background_mode2_7.png");
+  bg2_8 = loadImage("Assets/background_mode2_8.png");
+  bg2_9 = loadImage("Assets/background_mode2_9.png");
   bg5 = loadImage("Assets/background_mode5.jpg");
   soju_img = loadImage("Assets/soju_1.png"); // 빨뚜
   soju_img_g = loadImage("Assets/soju_2.png"); // 초록뚜껑
