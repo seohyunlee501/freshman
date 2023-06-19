@@ -340,7 +340,7 @@ function draw() {
         textAlign(CENTER);
         textSize(32);
         text("역 이름을 입력하세요!", w * 0.5, h * 0.45);
-        subwayInput.value("");
+
         subwayInput.show();
         subwayButton.show();
         subwayButton.mousePressed(saveStations);
@@ -729,4 +729,5 @@ function saveStations() {
   nowGame.playerCurrentTime = millis();
   nowGame.playerStarted = true;
   nowGame.playerInput = false;
+  subwayInput.value("");
 }

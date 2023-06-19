@@ -270,6 +270,7 @@ class Story {
       this.submitButton.position(w * 0.5, h * 0.65);
       this.submitButton.mousePressed(() => {
         this.expectedID = parseInt(this.numberInput.value());
+        this.numberInput.value("");
         if (this.expectedID === 19) {
           this.scene = "5-3";
           this.buttonPressTime = millis();
