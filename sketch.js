@@ -58,6 +58,8 @@ let myHand;
 let predictionsHand = [];
 let modelReadyComplete = false;
 
+let bgm;
+
 function preload() {
   carrot = loadImage("Assets/button_carrot.png");
   k_melon = loadImage("Assets/button_k-melon.png");
@@ -128,6 +130,8 @@ function preload() {
   for (let i = 0; i < 3; i++) {
     subwayImage[i] = loadImage(`Assets/subway_${i + 2}.png`);
   }
+
+  bgm = loadSound("audio/bgm.wav");
 }
 
 function setup() {
@@ -295,6 +299,7 @@ function draw() {
         nowGame.round();
         if (nowGame.gameOver) {
           idx = nowGame.idx;
+          bgm.stop();
           if (gameSelect.gameNum == 4) {
             mode = 5;
           } else if (gameSelect.gameNum == 7) {
@@ -362,6 +367,7 @@ function mousePressed() {
         infoButton5.hide();
         infoButton6.hide();
         mode = 4;
+        bgm.play();
       } else if (mouseX > 0.38 * w && mouseX < 0.62 * w) {
         nowGame = new eyeGame(idx, gameSelect);
         mode = 4;
@@ -371,6 +377,7 @@ function mousePressed() {
         infoButton4.hide();
         infoButton5.hide();
         infoButton6.hide();
+        bgm.play();
       } else if (mouseX > 0.63 * w && mouseX < 0.87 * w) {
         nowGame = new brGame(idx, gameSelect);
         mode = 4;
@@ -380,6 +387,7 @@ function mousePressed() {
         infoButton4.hide();
         infoButton5.hide();
         infoButton6.hide();
+        bgm.play();
       }
     } else if (mouseY > 0.62 * h && mouseY < 0.82 * h) {
       if (mouseX > 0.13 * w && mouseX < 0.37 * w) {
@@ -391,6 +399,7 @@ function mousePressed() {
         infoButton4.hide();
         infoButton5.hide();
         infoButton6.hide();
+        bgm.play();
       } else if (mouseX > 0.38 * w && mouseX < 0.62 * w) {
         nowGame = new doobooGame(idx, gameSelect);
         mode = 4;
@@ -400,6 +409,7 @@ function mousePressed() {
         infoButton4.hide();
         infoButton5.hide();
         infoButton6.hide();
+        bgm.play();
       } else if (mouseX > 0.63 * w && mouseX < 0.87 * w) {
         nowGame = new baboGame(idx, gameSelect);
         mode = 4;
@@ -409,6 +419,7 @@ function mousePressed() {
         infoButton4.hide();
         infoButton5.hide();
         infoButton6.hide();
+        bgm.play();
       }
     }
   }
