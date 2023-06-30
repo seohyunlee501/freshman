@@ -58,7 +58,13 @@ let myHand;
 let predictionsHand = [];
 let modelReadyComplete = false;
 
+//bgm
 let bgm;
+let bgmplaying = true;
+let sound, nosound;
+
+//ready
+let ready, start;
 
 function preload() {
   carrot = loadImage("Assets/button_carrot.png");
@@ -130,8 +136,13 @@ function preload() {
   for (let i = 0; i < 3; i++) {
     subwayImage[i] = loadImage(`Assets/subway_${i + 2}.png`);
   }
-
+  //bgm
   bgm = loadSound("audio/bgm.wav");
+  sound = loadImage("Assets/audio_playing.png");
+  nosound = loadImage("Assets/audio_no.png");
+  //ready, start
+  ready = loadImage("Assets/ready.png");
+  start = loadImage("Assets/start.png");
 }
 
 function setup() {
@@ -330,9 +341,17 @@ function draw() {
 
     // reset button
     if (mode != 0 && mode != 1 && mode != 6 && mode != 2 && mode != 5) {
-      fill(0);
       imageMode(CORNER);
       image(reset, 0.05 * w, 0.05 * h, 0.1 * h, 0.1 * h);
+    }
+
+    //sound button
+    if (bgmplaying) {
+      imageMode(CORNER);
+      image(sound, w - 0.05 * w - 0.1 * h, 0.05 * h, 0.1 * h, 0.1 * h);
+    } else {
+      imageMode(CORNER);
+      image(nosound, w - 0.05 * w - 0.1 * h, 0.05 * h, 0.1 * h, 0.1 * h);
     }
 
     // subwayGame setup
@@ -367,7 +386,7 @@ function mousePressed() {
         infoButton5.hide();
         infoButton6.hide();
         mode = 4;
-        bgm.play();
+        if (bgmplaying) bgm.play();
       } else if (mouseX > 0.38 * w && mouseX < 0.62 * w) {
         nowGame = new eyeGame(idx, gameSelect);
         mode = 4;
@@ -377,7 +396,7 @@ function mousePressed() {
         infoButton4.hide();
         infoButton5.hide();
         infoButton6.hide();
-        bgm.play();
+        if (bgmplaying) bgm.play();
       } else if (mouseX > 0.63 * w && mouseX < 0.87 * w) {
         nowGame = new brGame(idx, gameSelect);
         mode = 4;
@@ -387,7 +406,7 @@ function mousePressed() {
         infoButton4.hide();
         infoButton5.hide();
         infoButton6.hide();
-        bgm.play();
+        if (bgmplaying) bgm.play();
       }
     } else if (mouseY > 0.62 * h && mouseY < 0.82 * h) {
       if (mouseX > 0.13 * w && mouseX < 0.37 * w) {
@@ -399,7 +418,7 @@ function mousePressed() {
         infoButton4.hide();
         infoButton5.hide();
         infoButton6.hide();
-        bgm.play();
+        if (bgmplaying) bgm.play();
       } else if (mouseX > 0.38 * w && mouseX < 0.62 * w) {
         nowGame = new doobooGame(idx, gameSelect);
         mode = 4;
@@ -409,7 +428,7 @@ function mousePressed() {
         infoButton4.hide();
         infoButton5.hide();
         infoButton6.hide();
-        bgm.play();
+        if (bgmplaying) bgm.play();
       } else if (mouseX > 0.63 * w && mouseX < 0.87 * w) {
         nowGame = new baboGame(idx, gameSelect);
         mode = 4;
@@ -419,7 +438,7 @@ function mousePressed() {
         infoButton4.hide();
         infoButton5.hide();
         infoButton6.hide();
-        bgm.play();
+        if (bgmplaying) bgm.play();
       }
     }
   }
@@ -489,6 +508,14 @@ function mouseClicked() {
       }
       xButton.hide();
     }
+  }
+  if (
+    mouseX < w - 0.05 * w &&
+    mouseX > w - 0.05 * w - 0.1 * h &&
+    mouseY > 0.05 * h &&
+    mouseY < 0.15 * h
+  ) {
+    bgmplaying = !bgmplaying;
   }
   //select player
   if (mode == 1) {
