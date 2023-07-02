@@ -66,6 +66,8 @@ let sound, nosound;
 //ready
 let ready, start;
 
+let table, beer, soju_img, soju_img_g, soamek;
+
 function preload() {
   carrot = loadImage("Assets/button_carrot.png");
   k_melon = loadImage("Assets/button_k-melon.png");
@@ -102,6 +104,9 @@ function preload() {
   bg5 = loadImage("Assets/background_mode5.jpg");
   soju_img = loadImage("Assets/soju_1.png"); // 빨뚜
   soju_img_g = loadImage("Assets/soju_2.png"); // 초록뚜껑
+  soju_jan = loadImage("Assets/soju.png");
+  beer = loadImage("Assets/beer.png");
+  soamek = loadImage("Assets/soamek.png");
   item_img = loadImage("Assets/item_1.png");
   imgs_npc["g_1"] = loadImage("Assets/npc_g_1.png");
   imgs_npc["g_7"] = loadImage("Assets/npc_g_7.png");

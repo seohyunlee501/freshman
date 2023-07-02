@@ -110,7 +110,7 @@ class berryGame extends Game {
           this.step++;
         }
       } else if (this.stepStarted) {
-        if (millis() - this.stepTime < 400) {
+        if (millis() - this.stepTime < 500) {
           let berryCheck = this.buttons2[this.whatBerryCheck];
           text(berryCheck, 0.2 * w + 0.51 * h, 0.3 * h);
         } else {

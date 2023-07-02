@@ -10,6 +10,16 @@ class Game {
     this.gameOver = false;
     //everyone list
     this.everyone = _gameList.everyone;
+    this.bottles = [beer, soju_img, soju_img_g, soamek, soju_jan];
+    this.whatbottle = [];
+    this.wherebottleX = [];
+    this.wherebottleY = [];
+    this.bottleNum = 2 * this.gameNum - 1;
+    for (let i = 0; i < this.bottleNum; i++) {
+      this.whatbottle[i] = int(random(0, 5));
+      this.wherebottleX[i] = random(-0.25 * w, 0.25 * w);
+      this.wherebottleY[i] = random(-0.07 * h, 0.01 * h);
+    }
   }
   display() {
     //background
@@ -59,6 +69,15 @@ class Game {
     imageMode(CENTER);
     image(table, 0.2 * w + 0.17 * h * 2.5, 0.6 * h, 0.6 * w, 0.2 * h);
     //bottles
+    for (let i = 0; i < this.bottleNum; i++) {
+      image(
+        this.bottles[this.whatbottle[i]],
+        0.2 * w + 0.17 * h * 2.5 + this.wherebottleX[i],
+        0.6 * h + this.wherebottleY[i],
+        0.12 * h,
+        0.12 * h
+      );
+    }
   }
 
   playerDrinkDisplay() {
