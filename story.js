@@ -261,7 +261,7 @@ class Story {
 
       // 숫자 입력을 받는 input 요소 생성
       this.numberInput = createInput();
-      this.numberInput.position(w * 0.5 - 100, h * 0.65);
+      this.numberInput.position(w * 0.5 - 120, h * 0.65);
       this.numberInput.size(100);
       this.numberInput.input(this.handleNumberInput); // 입력 값 변화 이벤트 처리
 

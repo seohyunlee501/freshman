@@ -37,14 +37,14 @@ class Game {
     rectMode(CORNER);
     stroke(255);
     translate(w * 0.8, h * 0.3);
-    rect(0, 0, h * 0.1, h * 0.6);
+    rect(0, 0, h * 0.1, h * 0.58);
     for (let i = 0; i < this.player.alcholblood; i++) {
       fill(
         120 * (i == 2) + 200 * (i == 3) + 248 * (i >= 4),
         (120 + 40 * i) * (i < 4) + (240 - 40 * (i % 4)) * (i >= 4),
         0
       );
-      rect(0.01 * h, 0.52 * h - 0.07 * h * i, 0.08 * h, 0.07 * h);
+      rect(0.01 * h, 0.5 * h - 0.07 * h * i, 0.08 * h, 0.07 * h);
     }
     pop();
 
@@ -66,7 +66,7 @@ class Game {
     rectMode(CENTER);
     rect(w / 2, h / 2, w * 0.5, h * 0.65);
     imageMode(CENTER);
-    image(player.image[5], w /2 , h / 2, w / 3, w / 3);
+    image(player.image[5], w / 2, h / 2, w / 3, w / 3);
   }
 
   npcDrinkDisplay() {
@@ -74,15 +74,15 @@ class Game {
     rectMode(CENTER);
     rect(w / 2, h / 2, w * 0.5, h * 0.65);
     imageMode(CENTER);
-    if(this.idx == 2){
+    if (this.idx == 2) {
       image(imgs_npc["g_7"], w / 2, h / 2, w / 3, w / 3);
-    } else if(this.idx == 0){
+    } else if (this.idx == 0) {
       image(imgs_npc["1_7"], w / 2, h / 2, w / 3, w / 3);
-    } else if(this.idx == 1){
+    } else if (this.idx == 1) {
       image(imgs_npc["2_7"], w / 2, h / 2, w / 3, w / 3);
-    } else if(this.idx == 4){
+    } else if (this.idx == 4) {
       image(imgs_npc["3_7"], w / 2, h / 2, w / 3, w / 3);
-    } else if(this.idx == 5){
+    } else if (this.idx == 5) {
       image(imgs_npc["4_7"], w / 2, h / 2, w / 3, w / 3);
     }
   }
