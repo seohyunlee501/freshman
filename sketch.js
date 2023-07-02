@@ -60,7 +60,7 @@ let modelReadyComplete = false;
 
 //bgm
 let bgm;
-let bgmplaying = true;
+let bgmplaying = false;
 let sound, nosound;
 
 //ready
@@ -129,7 +129,7 @@ function preload() {
   gameLostImage = loadImage("Assets/gameover_lose.png");
   gameWinImage = loadImage("Assets/gameover_win.png");
   for (let i = 1; i <= 6; i++) {
-    tutorial[i - 1] = loadImage(`Assets/tutorial_${i}.jpg`);
+    //tutorial[i - 1] = loadImage(`Assets/tutorial_${i}.jpg`);
     gameDes[i - 1] = loadImage(`Assets/gameDes_${i}.png`);
     playDes[i - 1] = loadImage(`Assets/playDes_${i}.png`);
   }
@@ -137,7 +137,7 @@ function preload() {
     subwayImage[i] = loadImage(`Assets/subway_${i + 2}.png`);
   }
   //bgm
-  bgm = loadSound("audio/bgm.wav");
+  bgm = loadSound("audio/gamebgm.wav");
   sound = loadImage("Assets/audio_playing.png");
   nosound = loadImage("Assets/audio_no.png");
   //ready, start
@@ -211,6 +211,9 @@ function setup() {
   });
   textSize(150);
   textFont(retroFont);
+  background(0);
+  fill(255);
+  textAlign(CENTER, CENTER);
   text("LOADING...", width / 2, height / 2);
 }
 
@@ -293,7 +296,7 @@ function draw() {
           imageMode(CENTER);
           image(gameDes[infoNum - 1], w / 2, h / 2, w, h);
           xButton.show();
-          xButton.position(w * 0.48, h * 0.9);
+          xButton.position(w * 0.69, h * 0.1);
           xButton.mousePressed(infoX);
           infoButton1.hide();
           infoButton2.hide();
@@ -310,7 +313,7 @@ function draw() {
         nowGame.round();
         if (nowGame.gameOver) {
           idx = nowGame.idx;
-          bgm.stop();
+          //bgm.stop();
           if (gameSelect.gameNum == 4) {
             mode = 5;
           } else if (gameSelect.gameNum == 7) {
@@ -386,7 +389,7 @@ function mousePressed() {
         infoButton5.hide();
         infoButton6.hide();
         mode = 4;
-        if (bgmplaying) bgm.play();
+        //if (bgmplaying) bgm.play();
       } else if (mouseX > 0.38 * w && mouseX < 0.62 * w) {
         nowGame = new eyeGame(idx, gameSelect);
         mode = 4;
@@ -396,7 +399,7 @@ function mousePressed() {
         infoButton4.hide();
         infoButton5.hide();
         infoButton6.hide();
-        if (bgmplaying) bgm.play();
+        //if (bgmplaying) bgm.play();
       } else if (mouseX > 0.63 * w && mouseX < 0.87 * w) {
         nowGame = new brGame(idx, gameSelect);
         mode = 4;
@@ -406,7 +409,7 @@ function mousePressed() {
         infoButton4.hide();
         infoButton5.hide();
         infoButton6.hide();
-        if (bgmplaying) bgm.play();
+        //if (bgmplaying) bgm.play();
       }
     } else if (mouseY > 0.62 * h && mouseY < 0.82 * h) {
       if (mouseX > 0.13 * w && mouseX < 0.37 * w) {
@@ -418,7 +421,7 @@ function mousePressed() {
         infoButton4.hide();
         infoButton5.hide();
         infoButton6.hide();
-        if (bgmplaying) bgm.play();
+        //if (bgmplaying) bgm.play();
       } else if (mouseX > 0.38 * w && mouseX < 0.62 * w) {
         nowGame = new doobooGame(idx, gameSelect);
         mode = 4;
@@ -428,7 +431,7 @@ function mousePressed() {
         infoButton4.hide();
         infoButton5.hide();
         infoButton6.hide();
-        if (bgmplaying) bgm.play();
+        //if (bgmplaying) bgm.play();
       } else if (mouseX > 0.63 * w && mouseX < 0.87 * w) {
         nowGame = new baboGame(idx, gameSelect);
         mode = 4;
@@ -438,7 +441,7 @@ function mousePressed() {
         infoButton4.hide();
         infoButton5.hide();
         infoButton6.hide();
-        if (bgmplaying) bgm.play();
+        //if (bgmplaying) bgm.play();
       }
     }
   }
@@ -516,6 +519,11 @@ function mouseClicked() {
     mouseY < 0.15 * h
   ) {
     bgmplaying = !bgmplaying;
+    if (bgmplaying) {
+      bgm.play();
+    } else {
+      bgm.stop();
+    }
   }
   //select player
   if (mode == 1) {

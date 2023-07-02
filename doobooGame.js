@@ -95,7 +95,6 @@ class doobooGame extends Game {
           0.3 * h
         );
         this.temp = 10;
-
       } else {
         this.infoStarted = false;
       }
@@ -221,14 +220,11 @@ class doobooGame extends Game {
                 this.playerCorrect = false;
               }
             }
-
-
           }
         }
       }
     }
   }
-
 
   point() {
     console.log("point");
@@ -321,7 +317,7 @@ class doobooGame extends Game {
     textSize(32);
     textAlign(CENTER);
     rectMode(CENTER);
-    if (millis() = this.endTime < 2000) {
+    if (millis() - this.endTime < 2000) {
       if (this.idx == 3) {
         super.playerDrinkDisplay();
         console.log("one");
